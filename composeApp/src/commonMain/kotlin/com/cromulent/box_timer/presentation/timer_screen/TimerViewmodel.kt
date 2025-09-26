@@ -2,6 +2,7 @@ package com.cromulent.box_timer.presentation.timer_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cromulent.box_timer.domain.TimerConfigurations
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,9 +10,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class TimerViewmodel : ViewModel() {
+class TimerViewmodel(
+    timerConfigurations: TimerConfigurations
+) : ViewModel() {
 
-    private var _state = MutableStateFlow(TimerState())
+    private var _state = MutableStateFlow(TimerState(
+        roundDuration = timerConfigurations.roundDuration,
+        restDuration = timerConfigurations.restDuration,
+        totalRounds = timerConfigurations.totalRounds
+    ))
     val state = _state.asStateFlow()
 
     private var timerJob: Job? = null
@@ -47,7 +54,7 @@ class TimerViewmodel : ViewModel() {
         _state.update {
             it.copy(
                 isTimerRunning = false,
-                currentTimeMillis = 0L
+                currentTime = 0L
             )
         }
 
@@ -65,7 +72,7 @@ class TimerViewmodel : ViewModel() {
                 delay(10L)
                 _state.update {
                     it.copy(
-                        currentTimeMillis = it.currentTimeMillis + 10L
+                        currentTime = it.currentTime + 10L
                     )
                 }
             }

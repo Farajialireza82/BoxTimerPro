@@ -2,8 +2,9 @@ package com.cromulent.box_timer.presentation.timer_screen
 
 data class TimerState(
     val isTimerRunning: Boolean = false,
-    val currentTimeMillis: Long = 0L,
-    val totalTimeMillis: Long = 180000,
+    val currentTime: Long = 0L,
     val currentRound: Int = 1,
-    val totalRounds: Int = 12
+    val totalRounds: Int,
+    val roundDuration: Long,
+    val restDuration: Long,
 )
