@@ -75,6 +75,9 @@ class TimerViewmodel(
                         currentTime = it.currentTime + 10L
                     )
                 }
+                if(_state.value.currentTime == _state.value.roundDuration){
+                    resetTimer()
+                }
             }
         }
 
