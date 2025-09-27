@@ -42,11 +42,13 @@ import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
 import com.cromulent.box_timer.core.theme.titleGradientBrush
+import com.cromulent.box_timer.core.util.findWorkoutMode
+import com.cromulent.box_timer.core.util.toWorkoutMode
 import com.cromulent.box_timer.domain.TimerSettings
+import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
-import com.cromulent.box_timer.presentation.configuration_screen.components.WorkoutMode
 import com.cromulent.box_timer.presentation.configuration_screen.components.WorkoutModeGrid
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
@@ -59,22 +61,10 @@ fun ConfigurationScreen(
     onStartWorkout: (TimerSettings) -> Unit,
 ) {
 
-    var selectedMode by rememberSaveable {
-        mutableStateOf(
-            WorkoutMode.entries
-                .firstOrNull {
-                    it.defaultRounds == timerSettings.totalRounds &&
-                            it.defaultRoundDuration == timerSettings.roundDuration &&
-                            it.defaultRestDuration == timerSettings.restDuration }
-            ?: WorkoutMode.CUSTOM)
-    }
+    var selectedMode by rememberSaveable { mutableStateOf(timerSettings.toWorkoutMode()) }
     var roundDuration by rememberSaveable { mutableLongStateOf(timerSettings.roundDuration) }
     var restDuration by rememberSaveable { mutableLongStateOf(timerSettings.restDuration) }
     var totalRounds by rememberSaveable { mutableIntStateOf(timerSettings.totalRounds) }
-
-    LaunchedEffect(roundDuration) {
-
-    }
 
     val scrollState = rememberScrollState()
 
@@ -167,9 +157,9 @@ fun ConfigurationScreen(
                         onModeSelected = { mode ->
                             selectedMode = mode
                             if (selectedMode != WorkoutMode.CUSTOM) {
-                                roundDuration = mode.defaultRoundDuration
-                                restDuration = mode.defaultRestDuration
-                                totalRounds = mode.defaultRounds
+                                roundDuration = mode.roundDuration
+                                restDuration = mode.restDuration
+                                totalRounds = mode.rounds
                             }
                         },
                         emojiSize = 24.sp,

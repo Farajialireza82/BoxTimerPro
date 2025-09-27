@@ -31,9 +31,9 @@ import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.theme.SecondarySubtitleColor
 import com.cromulent.box_timer.core.theme.SubtitleColor
+import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-// ModeCard.kt - Updated Composable
 @Composable
 fun ModeCard(
     mode: WorkoutMode,
@@ -100,35 +100,4 @@ fun ModeCard(
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun Preview() {
-
-    ModeCard(
-        mode = WorkoutMode.BOXING,
-        isSelected = true,
-    ) {
-
-    }
-
-}
-
-enum class WorkoutMode(
-    val displayName: String,
-    val icon: String,
-    val description: String,
-    val defaultRoundDuration: Long, // in seconds
-    val defaultRestDuration: Long,  // in seconds
-    val defaultRounds: Int
-) {
-    BOXING("Boxing", "🥊", "Traditional boxing rounds", 180000, 60000, 12),
-    HIIT("HIIT", "🔥", "High-Intensity Interval Training", 45000, 15000, 8),
-    STRENGTH("Strength", "💪", "Strength training circuits", 120000, 90000, 6),
-    TABATA("Tabata", "⚡", "4-minute Tabata protocol", 20000, 10000, 8),
-    CARDIO("Cardio", "❤️", "Cardio intervals", 60000, 30000, 10),
-    CROSSFIT("CrossFit", "🏋️", "CrossFit WODs", 300000, 120000, 5),
-    MMA("MMA", "🥋", "Mixed Martial Arts", 300000, 60000, 3),
-    CUSTOM("Custom", "⚙️", "Create your own workout", 60000, 30000, 5);
 }
