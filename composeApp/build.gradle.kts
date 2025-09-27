@@ -42,7 +42,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(libs.jetbrains.compose.navigation)
-            implementation("br.com.devsrsouza.compose.icons:font-awesome:1.1.1")
+            implementation(libs.font.awesome)
+            implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.kotlinx.serialization.json)
 
         }
         commonTest.dependencies {

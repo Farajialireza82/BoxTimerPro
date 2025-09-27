@@ -54,14 +54,27 @@ import compose.icons.fontawesomeicons.solid.Play
 
 @Composable
 fun ConfigurationScreen(
+    timerSettings: TimerSettings,
     modifier: Modifier = Modifier,
     onStartWorkout: (TimerSettings) -> Unit,
 ) {
 
-    var selectedMode by rememberSaveable { mutableStateOf(WorkoutMode.BOXING) }
-    var roundDuration by rememberSaveable { mutableLongStateOf(selectedMode.defaultRoundDuration) }
-    var restDuration by rememberSaveable { mutableLongStateOf(selectedMode.defaultRestDuration) }
-    var totalRounds by rememberSaveable { mutableIntStateOf(selectedMode.defaultRounds) }
+    var selectedMode by rememberSaveable {
+        mutableStateOf(
+            WorkoutMode.entries
+                .firstOrNull {
+                    it.defaultRounds == timerSettings.totalRounds &&
+                            it.defaultRoundDuration == timerSettings.roundDuration &&
+                            it.defaultRestDuration == timerSettings.restDuration }
+            ?: WorkoutMode.CUSTOM)
+    }
+    var roundDuration by rememberSaveable { mutableLongStateOf(timerSettings.roundDuration) }
+    var restDuration by rememberSaveable { mutableLongStateOf(timerSettings.restDuration) }
+    var totalRounds by rememberSaveable { mutableIntStateOf(timerSettings.totalRounds) }
+
+    LaunchedEffect(roundDuration) {
+
+    }
 
     val scrollState = rememberScrollState()
 
@@ -88,8 +101,11 @@ fun ConfigurationScreen(
                 AnimatedVisibility(isFabVisible) {
 
                     ExtendedFloatingActionButton(
-                        onClick = { onStartWorkout(
-                            TimerSettings(roundDuration, restDuration, totalRounds)) },
+                        onClick = {
+                            onStartWorkout(
+                                TimerSettings(roundDuration, restDuration, totalRounds)
+                            )
+                        },
                         containerColor = CoralMist,
                         contentColor = CoralHaze
                     ) {

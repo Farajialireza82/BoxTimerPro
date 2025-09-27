@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
+import com.cromulent.box_timer.data.repository.SettingsRepositoryImpl
 import com.cromulent.box_timer.presentation.TimerSettingsViewModel
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreen
 import com.cromulent.box_timer.presentation.timer_screen.TimerScreenRoot
@@ -23,8 +24,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 fun App() {
 
-    val timerSettingsViewModel = TimerSettingsViewModel()
-
+    val timerSettingsViewModel = TimerSettingsViewModel(SettingsRepositoryImpl())
 
     MaterialTheme {
 
@@ -46,7 +46,9 @@ fun App() {
 
                     composable<Route.ConfigurationScreen>(
                     ) {
-                        ConfigurationScreen { timerConfigs ->
+                        ConfigurationScreen(
+                            timerSettingsViewModel.timerSettings.value
+                        ) { timerConfigs ->
                             timerSettingsViewModel.onSettingsSaved(timerConfigs)
                             navController.navigate(Route.TimerScreen)
                         }
@@ -56,7 +58,7 @@ fun App() {
                     composable<Route.TimerScreen>(
 
                     ) {
-                        val timerConfigs by timerSettingsViewModel.timerConfigs.collectAsState()
+                        val timerConfigs by timerSettingsViewModel.timerSettings.collectAsState()
                         val viewmodel = TimerViewmodel(timerConfigs)
                         TimerScreenRoot(viewmodel)
 

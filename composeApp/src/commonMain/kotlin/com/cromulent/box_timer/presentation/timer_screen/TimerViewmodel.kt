@@ -2,6 +2,7 @@ package com.cromulent.box_timer.presentation.timer_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cromulent.box_timer.domain.SettingsRepository
 import com.cromulent.box_timer.domain.TimerSettings
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
