@@ -13,7 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
-import com.cromulent.box_timer.domain.TimerConfigurations
 import com.cromulent.box_timer.presentation.TimerSettingsViewModel
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreen
 import com.cromulent.box_timer.presentation.timer_screen.TimerScreenRoot

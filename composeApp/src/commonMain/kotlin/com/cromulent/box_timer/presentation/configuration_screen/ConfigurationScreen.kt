@@ -1,12 +1,7 @@
 package com.cromulent.box_timer.presentation.configuration_screen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,8 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -25,13 +18,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
@@ -47,13 +38,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import boxtimerpro.composeapp.generated.resources.Res
-import boxtimerpro.composeapp.generated.resources.ic_reset
 import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
 import com.cromulent.box_timer.core.theme.titleGradientBrush
-import com.cromulent.box_timer.domain.TimerConfigurations
+import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
@@ -61,16 +50,12 @@ import com.cromulent.box_timer.presentation.configuration_screen.components.Work
 import com.cromulent.box_timer.presentation.configuration_screen.components.WorkoutModeGrid
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.HourglassStart
 import compose.icons.fontawesomeicons.solid.Play
-import compose.icons.fontawesomeicons.solid.Star
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ConfigurationScreen(
     modifier: Modifier = Modifier,
-    onStartWorkout: (TimerConfigurations) -> Unit,
+    onStartWorkout: (TimerSettings) -> Unit,
 ) {
 
     var selectedMode by rememberSaveable { mutableStateOf(WorkoutMode.BOXING) }
@@ -104,7 +89,7 @@ fun ConfigurationScreen(
 
                     ExtendedFloatingActionButton(
                         onClick = { onStartWorkout(
-                            TimerConfigurations(roundDuration, restDuration, totalRounds)) },
+                            TimerSettings(roundDuration, restDuration, totalRounds)) },
                         containerColor = CoralMist,
                         contentColor = CoralHaze
                     ) {
@@ -246,7 +231,7 @@ fun ConfigurationScreen(
                                 }
                             )
                     ) {
-                        onStartWorkout(TimerConfigurations(roundDuration, restDuration, totalRounds))
+                        onStartWorkout(TimerSettings(roundDuration, restDuration, totalRounds))
                     }
 
                     Spacer(Modifier.size(72.dp))
