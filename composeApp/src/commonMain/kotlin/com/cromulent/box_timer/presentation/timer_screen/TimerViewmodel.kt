@@ -12,15 +12,27 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class TimerViewmodel(
-    timerSettings: TimerSettings
+    settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    private var _state = MutableStateFlow(TimerState(
-        roundDuration = timerSettings.roundDuration,
-        restDuration = timerSettings.restDuration,
-        totalRounds = timerSettings.totalRounds
-    ))
+    private var _state = MutableStateFlow(
+        TimerState(
+            roundDuration = 180000,
+            restDuration = 30000,
+            totalRounds = 12
+        )
+    )
     val state = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            settingsRepository.getTimerSettings()?.toTimerState()?.let { timerState ->
+                _state.update {
+                    timerState
+                }
+            }
+        }
+    }
 
     private var timerJob: Job? = null
 
@@ -76,7 +88,7 @@ class TimerViewmodel(
                         currentTime = it.currentTime + 10L
                     )
                 }
-                if(_state.value.currentTime == _state.value.roundDuration){
+                if (_state.value.currentTime == _state.value.roundDuration) {
                     resetTimer()
                 }
             }

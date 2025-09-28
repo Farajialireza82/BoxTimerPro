@@ -45,6 +45,9 @@ kotlin {
             implementation(libs.font.awesome)
             implementation(libs.multiplatform.settings.no.arg)
             implementation(libs.kotlinx.serialization.json)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            api(libs.koin.core)
 
         }
         commonTest.dependencies {

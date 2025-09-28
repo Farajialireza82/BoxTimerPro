@@ -1,4 +1,4 @@
-package com.cromulent.box_timer.app
+package com.cromulent.box_timer.core.app
 
 import kotlinx.serialization.Serializable
 
