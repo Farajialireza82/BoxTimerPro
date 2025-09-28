@@ -37,6 +37,7 @@ fun TimerCircleIndicator(
     currentTimeMillis: Long,
     totalTimeMillis: Long,
     isRunning: Boolean = false,
+    message: String,
     modifier: Modifier = Modifier,
 ) {
 
@@ -80,7 +81,7 @@ fun TimerCircleIndicator(
                 modifier = Modifier
                     .animateContentSize()
                     .padding(vertical = 4.dp),
-                text = if (isRunning) "Fight" else if(currentTimeMillis == 0L) "Ready" else "Paused",
+                text = message,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.W600,
                 letterSpacing = 2.sp,
@@ -100,7 +101,8 @@ private fun Prev() {
     TimerCircleIndicator(
         currentTimeMillis = 1000L,
         totalTimeMillis = 100000L,
-        isRunning = false
+        isRunning = false,
+        "Ready"
     )
 
 }

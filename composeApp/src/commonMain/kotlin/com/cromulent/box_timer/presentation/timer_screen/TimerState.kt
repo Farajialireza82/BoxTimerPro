@@ -1,20 +1,15 @@
 package com.cromulent.box_timer.presentation.timer_screen
 
-import com.cromulent.box_timer.domain.TimerSettings
 
 data class TimerState(
     val isTimerRunning: Boolean = false,
     val currentTime: Long = 0L,
     val currentRound: Int = 1,
-    val totalRounds: Int,
-    val roundDuration: Long,
-    val restDuration: Long,
-){
+    val totalRounds: Int = 12,
+    val roundDuration: Long = 180_000L, // 3 min
+    val restDuration: Long = 30_000L,
+    val timerMessage: String = "Ready",
+    val phase: TimerPhase = TimerPhase.IDLE
+)
 
-    fun toTimerSettings() = TimerSettings(
-        roundDuration = roundDuration,
-        restDuration = restDuration,
-        totalRounds = totalRounds
-    )
-
-}
+enum class TimerPhase { IDLE, FIGHT, REST, COUNTDOWN }

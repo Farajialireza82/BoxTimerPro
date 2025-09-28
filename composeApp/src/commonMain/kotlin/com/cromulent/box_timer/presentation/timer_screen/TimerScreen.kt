@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
-import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
 import com.cromulent.box_timer.presentation.timer_screen.components.CircleButton
@@ -32,7 +31,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TimerScreenRoot(
-    viewmodel: TimerViewmodel,
+    viewmodel: TimerViewModel,
     modifier: Modifier = Modifier
 ) {
 
@@ -99,7 +98,8 @@ private fun TimerScreen(
                 TimerCircleIndicator(
                     currentTimeMillis = state.currentTime,
                     totalTimeMillis = state.roundDuration,
-                    isRunning = state.isTimerRunning
+                    isRunning = state.isTimerRunning,
+                    message = state.timerMessage,
                 )
 
                 Spacer(

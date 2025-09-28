@@ -14,7 +14,7 @@ import com.cromulent.box_timer.core.theme.backgroundGradientBrush
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
 import com.cromulent.box_timer.presentation.timer_screen.TimerScreenRoot
-import com.cromulent.box_timer.presentation.timer_screen.TimerViewmodel
+import com.cromulent.box_timer.presentation.timer_screen.TimerViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -53,7 +53,7 @@ fun App() {
                     composable<Route.TimerScreen>(
 
                     ) {
-                        val viewmodel = koinViewModel<TimerViewmodel>()
+                        val viewmodel = koinViewModel<TimerViewModel>()
                         TimerScreenRoot(viewmodel)
 
                     }
