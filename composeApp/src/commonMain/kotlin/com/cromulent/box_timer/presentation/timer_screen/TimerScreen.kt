@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
+import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
 import com.cromulent.box_timer.presentation.timer_screen.components.CircleButton

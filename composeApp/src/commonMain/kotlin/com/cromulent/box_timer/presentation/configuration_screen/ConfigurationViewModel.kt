@@ -1,4 +1,4 @@
-package com.cromulent.box_timer.presentation
+package com.cromulent.box_timer.presentation.configuration_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class TimerSettingsViewModel(
-    private val settingsRepository: SettingsRepository
-) : ViewModel() {
+class ConfigurationViewModel(
+    val settingsRepository: SettingsRepository
+): ViewModel() {
 
     private val _timerSettings = MutableStateFlow(TimerSettings(
         roundDuration = 180000,
@@ -28,8 +28,17 @@ class TimerSettingsViewModel(
         }
     }
 
-    fun onSettingsSaved(timerSettings: TimerSettings) {
-        _timerSettings.value = timerSettings
+
+
+    fun onAction(action: ConfigurationActions){
+
+        when(action){
+            is ConfigurationActions.SaveTimerSettings -> saveTimerSettings(action.timerSettings)
+        }
+
+    }
+
+    private fun saveTimerSettings(timerSettings: TimerSettings){
         viewModelScope.launch {
             settingsRepository.updateTimerSettings(timerSettings)
         }

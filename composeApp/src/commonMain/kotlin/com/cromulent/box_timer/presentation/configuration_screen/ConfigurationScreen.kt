@@ -23,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
@@ -55,7 +56,27 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Play
 
 @Composable
-fun ConfigurationScreen(
+fun ConfigurationScreenRoot(
+    viewModel: ConfigurationViewModel,
+    modifier: Modifier = Modifier,
+    navigateToTimerScreen: () -> Unit
+) {
+
+    val timerSettings by viewModel.timerSettings.collectAsState()
+
+    ConfigurationScreen(
+        timerSettings,
+        modifier,
+        onStartWorkout = {
+            viewModel.onAction(ConfigurationActions.SaveTimerSettings(it))
+            navigateToTimerScreen()
+        }
+    )
+
+}
+
+@Composable
+private fun ConfigurationScreen(
     timerSettings: TimerSettings,
     modifier: Modifier = Modifier,
     onStartWorkout: (TimerSettings) -> Unit,
