@@ -24,6 +24,7 @@ import com.cromulent.box_timer.presentation.timer_screen.components.CircleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.FileAudio
 import compose.icons.fontawesomeicons.solid.Pause
 import compose.icons.fontawesomeicons.solid.Play
 import compose.icons.fontawesomeicons.solid.Stop

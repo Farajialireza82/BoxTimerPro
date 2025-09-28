@@ -18,7 +18,7 @@ fun formatTime(milliseconds: Long): String {
             seconds.toString().padStart(2, '0')
         }"
 
-        else -> "$seconds'"
+        else -> "00:${seconds.toString().padStart(2, '0')}"
     }
 }
 

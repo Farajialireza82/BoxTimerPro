@@ -2,6 +2,7 @@ package com.cromulent.box_timer.presentation.timer_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cromulent.box_timer.core.util.AudioPlayer
 import com.cromulent.box_timer.domain.SettingsRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -9,13 +10,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 class TimerViewModel(
-    settingsRepository: SettingsRepository
+    settingsRepository: SettingsRepository,
+    val audioPlayer: AudioPlayer
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TimerState())
     val state = _state.asStateFlow()
-
 
 
     init {
@@ -107,6 +109,7 @@ class TimerViewModel(
         for (i in seconds downTo 1) {
             if (!_state.value.isTimerRunning) break
             _state.update { it.copy(timerMessage = "Get Ready: $i") }
+            audioPlayer.playSound("files/beep.mp3")
             delay(1000L)
         }
     }
@@ -118,15 +121,21 @@ class TimerViewModel(
         showCountdownAtEnd: Boolean = false
     ) {
         _state.update { it.copy(phase = phase, currentTime = 0L, timerMessage = defaultMessage) }
-
+        if (phase == TimerPhase.FIGHT) audioPlayer.playSound("files/bell-single.mp3")
         while (_state.value.currentTime < duration && _state.value.isTimerRunning) {
             delay(10L)
             _state.update { state ->
                 val newTime = state.currentTime + 10L
                 val remaining = duration - newTime
-                val msg = if (showCountdownAtEnd && remaining in 1000L..3000L) {
+                val msg = if (showCountdownAtEnd && remaining in 1000L..4000L) {
                     "Get Ready"
                 } else defaultMessage
+                if (remaining == 3000L) audioPlayer.playSound("files/beep.mp3")
+                if (remaining == 2000L) audioPlayer.playSound("files/beep.mp3")
+                if (remaining == 1000L) audioPlayer.playSound("files/beep.mp3")
+                if (phase == TimerPhase.FIGHT) {
+                    if (remaining == 0L) audioPlayer.playSound("files/bell-three-times.mp3")
+                }
                 state.copy(currentTime = newTime, timerMessage = msg)
             }
         }
@@ -134,6 +143,7 @@ class TimerViewModel(
 
     override fun onCleared() {
         timerJob?.cancel()
+        audioPlayer.release()
         super.onCleared()
     }
 }
