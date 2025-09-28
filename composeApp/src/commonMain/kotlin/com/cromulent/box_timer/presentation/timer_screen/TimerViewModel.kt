@@ -26,6 +26,7 @@ class TimerViewModel(
                 }
             }
         }
+        start()
     }
 
     private var timerJob: Job? = null
