@@ -10,6 +10,28 @@ data class SettingsState(
         AudioFile("Single Bell", "files/bell-single.mp3"),
         AudioFile("Bell Three Times", "files/bell-three-times.mp3")
     ),
+    val startRoundAudioFiles: List<AudioFile> = listOf(
+        AudioFile("Bell Single", "files/bell-single.mp3"),
+        AudioFile("Bell Three Times", "files/bell-three-times.mp3"),
+        AudioFile("Whistle", "files/whistle.mp3"),
+        AudioFile("Air Horn Long", "files/air-horn-long.mp3"),
+        AudioFile("Air Horn Short", "files/air-horn-short.mp3"),
+        AudioFile("Buzzer Long", "files/buzzer-long.mp3"),
+        AudioFile("Buzzer Short", "files/buzzer-short.mp3"),
+        AudioFile("Gun Shot", "files/gun-shot.mp3"),
+        AudioFile("Pistol Shot", "files/pistol-shot.mp3"),
+    ),
+    val endRoundAudioFiles: List<AudioFile> = listOf(
+        AudioFile("Bell Single", "files/bell-single.mp3"),
+        AudioFile("Bell Three Times", "files/bell-three-times.mp3"),
+        AudioFile("Whistle", "files/whistle.mp3"),
+        AudioFile("Air Horn Long", "files/air-horn-long.mp3"),
+        AudioFile("Air Horn Short", "files/air-horn-short.mp3"),
+        AudioFile("Buzzer Long", "files/buzzer-long.mp3"),
+        AudioFile("Buzzer Short", "files/buzzer-short.mp3"),
+        AudioFile("Gun Shot", "files/gun-shot.mp3"),
+        AudioFile("Pistol Shot", "files/pistol-shot.mp3"),
+    ),
     val countDownAudioFiles: List<AudioFile> = listOf(
         AudioFile("Beep", "files/beep.mp3"),
         AudioFile("Barcode", "files/Barcode-Scanner.mp3"),

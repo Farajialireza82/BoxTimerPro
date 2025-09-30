@@ -1,6 +1,7 @@
 package com.cromulent.box_timer.core.di
 
 import com.cromulent.box_timer.core.util.AudioPlayer
+import com.cromulent.box_timer.core.util.VibrationEngine
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -10,6 +11,10 @@ actual val platformModule: Module = module {
 
     single {
         AudioPlayer(androidApplication())
+    }
+
+    single {
+        VibrationEngine(androidApplication())
     }
 
 }

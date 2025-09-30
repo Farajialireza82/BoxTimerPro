@@ -3,6 +3,8 @@ package com.cromulent.box_timer.presentation.timer_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cromulent.box_timer.core.util.AudioPlayer
+import com.cromulent.box_timer.core.util.VibrationEngine
+import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -13,11 +15,14 @@ import kotlinx.coroutines.launch
 
 class TimerViewModel(
     settingsRepository: SettingsRepository,
-    val audioPlayer: AudioPlayer
+    val audioPlayer: AudioPlayer,
+    val vibrationEngine: VibrationEngine,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TimerState())
     val state = _state.asStateFlow()
+
+    lateinit var appSettings: AppSettings
 
 
     init {
@@ -27,6 +32,7 @@ class TimerViewModel(
                     timerState
                 }
             }
+            appSettings = settingsRepository.getAppSettings() ?: AppSettings()
         }
         start()
     }
@@ -109,7 +115,7 @@ class TimerViewModel(
         for (i in seconds downTo 1) {
             if (!_state.value.isTimerRunning) break
             _state.update { it.copy(timerMessage = "Get Ready: $i") }
-            audioPlayer.playSound("files/beep.mp3")
+            countDownAlert()
             delay(1000L)
         }
     }
@@ -121,7 +127,7 @@ class TimerViewModel(
         showCountdownAtEnd: Boolean = false
     ) {
         _state.update { it.copy(phase = phase, currentTime = 0L, timerMessage = defaultMessage) }
-        if (phase == TimerPhase.FIGHT) audioPlayer.playSound("files/bell-single.mp3")
+        if (phase == TimerPhase.FIGHT) startRoundAlert()
         while (_state.value.currentTime < duration && _state.value.isTimerRunning) {
             delay(10L)
             _state.update { state ->
@@ -130,15 +136,39 @@ class TimerViewModel(
                 val msg = if (showCountdownAtEnd && remaining in 1000L..4000L) {
                     "Get Ready"
                 } else defaultMessage
-                if (remaining == 3000L) audioPlayer.playSound("files/beep.mp3")
-                if (remaining == 2000L) audioPlayer.playSound("files/beep.mp3")
-                if (remaining == 1000L) audioPlayer.playSound("files/beep.mp3")
+                if (remaining == 3000L) countDownAlert()
+                if (remaining == 2000L) countDownAlert()
+                if (remaining == 1000L) countDownAlert()
                 if (phase == TimerPhase.FIGHT) {
-                    if (remaining == 0L) audioPlayer.playSound("files/bell-three-times.mp3")
+                    if (remaining == 0L) endRoundAlert()
                 }
                 state.copy(currentTime = newTime, timerMessage = msg)
             }
         }
+    }
+
+    fun endRoundAlert(){
+        vibratePhone(1000L)
+        playAudio(appSettings.endRoundAudioFile.uri)
+    }
+
+    fun startRoundAlert(){
+        vibratePhone(700L)
+        playAudio(appSettings.startRoundAudioFile.uri)
+    }
+
+    fun countDownAlert() {
+        vibratePhone(500L)
+        playAudio(appSettings.countDownAudioFile.uri)
+    }
+
+    fun vibratePhone(duration: Long = 1000L){
+        if(appSettings.isVibrationEnabled) vibrationEngine.vibrate(duration)
+    }
+
+    fun playAudio(uri: String) {
+        if (appSettings.muteAllSounds) return
+        audioPlayer.playSound(uri)
     }
 
     override fun onCleared() {

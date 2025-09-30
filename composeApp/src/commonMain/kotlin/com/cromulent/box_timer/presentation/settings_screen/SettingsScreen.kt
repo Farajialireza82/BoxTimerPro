@@ -143,9 +143,9 @@ private fun SettingsScreen(
                         title = "Start Round Sound",
                         subtitle = "Sound when round begins",
                         selectedTitle = appSettings.startRoundAudioFile.title,
-                        items = state.audioFiles.map { it.title },
+                        items = state.startRoundAudioFiles.map { it.title },
                     ) {
-                        onAction(SettingsActions.SetStartRoundSound(state.audioFiles[it]))
+                        onAction(SettingsActions.SetStartRoundSound(state.startRoundAudioFiles[it]))
                     }
 
                     Spacer(Modifier.size(10.dp))
@@ -154,9 +154,9 @@ private fun SettingsScreen(
                         title = "End Round Sound",
                         subtitle = "Sound when round ends",
                         selectedTitle = appSettings.endRoundAudioFile.title,
-                        items = state.audioFiles.map { it.title },
+                        items = state.endRoundAudioFiles.map { it.title },
                     ) {
-                        onAction(SettingsActions.SetEndRoundSound(state.audioFiles[it]))
+                        onAction(SettingsActions.SetEndRoundSound(state.endRoundAudioFiles[it]))
                     }
 
                     Spacer(Modifier.size(10.dp))
