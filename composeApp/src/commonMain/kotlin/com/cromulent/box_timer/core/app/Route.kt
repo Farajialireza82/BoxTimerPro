@@ -16,5 +16,8 @@ sealed interface Route {
     @Serializable
     data object TimerScreen: Route
 
+    @Serializable
+    data object SettingsScreen: Route
+
 
 }

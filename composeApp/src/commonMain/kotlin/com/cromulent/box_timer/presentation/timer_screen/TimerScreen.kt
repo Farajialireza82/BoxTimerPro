@@ -32,15 +32,17 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TimerScreenRoot(
-    viewmodel: TimerViewModel,
+    viewModel: TimerViewModel,
+    onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
-    val state = viewmodel.state.collectAsStateWithLifecycle()
+    val state = viewModel.state.collectAsStateWithLifecycle()
 
     TimerScreen(
         state = state.value,
-        onAction = viewmodel::onAction,
+        onAction = viewModel::onAction,
+        onBackButtonClicked = onBackButtonClicked,
         modifier = modifier
     )
 
@@ -52,6 +54,7 @@ fun TimerScreenRoot(
 private fun TimerScreen(
     state: TimerState,
     onAction: (TimerActions) -> Unit,
+    onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -65,7 +68,9 @@ private fun TimerScreen(
                     modifier = Modifier
                         .statusBarsPadding(),
                     title = "BoxTimer Pro",
-                    subtitle = "Ready to train"
+                    subtitle = "Ready to train",
+                    hasBackButton = true,
+                    onBackButtonClicked = onBackButtonClicked
                 )
 
             }

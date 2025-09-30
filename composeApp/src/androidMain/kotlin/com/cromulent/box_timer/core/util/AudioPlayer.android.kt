@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import boxtimerpro.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 actual class AudioPlayer(context: Context){
     private val mediaPlayer = ExoPlayer.Builder(context).build()
@@ -12,6 +13,7 @@ actual class AudioPlayer(context: Context){
         mediaPlayer.prepare()
     }
 
+    @OptIn(ExperimentalResourceApi::class)
     actual fun playSound(uri: String) {
         mediaPlayer.setMediaItem(MediaItem.fromUri(Res.getUri(uri)))
         mediaPlayer.play()

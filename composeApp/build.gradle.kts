@@ -45,6 +45,7 @@ kotlin {
             implementation(libs.jetbrains.compose.navigation)
             implementation(libs.font.awesome)
             implementation(libs.multiplatform.settings.no.arg)
+            implementation(libs.multiplatform.settings.coroutines)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)
