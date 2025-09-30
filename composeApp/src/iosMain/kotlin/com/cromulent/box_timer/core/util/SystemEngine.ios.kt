@@ -1,14 +1,10 @@
 package com.cromulent.box_timer.core.util
 
-import platform.AudioToolbox.AUDIO_TOOLBOX_VERSION
-import platform.AudioToolbox.AudioServicesPlayAlertSound
-import platform.AudioToolbox.AudioServicesPlayAlertSoundWithCompletion
-import platform.AudioToolbox.SystemSoundID
-import platform.AudioToolbox.kSystemSoundID_Vibrate
+import platform.UIKit.UIApplication
 import platform.UIKit.UIImpactFeedbackGenerator
 import platform.UIKit.UIImpactFeedbackStyle
 
-actual class VibrationEngine {
+actual class SystemEngine {
     actual fun vibrate(duration: Long) {
         val generator = UIImpactFeedbackGenerator(
             style = if(duration < 600L) UIImpactFeedbackStyle.UIImpactFeedbackStyleLight
@@ -18,5 +14,9 @@ actual class VibrationEngine {
         generator.prepare()
         generator.impactOccurred()
 
+    }
+
+    actual fun keepScreenOn(keepScreenOn: Boolean) {
+        UIApplication.sharedApplication.idleTimerDisabled = keepScreenOn
     }
 }

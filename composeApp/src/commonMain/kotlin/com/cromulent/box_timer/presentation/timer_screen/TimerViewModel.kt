@@ -3,7 +3,7 @@ package com.cromulent.box_timer.presentation.timer_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cromulent.box_timer.core.util.AudioPlayer
-import com.cromulent.box_timer.core.util.VibrationEngine
+import com.cromulent.box_timer.core.util.SystemEngine
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
 import kotlinx.coroutines.Job
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class TimerViewModel(
     settingsRepository: SettingsRepository,
     val audioPlayer: AudioPlayer,
-    val vibrationEngine: VibrationEngine,
+    val systemEngine: SystemEngine,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(TimerState())
@@ -49,6 +49,7 @@ class TimerViewModel(
 
     private fun start() {
         if (_state.value.isTimerRunning) return
+        toggleKeepScreenOn(appSettings.keepScreenOnEnabled)
 
         _state.update { it.copy(isTimerRunning = true) }
 
@@ -89,12 +90,14 @@ class TimerViewModel(
     }
 
     private fun pause() {
+        toggleKeepScreenOn(false)
         timerJob?.cancel()
         timerJob = null
         _state.update { it.copy(isTimerRunning = false, timerMessage = "Paused") }
     }
 
     private fun reset() {
+        toggleKeepScreenOn(false)
         timerJob?.cancel()
         timerJob = null
         _state.update {
@@ -147,33 +150,38 @@ class TimerViewModel(
         }
     }
 
-    fun endRoundAlert(){
+    private fun endRoundAlert(){
         vibratePhone(1000L)
         playAudio(appSettings.endRoundAudioFile.uri)
     }
 
-    fun startRoundAlert(){
+    private fun startRoundAlert(){
         vibratePhone(700L)
         playAudio(appSettings.startRoundAudioFile.uri)
     }
 
-    fun countDownAlert() {
+    private fun countDownAlert() {
         vibratePhone(500L)
         playAudio(appSettings.countDownAudioFile.uri)
     }
 
-    fun vibratePhone(duration: Long = 1000L){
-        if(appSettings.isVibrationEnabled) vibrationEngine.vibrate(duration)
+    private fun vibratePhone(duration: Long = 1000L){
+        if(appSettings.isVibrationEnabled) systemEngine.vibrate(duration)
     }
 
-    fun playAudio(uri: String) {
+    private fun playAudio(uri: String) {
         if (appSettings.muteAllSounds) return
         audioPlayer.playSound(uri)
+    }
+
+    private fun toggleKeepScreenOn(enabled: Boolean){
+        systemEngine.keepScreenOn(enabled)
     }
 
     override fun onCleared() {
         timerJob?.cancel()
         audioPlayer.release()
+        toggleKeepScreenOn(false)
         super.onCleared()
     }
 }

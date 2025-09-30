@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,6 +42,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cromulent.box_timer.core.theme.CoralHaze
@@ -186,16 +188,16 @@ private fun SettingsScreen(
                         }
                     )
 
-                    Spacer(Modifier.size(10.dp))
-
-                    SettingSwitchCard(
-                        isChecked = appSettings.allowRotation,
-                        title = "Allow Rotation",
-                        subtitle = "Enable landscape mode",
-                        onCheckedChange = {
-                            onAction(SettingsActions.ToggleAllowRotation(it))
-                        }
-                    )
+//                    Spacer(Modifier.size(10.dp))
+//
+//                    SettingSwitchCard(
+//                        isChecked = appSettings.allowRotation,
+//                        title = "Allow Rotation",
+//                        subtitle = "Enable landscape mode",
+//                        onCheckedChange = {
+//                            onAction(SettingsActions.ToggleAllowRotation(it))
+//                        }
+//                    )
 
 
 
@@ -282,26 +284,26 @@ private fun SettingCard(
                 .padding(16.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.Start
         ) {
 
             Column(
                 modifier = Modifier
                     .weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.Start
             ) {
                 Text(
                     modifier = Modifier
                         .padding(bottom = 4.dp),
                     text = title,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W500,
                     color = White,
                 )
                 Text(
                     text = subtitle,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     color = White.copy(alpha = 0.6f)
                 )
             }
@@ -345,7 +347,7 @@ private fun SettingsStringPickerCard(
                 modifier = Modifier
                     .padding(2.dp)
                     .clickable { expanded = true }
-                    .widthIn(min = 70.dp),
+                    .width(100.dp),
                 color = Color(0xFFFF6B35).copy(alpha = 0.1f),
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(1.dp, Color(0xFFFF6B35)),
@@ -357,7 +359,9 @@ private fun SettingsStringPickerCard(
                     textAlign = TextAlign.Center,
                     text = selectedTitle,
                     fontSize = 14.sp,
+                    maxLines = 1,
                     fontWeight = FontWeight.Medium,
+                    overflow = TextOverflow.Ellipsis,
                     color = Color(0xFFFF6B35)
                 )
             }
@@ -437,7 +441,10 @@ fun TitleText(
     modifier: Modifier = Modifier
 ) {
 
-    Text(text.uppercase(), modifier = modifier, style = SettingTitleStyle)
+    Text(
+        text.uppercase(),
+        modifier = modifier,
+        style = SettingTitleStyle)
 
 }
 
