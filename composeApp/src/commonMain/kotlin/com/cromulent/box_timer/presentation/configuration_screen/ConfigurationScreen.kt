@@ -34,11 +34,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onVisibilityChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.settings_ic
 import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
@@ -59,7 +62,8 @@ import compose.icons.fontawesomeicons.solid.Play
 fun ConfigurationScreenRoot(
     viewModel: ConfigurationViewModel,
     modifier: Modifier = Modifier,
-    navigateToTimerScreen: () -> Unit
+    navigateToTimerScreen: () -> Unit,
+    navigateToSettings: () -> Unit,
 ) {
 
     val timerSettings by viewModel.timerSettings.collectAsState()
@@ -70,7 +74,8 @@ fun ConfigurationScreenRoot(
         onStartWorkout = {
             viewModel.onAction(ConfigurationActions.SaveTimerSettings(it))
             navigateToTimerScreen()
-        }
+        },
+        navigateToSettings = navigateToSettings
     )
 
 }
@@ -80,6 +85,7 @@ private fun ConfigurationScreen(
     timerSettings: TimerSettings,
     modifier: Modifier = Modifier,
     onStartWorkout: (TimerSettings) -> Unit,
+    navigateToSettings: () -> Unit,
 ) {
 
     var selectedMode by rememberSaveable { mutableStateOf(timerSettings.toWorkoutMode()) }
@@ -142,20 +148,24 @@ private fun ConfigurationScreen(
                 modifier = modifier
                     .background(backgroundGradientBrush)
                     .padding(it)
-                    .padding(horizontal = 24.dp)
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
 
                 Header(
-                    modifier = Modifier,
+                    modifier = Modifier.padding(horizontal = 8.dp),
                     title = "BoxTimer Pro",
-                    subtitle = "Configure Your Workout"
+                    subtitle = "Configure Your Workout",
+                    hasBackButton = false,
+                    hasActionButton = true,
+                    actionButtonResource = Res.drawable.settings_ic,
+                    onActionButtonClicked = { navigateToSettings() }
                 )
 
                 Column(
                     modifier = Modifier
+                        .padding(horizontal = 24.dp)
                         .verticalScroll(scrollState),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Top

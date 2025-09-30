@@ -13,6 +13,8 @@ import androidx.navigation.compose.rememberNavController
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
+import com.cromulent.box_timer.presentation.settings_screen.SettingsScreenRoot
+import com.cromulent.box_timer.presentation.settings_screen.SettingsViewModel
 import com.cromulent.box_timer.presentation.timer_screen.TimerScreenRoot
 import com.cromulent.box_timer.presentation.timer_screen.TimerViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -42,20 +44,35 @@ fun App() {
 
                     composable<Route.ConfigurationScreen>(
                     ) {
-                        val viewmodel = koinViewModel<ConfigurationViewModel>()
+                        val viewModel = koinViewModel<ConfigurationViewModel>()
                         ConfigurationScreenRoot(
-                            viewModel = viewmodel,
+                            viewModel = viewModel,
                             navigateToTimerScreen = {
                                 navController.navigate(Route.TimerScreen)
-                            })
+                            },
+                            navigateToSettings = {
+                                navController.navigate(Route.SettingsScreen)
+                            }
+                        )
                     }
 
-                    composable<Route.TimerScreen>(
+                    composable<Route.TimerScreen> {
+                        val viewModel = koinViewModel<TimerViewModel>()
+                        TimerScreenRoot(
+                            viewModel = viewModel,
+                            onBackButtonClicked = {
+                                navController.popBackStack()
+                            })
 
-                    ) {
-                        val viewmodel = koinViewModel<TimerViewModel>()
-                        TimerScreenRoot(viewmodel)
+                    }
 
+                    composable<Route.SettingsScreen> {
+                        val viewModel = koinViewModel<SettingsViewModel>()
+                        SettingsScreenRoot(
+                            viewModel = viewModel,
+                            onBackButtonClicked = {
+                                navController.popBackStack()
+                            })
                     }
 
 
