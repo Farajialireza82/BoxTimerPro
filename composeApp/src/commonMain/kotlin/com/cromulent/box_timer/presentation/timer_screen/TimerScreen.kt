@@ -3,10 +3,12 @@ package com.cromulent.box_timer.presentation.timer_screen
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,34 +16,37 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.back_ic
 import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.FruitOrange
-import com.cromulent.box_timer.core.theme.GoldenSun
+import com.cromulent.box_timer.core.theme.SecondarySubtitleColor
 import com.cromulent.box_timer.core.theme.SubtitleColor
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
+import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
-import com.cromulent.box_timer.presentation.timer_screen.components.CircleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
-import compose.icons.FontAwesomeIcons
-import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.FileAudio
-import compose.icons.fontawesomeicons.solid.Pause
-import compose.icons.fontawesomeicons.solid.Play
-import compose.icons.fontawesomeicons.solid.Stop
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -52,20 +57,194 @@ fun TimerScreenRoot(
 ) {
 
     val state = viewModel.state.collectAsStateWithLifecycle()
+    BoxWithConstraints {
+        val isLandscape = maxWidth > maxHeight
 
-    TimerScreen(
-        state = state.value,
-        onAction = viewModel::onAction,
-        onBackButtonClicked = onBackButtonClicked,
-        modifier = modifier
-    )
+        if (isLandscape) {
+            TimerScreenLandscape(
+                state = state.value,
+                onAction = viewModel::onAction,
+                onBackButtonClicked = onBackButtonClicked,
+                modifier = modifier
+            )
+        } else {
+            TimerScreenPortrait(
+                state = state.value,
+                onAction = viewModel::onAction,
+                onBackButtonClicked = onBackButtonClicked,
+                modifier = modifier
+            )
+        }
+    }
 
 
 }
 
+@Preview(
+    name = "Phone Landscape",
+    widthDp = 915,
+    heightDp = 412
+)
 @Composable
-@Preview
-private fun TimerScreen(
+private fun TimerScreenLandscape(
+    state: TimerState = TimerState(),
+    onAction: (TimerActions) -> Unit,
+    onBackButtonClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    MaterialTheme {
+
+        Box(
+            modifier = modifier
+                .background(backgroundGradientBrush)
+                .statusBarsPadding()
+                .fillMaxSize()
+                .padding(vertical = 24.dp, horizontal = 16.dp)
+        ) {
+            IconButton(
+                onClick = onBackButtonClicked,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+            ) {
+                Icon(
+                    tint = SubtitleColor,
+                    painter = painterResource(Res.drawable.back_ic),
+                    contentDescription = null
+                )
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+
+                Column(
+                    modifier = Modifier
+                        .weight(2f)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement
+                            .spacedBy(
+                                space = 24.dp,
+                                alignment = Alignment.CenterHorizontally
+                            )
+                    ) {
+
+                        Chip(
+                            modifier = Modifier
+                                .width(140.dp)
+                                .height(68.dp),
+                            fontSize = 20.sp,
+                            text = "Round ${state.currentRound}"
+                        )
+
+                        Chip(
+                            modifier = Modifier
+                                .width(140.dp)
+                                .height(68.dp),
+                            fontSize = 20.sp,
+                            text = "of ${state.totalRounds}"
+                        )
+
+                    }
+
+                    Text(
+                        modifier = Modifier
+                            .animateContentSize(),
+                        text = formatTime(state.roundDuration - state.currentTime),
+                        textAlign = TextAlign.Center,
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = CoralHaze,
+                                offset = Offset(0f, 4f),
+                                blurRadius = if(state.isTimerRunning) 30f else 0f
+                            ),
+                        ),
+                        fontSize = 150.sp,
+                        fontWeight = FontWeight.W900,
+                        color = Color.White
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .animateContentSize(),
+                        text = state.timerMessage.uppercase(),
+                        fontSize = 48.sp,
+                        fontWeight = FontWeight.W600,
+                        letterSpacing = 6.sp,
+                        textAlign = TextAlign.Center,
+                        color = if (state.isTimerRunning) CoralHaze else Color.LightGray
+                    )
+
+                }
+
+                VerticalDivider(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(vertical = 16.dp),
+                    color = SecondarySubtitleColor,
+                    thickness = 2.dp
+                )
+
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .animateContentSize()
+                        .padding(vertical = 8.dp, horizontal = 12.dp)
+                ) {
+
+                    RectangleButton(
+                        modifier = Modifier
+                            .weight(if (state.isTimerRunning) 2f else 1f),
+                        isActive = state.isTimerRunning,
+                        onButtonClicked = {
+                            if (state.isTimerRunning) {
+                                onAction(TimerActions.PauseTimer)
+                            } else {
+                                onAction(TimerActions.StartTimer)
+                            }
+                        },
+                        unactiveColor = FruitOrange,
+                        activeColor = CoralHaze,
+                        text = if (state.isTimerRunning) "Pause" else if (state.currentTime != 0L) "Resume" else "Start",
+                    )
+
+                    Spacer(Modifier.size(18.dp))
+
+
+                    RectangleButton(
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(58.dp),
+                        isActive = false,
+                        text = "Reset",
+                        onButtonClicked = {
+                            onAction(TimerActions.ResetTimer)
+                        }
+                    )
+
+                }
+
+            }
+
+
+        }
+
+    }
+
+}
+
+@Composable
+private fun TimerScreenPortrait(
     state: TimerState = TimerState(),
     onAction: (TimerActions) -> Unit,
     onBackButtonClicked: () -> Unit,
