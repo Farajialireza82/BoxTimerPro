@@ -16,6 +16,7 @@ val SubtitleColor = Color(0xFFBABABA)
 val SecondarySubtitleColor = Color(0xFF353130)
 val CoralMist = Color(0xFF2b1d18)
 val CoralHaze = Color(0xFFff6b35)
+val FruitOrange = Color(0xFFFC5600)
 
 
 val backgroundGradientBrush = Brush.linearGradient(

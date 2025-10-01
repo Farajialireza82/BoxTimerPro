@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cromulent.box_timer.core.theme.CoralHaze
@@ -18,32 +19,33 @@ import com.cromulent.box_timer.core.theme.CoralMist
 
 @Composable
 fun Chip(
+    modifier: Modifier = Modifier,
+    fontSize: TextUnit = 14.sp,
     text: String
 ) {
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = CoralMist,
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(24.dp)
             )
             .border(
                 width = 1.dp,
                 color = CoralHaze,
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(24.dp)
             )
             .padding(
-                vertical = 8.dp,
-                horizontal = 12.dp
-            )
-            .widthIn(min = 60.dp),
+                vertical = 12.dp,
+                horizontal = 16.dp
+            ),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = text,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.W600,
+            fontSize = fontSize,
+            fontWeight = FontWeight.W800,
             color = CoralHaze
         )
     }
