@@ -3,6 +3,7 @@ package com.cromulent.box_timer.presentation.settings_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cromulent.box_timer.core.util.AudioFile
+import com.cromulent.box_timer.core.util.AudioPlayer
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
+    val audioPlayer: AudioPlayer,
     val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
@@ -44,8 +46,13 @@ class SettingsViewModel(
             is SettingsActions.ToggleKeepScreenOn -> toggleKeepScreenOn(action.isEnabled)
             is SettingsActions.ToggleMuteAllSounds -> toggleMuteAllSounds(action.isEnabled)
             is SettingsActions.ToggleVibrationHaptic -> toggleVibrationHaptic(action.isEnabled)
+            is SettingsActions.PlayAudio -> playAudio(action.uri)
         }
 
+    }
+
+    private fun playAudio(uri: String){
+        audioPlayer.playSound(uri)
     }
 
     private fun onFeedbackClicked() {

@@ -11,6 +11,8 @@ sealed interface SettingsActions {
     data class ToggleVibrationHaptic(val isEnabled: Boolean): SettingsActions
     data class ToggleKeepScreenOn(val isEnabled: Boolean): SettingsActions
     data class ToggleAllowRotation(val isEnabled: Boolean): SettingsActions
+    data class PlayAudio(val uri: String): SettingsActions
+
     object OnAppVersionClick: SettingsActions
     object OnFeedbackClick: SettingsActions
 

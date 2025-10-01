@@ -2,6 +2,7 @@ package com.cromulent.box_timer.presentation.settings_screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -21,13 +24,17 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -38,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,15 +53,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.ic_play
 import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.theme.SubtitleColor
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
+import com.cromulent.box_timer.core.util.AudioFile
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
+import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
+import com.cromulent.box_timer.presentation.settings_screen.components.SettingCard
+import com.cromulent.box_timer.presentation.settings_screen.components.SettingSwitchCard
+import com.cromulent.box_timer.presentation.settings_screen.components.SettingsStringPickerCard
+import com.cromulent.box_timer.presentation.settings_screen.components.TitleText
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.ArrowRight
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -74,10 +91,10 @@ fun SettingsScreenRoot(
 
 }
 
-
+@Preview
 @Composable
 private fun SettingsScreen(
-    state: SettingsState,
+    state: SettingsState = SettingsState(),
     onAction: (SettingsActions) -> Unit,
     onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
@@ -85,6 +102,11 @@ private fun SettingsScreen(
 
     val appSettings = state.appSettings
     val scrollState = rememberScrollState()
+
+    var countDownBsVisibility by remember { mutableStateOf(false) }
+    var startRoundBsVisibility by remember { mutableStateOf(false) }
+    var endRoundBsVisibility by remember { mutableStateOf(false) }
+
 
     MaterialTheme {
 
@@ -134,10 +156,8 @@ private fun SettingsScreen(
                         title = "Countdown Sound",
                         subtitle = "Sound before round starts",
                         selectedTitle = appSettings.countDownAudioFile.title,
-                        items = state.countDownAudioFiles.map { it.title },
-                    ) {
-                        onAction(SettingsActions.SetCountdownSound(state.countDownAudioFiles[it]))
-                    }
+                        onClick = { countDownBsVisibility = true }
+                    )
 
                     Spacer(Modifier.size(10.dp))
 
@@ -145,10 +165,8 @@ private fun SettingsScreen(
                         title = "Start Round Sound",
                         subtitle = "Sound when round begins",
                         selectedTitle = appSettings.startRoundAudioFile.title,
-                        items = state.startRoundAudioFiles.map { it.title },
-                    ) {
-                        onAction(SettingsActions.SetStartRoundSound(state.startRoundAudioFiles[it]))
-                    }
+                        onClick = { startRoundBsVisibility = true }
+                    )
 
                     Spacer(Modifier.size(10.dp))
 
@@ -156,10 +174,8 @@ private fun SettingsScreen(
                         title = "End Round Sound",
                         subtitle = "Sound when round ends",
                         selectedTitle = appSettings.endRoundAudioFile.title,
-                        items = state.endRoundAudioFiles.map { it.title },
-                    ) {
-                        onAction(SettingsActions.SetEndRoundSound(state.endRoundAudioFiles[it]))
-                    }
+                        onClick = { endRoundBsVisibility = true }
+                    )
 
                     Spacer(Modifier.size(10.dp))
 
@@ -187,21 +203,6 @@ private fun SettingsScreen(
 
                         }
                     )
-
-//                    Spacer(Modifier.size(10.dp))
-//
-//                    SettingSwitchCard(
-//                        isChecked = appSettings.allowRotation,
-//                        title = "Allow Rotation",
-//                        subtitle = "Enable landscape mode",
-//                        onCheckedChange = {
-//                            onAction(SettingsActions.ToggleAllowRotation(it))
-//                        }
-//                    )
-
-
-
-
 
                     Spacer(Modifier.size(30.dp))
 
@@ -249,208 +250,47 @@ private fun SettingsScreen(
 
                     Spacer(Modifier.size(32.dp))
 
-
                 }
 
 
             }
         }
-    }
 
 
-}
 
-@Composable
-private fun SettingCard(
-    modifier: Modifier = Modifier,
-    title: String,
-    subtitle: String,
-    onClick: (() -> Unit)?,
-    content: @Composable () -> Unit,
-) {
-    Card(
-        modifier = modifier
-            .clickable(onClick != null, onClick = { onClick?.invoke() })
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = White.copy(alpha = 0.05f)
-        ),
-        border = BorderStroke(1.dp, White.copy(alpha = 0.1f))
-    ) {
-
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-
-            Column(
-                modifier = Modifier
-                    .weight(1f),
-                horizontalAlignment = Alignment.Start
-            ) {
-                Text(
-                    modifier = Modifier
-                        .padding(bottom = 4.dp),
-                    text = title,
-                    textAlign = TextAlign.Start,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.W500,
-                    color = White,
-                )
-                Text(
-                    text = subtitle,
-                    textAlign = TextAlign.Start,
-                    color = White.copy(alpha = 0.6f)
-                )
-            }
-
-            Spacer(Modifier.size(2.dp))
-
-            content()
-
-
-        }
-    }
-
-
-}
-
-
-@Composable
-private fun SettingsStringPickerCard(
-    modifier: Modifier = Modifier,
-    title: String,
-    subtitle: String,
-    selectedTitle: String,
-    items: List<String>,
-    onItemSelected: (index: Int) -> Unit
-) {
-
-    var expanded by remember { mutableStateOf(false) }
-
-
-    SettingCard(
-        modifier = modifier,
-        title = title,
-        subtitle = subtitle,
-        onClick = null
-    ) {
-
-        Box(
-            contentAlignment = Alignment.Center
-        ) {
-            Surface(
-                modifier = Modifier
-                    .padding(2.dp)
-                    .clickable { expanded = true }
-                    .width(100.dp),
-                color = Color(0xFFFF6B35).copy(alpha = 0.1f),
-                shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color(0xFFFF6B35)),
-
-                ) {
-                Text(
-                    modifier = Modifier
-                        .padding(horizontal = 12.dp, vertical = 8.dp),
-                    textAlign = TextAlign.Center,
-                    text = selectedTitle,
-                    fontSize = 14.sp,
-                    maxLines = 1,
-                    fontWeight = FontWeight.Medium,
-                    overflow = TextOverflow.Ellipsis,
-                    color = Color(0xFFFF6B35)
-                )
-            }
-
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                containerColor = CoralMist,
-                modifier = Modifier
-                    .background(color = CoralMist)
-                    .widthIn(min = 150.dp)
-                    .clip(RoundedCornerShape(24.dp)),
-            ) {
-                items.forEachIndexed { index, item ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                text = item,
-                                color = if (item == selectedTitle)
-                                    Color(0xFFFF6B35)
-                                else
-                                    White,
-                                fontWeight = if (item == selectedTitle)
-                                    FontWeight.Bold
-                                else
-                                    FontWeight.Normal
-                            )
-                        },
-                        onClick = {
-                            onItemSelected(index)
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-    }
-
-
-}
-
-@Composable
-private fun SettingSwitchCard(
-    modifier: Modifier = Modifier,
-    isChecked: Boolean,
-    title: String,
-    subtitle: String,
-    onCheckedChange: (Boolean) -> Unit
-) {
-
-    SettingCard(
-        modifier = modifier,
-        title = title,
-        subtitle = subtitle,
-        onClick = null
-    ) {
-
-        Switch(
-            modifier = Modifier,
-            checked = isChecked,
-            onCheckedChange = onCheckedChange,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = CoralMist,
-                checkedTrackColor = CoralHaze,
-                uncheckedTrackColor = White
+        if (startRoundBsVisibility) {
+            AudioPickerBottomSheet(
+                onDismissRequest = { startRoundBsVisibility = false },
+                onItemSelected = { onAction(SettingsActions.SetStartRoundSound(it)) },
+                title = "Start Round Sound",
+                selectedAudioFile = appSettings.startRoundAudioFile,
+                playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
+                items = state.startRoundAudioFiles
             )
-        )
+        }
+
+
+        if (endRoundBsVisibility) {
+            AudioPickerBottomSheet(
+                onDismissRequest = { endRoundBsVisibility = false },
+                onItemSelected = { onAction(SettingsActions.SetEndRoundSound(it)) },
+                title = "End Round Sound",
+                selectedAudioFile = appSettings.endRoundAudioFile,
+                playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
+                items = state.endRoundAudioFiles
+            )
+        }
+
+
+        if (countDownBsVisibility) {
+            AudioPickerBottomSheet(
+                onDismissRequest = { countDownBsVisibility = false },
+                onItemSelected = { onAction(SettingsActions.SetCountdownSound(it)) },
+                title = "Countdown Sound",
+                selectedAudioFile = appSettings.countDownAudioFile,
+                playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
+                items = state.countDownAudioFiles
+            )
+        }
     }
-
-
 }
-
-@Composable
-fun TitleText(
-    text: String,
-    modifier: Modifier = Modifier
-) {
-
-    Text(
-        text.uppercase(),
-        modifier = modifier,
-        style = SettingTitleStyle)
-
-}
-
-private val SettingTitleStyle = TextStyle(
-    fontSize = 20.sp,
-    fontWeight = FontWeight.W800,
-    color = CoralHaze,
-    letterSpacing = 2.sp,
-)
