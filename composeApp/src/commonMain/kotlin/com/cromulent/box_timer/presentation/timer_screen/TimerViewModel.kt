@@ -129,8 +129,8 @@ class TimerViewModel(
         defaultMessage: String,
         showCountdownAtEnd: Boolean = false
     ) {
-        _state.update { it.copy(phase = phase, currentTime = 0L, timerMessage = defaultMessage) }
-        if (phase == TimerPhase.FIGHT) startRoundAlert()
+        _state.update { it.copy(phase = phase, timerMessage = defaultMessage) }
+        if (phase == TimerPhase.FIGHT && state.value.currentTime == 0L) startRoundAlert()
         while (_state.value.currentTime < duration && _state.value.isTimerRunning) {
             delay(10L)
             _state.update { state ->

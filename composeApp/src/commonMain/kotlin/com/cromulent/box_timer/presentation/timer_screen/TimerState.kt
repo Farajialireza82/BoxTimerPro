@@ -12,4 +12,4 @@ data class TimerState(
     val phase: TimerPhase = TimerPhase.IDLE
 )
 
-enum class TimerPhase { IDLE, FIGHT, REST, COUNTDOWN }
+enum class TimerPhase { IDLE, FIGHT, PAUSE, REST, COUNTDOWN }

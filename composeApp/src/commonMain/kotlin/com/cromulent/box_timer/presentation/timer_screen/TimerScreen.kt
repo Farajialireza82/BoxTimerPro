@@ -132,8 +132,9 @@ private fun TimerScreen(
                     message = state.timerMessage,
                 )
 
-                Column (
+                Column(
                     modifier = Modifier
+                        .padding(top = 12.dp)
                         .fillMaxWidth()
                         .animateContentSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -152,7 +153,7 @@ private fun TimerScreen(
                         },
                         unactiveColor = FruitOrange,
                         activeColor = CoralHaze,
-                        text = if (state.isTimerRunning) "Stop" else "Start",
+                        text = if (state.isTimerRunning) "Pause" else if (state.currentTime != 0L) "Resume" else "Start",
                     )
 
                     Spacer(Modifier.size(18.dp))
