@@ -68,7 +68,7 @@ fun RoundNumberPicker(
                     text = rounds.toString(),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = CoralHaze
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
             
@@ -145,17 +145,17 @@ private fun RoundPresetButton(
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(
             width = if (isSelected) 2.dp else 1.dp,
-            color = if (isSelected) CoralHaze else SubtitleColor
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else SubtitleColor
         ),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) CoralMist else Color.Transparent
+            containerColor = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent
         )
     ) {
         Text(
             text = rounds.toString(),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-            color = if (isSelected) CoralHaze else White,
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else White,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
     }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -75,7 +76,7 @@ fun TimerCircleIndicator(
                 fontWeight = FontWeight.W600,
                 letterSpacing = 2.sp,
                 textAlign = TextAlign.Center,
-                color = if (isRunning) CoralHaze else Color.LightGray
+                color = if (isRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
             )
         }
 
@@ -100,8 +101,8 @@ private fun Prev() {
 @Composable
 private fun MyProgressIndicator(
     progress: Float = 0.1f,
-    trackColor: Color = CoralMist,
-    color: Color = CoralHaze,
+    trackColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    color: Color = MaterialTheme.colorScheme.secondary,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {

@@ -235,14 +235,14 @@ private fun SettingsScreen(
                         ) {
                             Text(
                                 text = "Contact",
-                                color = CoralHaze,
+                                color = MaterialTheme.colorScheme.secondary,
                                 fontWeight = FontWeight.W600,
                                 modifier = Modifier.padding(end = 4.dp)
                             )
                             Icon(
                                 modifier = Modifier.size(16.dp),
                                 imageVector = FontAwesomeIcons.Solid.ArrowRight,
-                                tint = CoralHaze,
+                                tint = MaterialTheme.colorScheme.secondary,
                                 contentDescription = null
                             )
                         }

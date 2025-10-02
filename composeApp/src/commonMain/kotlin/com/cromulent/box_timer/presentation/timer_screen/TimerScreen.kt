@@ -165,7 +165,7 @@ private fun TimerScreenLandscape(
                         textAlign = TextAlign.Center,
                         style = TextStyle(
                             shadow = Shadow(
-                                color = CoralHaze,
+                                color = MaterialTheme.colorScheme.secondary,
                                 offset = Offset(0f, 4f),
                                 blurRadius = if(state.isTimerRunning) 30f else 0f
                             ),
@@ -183,7 +183,7 @@ private fun TimerScreenLandscape(
                         fontWeight = FontWeight.W600,
                         letterSpacing = 6.sp,
                         textAlign = TextAlign.Center,
-                        color = if (state.isTimerRunning) CoralHaze else Color.LightGray
+                        color = if (state.isTimerRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
                     )
 
                 }
@@ -214,8 +214,8 @@ private fun TimerScreenLandscape(
                                 onAction(TimerActions.StartTimer)
                             }
                         },
-                        unactiveColor = FruitOrange,
-                        activeColor = CoralHaze,
+                        unactiveColor = MaterialTheme.colorScheme.tertiary,
+                        activeColor = MaterialTheme.colorScheme.secondary,
                         text = if (state.isTimerRunning) "Pause" else if (state.currentTime != 0L) "Resume" else "Start",
                     )
 
@@ -340,8 +340,8 @@ private fun TimerScreenPortrait(
                                 onAction(TimerActions.StartTimer)
                             }
                         },
-                        unactiveColor = FruitOrange,
-                        activeColor = CoralHaze,
+                        unactiveColor = MaterialTheme.colorScheme.tertiary,
+                        activeColor = MaterialTheme.colorScheme.secondary,
                         text = if (state.isTimerRunning) "Pause" else if (state.currentTime != 0L) "Resume" else "Start",
                     )
 

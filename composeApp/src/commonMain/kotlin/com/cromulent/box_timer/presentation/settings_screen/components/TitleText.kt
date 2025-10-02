@@ -1,4 +1,6 @@
 package com.cromulent.box_timer.presentation.settings_screen.components
+
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,13 +18,11 @@ fun TitleText(
     Text(
         text.uppercase(),
         modifier = modifier,
-        style = SettingTitleStyle)
-
+        style = TextStyle(
+            fontSize = 20.sp,
+            fontWeight = FontWeight.W800,
+            color = MaterialTheme.colorScheme.secondary,
+            letterSpacing = 2.sp,
+        )
+    )
 }
-
-private val SettingTitleStyle = TextStyle(
-    fontSize = 20.sp,
-    fontWeight = FontWeight.W800,
-    color = CoralHaze,
-    letterSpacing = 2.sp,
-)

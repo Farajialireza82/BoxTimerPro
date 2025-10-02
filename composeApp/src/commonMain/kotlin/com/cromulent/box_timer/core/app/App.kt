@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.cromulent.box_timer.core.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
@@ -24,7 +25,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Preview
 fun App() {
 
-    MaterialTheme {
+    BoxTimerProTheme {
 
         Box(
             modifier = Modifier

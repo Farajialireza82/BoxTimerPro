@@ -52,10 +52,10 @@ fun ModeCard(
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(
             width = if (isSelected) 2.dp else 1.dp,
-            color = if (isSelected) CoralHaze else SubtitleColor
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else SubtitleColor
         ),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) CoralMist else SecondarySubtitleColor
+            containerColor = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else SecondarySubtitleColor
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = if (isSelected) 8.dp else 2.dp

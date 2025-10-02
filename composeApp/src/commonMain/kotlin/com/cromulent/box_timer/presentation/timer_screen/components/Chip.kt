@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,12 +28,12 @@ fun Chip(
     Row(
         modifier = modifier
             .background(
-                color = CoralMist,
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(24.dp)
             )
             .border(
                 width = 1.dp,
-                color = CoralHaze,
+                color = MaterialTheme.colorScheme.secondary,
                 shape = RoundedCornerShape(24.dp)
             )
             .padding(
@@ -46,7 +47,7 @@ fun Chip(
             text = text,
             fontSize = fontSize,
             fontWeight = FontWeight.W800,
-            color = CoralHaze
+            color = MaterialTheme.colorScheme.secondary
         )
     }
 

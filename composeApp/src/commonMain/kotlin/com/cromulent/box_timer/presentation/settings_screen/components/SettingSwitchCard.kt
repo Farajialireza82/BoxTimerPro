@@ -1,5 +1,6 @@
 package com.cromulent.box_timer.presentation.settings_screen.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
@@ -29,9 +30,11 @@ fun SettingSwitchCard(
             checked = isChecked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = CoralMist,
-                checkedTrackColor = CoralHaze,
-                uncheckedTrackColor = White
+                checkedThumbColor = MaterialTheme.colorScheme.surfaceVariant,
+                checkedTrackColor = MaterialTheme.colorScheme.secondary,
+                uncheckedTrackColor = White,
+                uncheckedBorderColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                uncheckedThumbColor = MaterialTheme.colorScheme.onSurfaceVariant
             )
         )
     }

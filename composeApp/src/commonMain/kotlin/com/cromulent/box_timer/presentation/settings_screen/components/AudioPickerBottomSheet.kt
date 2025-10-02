@@ -1,13 +1,16 @@
 package com.cromulent.box_timer.presentation.settings_screen.components
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -15,6 +18,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -51,8 +55,8 @@ fun AudioPickerBottomSheet(
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = sheetState,
-        containerColor = CoralMist,
-        contentColor = CoralMist
+        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        contentColor = MaterialTheme.colorScheme.surfaceVariant
     ) {
 
         Column(
@@ -67,6 +71,8 @@ fun AudioPickerBottomSheet(
                     .padding(12.dp),
                 text = title
             )
+
+            Spacer(Modifier.size(8.dp))
 
             LazyColumn(
                 modifier = modifier
@@ -104,7 +110,10 @@ private fun AudioFileItem(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = { onItemSelected(file) }),
-        border = BorderStroke(2.dp, if (isSelected) CoralHaze else Transparent),
+        border = BorderStroke(
+            2.dp,
+            if (isSelected) MaterialTheme.colorScheme.secondary else Transparent
+        ),
         colors = CardDefaults.cardColors(
             containerColor = Transparent,
         )
@@ -113,7 +122,7 @@ private fun AudioFileItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CoralMist)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
                 .padding(vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {

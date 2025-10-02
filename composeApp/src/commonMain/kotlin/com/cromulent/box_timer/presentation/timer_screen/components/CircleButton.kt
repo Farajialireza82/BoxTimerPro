@@ -13,6 +13,7 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -44,7 +45,12 @@ fun CircleButton(
             .size(70.dp)
             .background(
                 brush =
-                    if (isActive) Brush.linearGradient(listOf(CoralHaze, CoralMist))
+                    if (isActive) Brush.linearGradient(
+                        listOf(
+                            MaterialTheme.colorScheme.secondary,
+                            MaterialTheme.colorScheme.surfaceVariant
+                        )
+                    )
                     else Brush.linearGradient(
                         listOf(
                             SecondarySubtitleColor,
@@ -72,7 +78,7 @@ fun CircleButton(
 fun RectangleButton(
     modifier: Modifier = Modifier,
     isActive: Boolean,
-    activeColor: Color = CoralHaze,
+    activeColor: Color = MaterialTheme.colorScheme.secondary,
     unactiveColor: Color = SecondarySubtitleColor,
     text: String,
     onButtonClicked: () -> Unit,
@@ -98,6 +104,7 @@ fun RectangleButton(
 
         Text(
             text = text,
+            color = Color.White,
             fontWeight = FontWeight.W700,
             fontSize = 24.sp
         )

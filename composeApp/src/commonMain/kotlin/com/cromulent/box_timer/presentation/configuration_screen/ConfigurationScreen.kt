@@ -123,8 +123,8 @@ private fun ConfigurationScreen(
                                 TimerSettings(roundDuration, restDuration, totalRounds)
                             )
                         },
-                        containerColor = CoralMist,
-                        contentColor = CoralHaze
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.secondary
                     ) {
 
                         AnimatedVisibility(isFabExpanded) {
@@ -174,7 +174,7 @@ private fun ConfigurationScreen(
                     Text(
                         text = "Workout Type",
                         fontSize = 22.sp,
-                        color = CoralHaze,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.W600,
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -203,7 +203,7 @@ private fun ConfigurationScreen(
                     Text(
                         text = "Round Settings",
                         fontSize = 22.sp,
-                        color = CoralHaze,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.W600,
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -300,6 +300,7 @@ fun StartButton(
     ) {
         Text(
             text = "Start Workout",
+            color = Color.White,
             fontSize = 18.sp,
             fontWeight = FontWeight.W800
         )
