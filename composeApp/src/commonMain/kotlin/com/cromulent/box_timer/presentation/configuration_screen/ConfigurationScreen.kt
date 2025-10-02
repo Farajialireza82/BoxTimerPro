@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.settings_ic
+import com.cromulent.box_timer.core.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.theme.backgroundGradientBrush
@@ -57,6 +58,7 @@ import com.cromulent.box_timer.presentation.configuration_screen.components.Work
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Play
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ConfigurationScreenRoot(
@@ -80,9 +82,14 @@ fun ConfigurationScreenRoot(
 
 }
 
+@Preview
 @Composable
 private fun ConfigurationScreen(
-    timerSettings: TimerSettings,
+    timerSettings: TimerSettings = TimerSettings(
+        roundDuration = 1000L,
+        restDuration = 2L,
+        totalRounds = 2
+    ),
     modifier: Modifier = Modifier,
     onStartWorkout: (TimerSettings) -> Unit,
     navigateToSettings: () -> Unit,
@@ -108,7 +115,7 @@ private fun ConfigurationScreen(
         lastScrollValue = scrollState.value
     }
 
-    MaterialTheme {
+    BoxTimerProTheme {
 
         Scaffold(
             modifier = Modifier,
