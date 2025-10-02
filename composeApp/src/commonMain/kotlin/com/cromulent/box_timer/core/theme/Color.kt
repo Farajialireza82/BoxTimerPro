@@ -1,5 +1,6 @@
 package com.cromulent.box_timer.core.theme
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -18,29 +19,6 @@ val SecondarySubtitleColor = Color(0xFF353130)
 val CoralMist = Color(0xFF2b1d18)
 val CoralHaze = Color(0xFFff6b35)
 val FruitOrange = Color(0xFFFC5600)
-
-
-val backgroundGradientBrush = Brush.linearGradient(
-    colors = listOf(
-        SootyGray,
-        StormCloudGray,
-        CoffeeBeanBrown
-    ),
-    start = Offset(0f, 0f), // Top-left corner
-    end = Offset(1000f, 1000f), // Bottom-right corner, approximates 145deg
-    tileMode = TileMode.Clamp
-)
-
-val titleGradientBrush = Brush.linearGradient(
-    colors = listOf(
-        CoralHaze,
-        AmberGlow,
-        GoldenSun
-    ),
-    start = Offset(0f, 0f), // Top-left corner
-    end = Offset(1000f, 1000f), // Bottom-right corner, approximates 135deg
-    tileMode = TileMode.Clamp
-)
 
 // ICE THEME
 val FireColorScheme = darkColorScheme(
@@ -91,20 +69,6 @@ val IceSecondary = Color(0xFF1e3a47)
 val AuroraMist = Color(0xFF1a2d3d)
 val CyanGlow = Color(0xFF44A8F0)
 val ElectricBlue = Color(0xFF00B8D4)
-
-val iceBackgroundGradient = Brush.linearGradient(
-    colors = listOf(DeepFreeze, ArcticNight, IcyDusk),
-    start = Offset(0f, 0f),
-    end = Offset(1000f, 1000f),
-    tileMode = TileMode.Clamp
-)
-
-val iceTitleGradient = Brush.linearGradient(
-    colors = listOf(CyanGlow, CrystalAqua, FrostWhite),
-    start = Offset(0f, 0f),
-    end = Offset(1000f, 1000f),
-    tileMode = TileMode.Clamp
-)
 
 
 // ICE THEME
@@ -290,4 +254,12 @@ val SteelColorScheme = darkColorScheme(
     scrim = Color(0xFF000000),
 
     surfaceTint = Color(0xFFE0E0E0),
+)
+
+val colorSchemes = listOf(
+    FireColorScheme,
+    IceColorScheme,
+    VenomColorScheme,
+    RoyalColorScheme,
+    ShadowColorScheme
 )

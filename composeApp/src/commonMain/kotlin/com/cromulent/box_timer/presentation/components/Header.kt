@@ -11,6 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -19,10 +22,7 @@ import androidx.compose.ui.unit.sp
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.back_ic
 import boxtimerpro.composeapp.generated.resources.settings_ic
-import com.cromulent.box_timer.core.theme.SubtitleColor
-import com.cromulent.box_timer.core.theme.titleGradientBrush
 import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.Resource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -37,6 +37,18 @@ fun Header(
     onActionButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+
+
+    val titleGradientBrush = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.onPrimaryContainer,
+        ),
+        start = Offset(0f, 0f), // Top-left corner
+        end = Offset(1000f, 1000f), // Bottom-right corner, approximates 135deg
+        tileMode = TileMode.Clamp
+    )
 
     Box(
         modifier = modifier
