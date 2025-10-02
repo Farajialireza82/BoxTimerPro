@@ -6,11 +6,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.TileMode
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.cromulent.box_timer.core.theme.backgroundGradientBrush
+import com.cromulent.box_timer.core.theme.BoxTimerProTheme
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
 import com.cromulent.box_timer.presentation.settings_screen.SettingsScreenRoot
@@ -24,11 +27,10 @@ import org.koin.compose.viewmodel.koinViewModel
 @Preview
 fun App() {
 
-    MaterialTheme {
+    BoxTimerProTheme {
 
         Box(
             modifier = Modifier
-                .background(backgroundGradientBrush)
                 .fillMaxSize()
         ) {
 

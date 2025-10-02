@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 
 @Composable
@@ -52,9 +54,9 @@ fun SettingsStringPickerCard(
                 modifier = Modifier
                     .padding(2.dp)
                     .width(100.dp),
-                color = Color(0xFFFF6B35).copy(alpha = 0.1f),
+                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
                 shape = RoundedCornerShape(8.dp),
-                border = BorderStroke(1.dp, Color(0xFFFF6B35)),
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
 
                 ) {
                 Text(
@@ -66,7 +68,7 @@ fun SettingsStringPickerCard(
                     maxLines = 1,
                     fontWeight = FontWeight.Medium,
                     overflow = TextOverflow.Ellipsis,
-                    color = Color(0xFFFF6B35)
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
 

@@ -1,40 +1,18 @@
 package com.cromulent.box_timer.presentation.settings_screen
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -43,26 +21,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import boxtimerpro.composeapp.generated.resources.Res
-import boxtimerpro.composeapp.generated.resources.ic_play
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.theme.SubtitleColor
-import com.cromulent.box_timer.core.theme.backgroundGradientBrush
-import com.cromulent.box_timer.core.util.AudioFile
+import com.cromulent.box_timer.core.theme.colorSchemes
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
+import com.cromulent.box_timer.presentation.settings_screen.components.ColorSchemePicker
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingSwitchCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingsStringPickerCard
@@ -70,8 +37,6 @@ import com.cromulent.box_timer.presentation.settings_screen.components.TitleText
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.ArrowRight
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SettingsScreenRoot(
@@ -91,10 +56,9 @@ fun SettingsScreenRoot(
 
 }
 
-@Preview
 @Composable
 private fun SettingsScreen(
-    state: SettingsState = SettingsState(),
+    state: SettingsState,
     onAction: (SettingsActions) -> Unit,
     onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
@@ -112,11 +76,11 @@ private fun SettingsScreen(
 
         Scaffold(
             modifier = Modifier,
+            containerColor = Transparent
         ) {
 
             Column(
                 modifier = modifier
-                    .background(backgroundGradientBrush)
                     .padding(it)
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -204,6 +168,16 @@ private fun SettingsScreen(
                         }
                     )
 
+                    Spacer(Modifier.size(20.dp))
+
+                    ColorSchemePicker(
+                        items = colorSchemes,
+                        selectedColorSchemeId = state.appSettings.colorSchemeId,
+                        onItemSelected = {colorSchemeId ->
+                            onAction(SettingsActions.SetColorScheme(colorSchemeId))
+                        }
+                    )
+
                     Spacer(Modifier.size(30.dp))
 
                     TitleText("About & Support")
@@ -235,14 +209,14 @@ private fun SettingsScreen(
                         ) {
                             Text(
                                 text = "Contact",
-                                color = CoralHaze,
+                                color = MaterialTheme.colorScheme.secondary,
                                 fontWeight = FontWeight.W600,
                                 modifier = Modifier.padding(end = 4.dp)
                             )
                             Icon(
                                 modifier = Modifier.size(16.dp),
                                 imageVector = FontAwesomeIcons.Solid.ArrowRight,
-                                tint = CoralHaze,
+                                tint = MaterialTheme.colorScheme.secondary,
                                 contentDescription = null
                             )
                         }

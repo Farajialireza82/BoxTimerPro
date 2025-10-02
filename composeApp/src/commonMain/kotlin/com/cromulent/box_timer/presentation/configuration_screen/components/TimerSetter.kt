@@ -45,11 +45,10 @@ fun TimerSetter(
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, SubtitleColor),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondaryContainer),
         colors = CardDefaults.cardColors(
-            containerColor = SecondarySubtitleColor
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            containerColor = White.copy(alpha = 0.05f)
+        )
     ) {
         Column(
             modifier = Modifier
@@ -73,7 +72,7 @@ fun TimerSetter(
                     text = formatTime(timeInMillis),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = CoralHaze
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
 
@@ -98,7 +97,7 @@ fun TimerSetter(
                 Text(
                     text = "30 seconds",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = SubtitleColor,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Center
                 )
 
@@ -128,9 +127,9 @@ fun AdvancedTimerSetter(
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, SubtitleColor),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondaryContainer),
         colors = CardDefaults.cardColors(
-            containerColor = SecondarySubtitleColor
+            containerColor = White.copy(alpha = 0.05f)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -156,7 +155,7 @@ fun AdvancedTimerSetter(
                     text = formatTime(timeInMillis),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = CoralHaze
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
 
@@ -206,7 +205,7 @@ fun AdvancedTimerSetter(
                 Text(
                     text = "${incrementSeconds}s increments",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = SubtitleColor,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Center
                 )
 
@@ -240,17 +239,17 @@ private fun TimerPresetButton(
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(
             width = if (isSelected) 2.dp else 1.dp,
-            color = if (isSelected) CoralHaze else SubtitleColor
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSecondaryContainer
         ),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) CoralMist else Color.Transparent
+            containerColor = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent
         )
     ) {
         Text(
             text = formatTime(time),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-            color = if (isSelected) CoralHaze else White,
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else White,
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
         )
     }
@@ -270,7 +269,7 @@ fun TimerControlButton(
         shape = CircleShape,
         border = BorderStroke(
             width = 2.dp,
-            color = if (enabled) CoralHaze else SubtitleColor
+            color = if (enabled) MaterialTheme.colorScheme.secondary else SubtitleColor
         ),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent
@@ -284,7 +283,7 @@ fun TimerControlButton(
                 text = icon,
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = if (enabled) CoralHaze else SubtitleColor
+                color = if (enabled) MaterialTheme.colorScheme.secondary else SubtitleColor
             )
         }
     }

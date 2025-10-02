@@ -23,10 +23,6 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.CoralMist
-import com.cromulent.box_timer.core.theme.SecondarySubtitleColor
-import com.cromulent.box_timer.core.theme.SubtitleColor
 
 @Composable
 fun RoundNumberPicker(
@@ -40,11 +36,10 @@ fun RoundNumberPicker(
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, SubtitleColor),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondaryContainer),
         colors = CardDefaults.cardColors(
-            containerColor = SecondarySubtitleColor
+            containerColor = White.copy(alpha = 0.05f)
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
             modifier = Modifier
@@ -68,7 +63,7 @@ fun RoundNumberPicker(
                     text = rounds.toString(),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = CoralHaze
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
             
@@ -112,7 +107,7 @@ fun RoundNumberPicker(
                 Text(
                     text = "rounds",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = SubtitleColor,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Center
                 )
                 
@@ -145,17 +140,17 @@ private fun RoundPresetButton(
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(
             width = if (isSelected) 2.dp else 1.dp,
-            color = if (isSelected) CoralHaze else SubtitleColor
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSecondaryContainer
         ),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) CoralMist else Color.Transparent
+            containerColor = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent
         )
     ) {
         Text(
             text = rounds.toString(),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-            color = if (isSelected) CoralHaze else White,
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else White,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
     }

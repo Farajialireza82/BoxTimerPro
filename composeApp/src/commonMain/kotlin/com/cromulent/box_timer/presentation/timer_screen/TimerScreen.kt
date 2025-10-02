@@ -37,11 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.back_ic
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.FruitOrange
+import com.cromulent.box_timer.core.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.theme.SecondarySubtitleColor
-import com.cromulent.box_timer.core.theme.SubtitleColor
-import com.cromulent.box_timer.core.theme.backgroundGradientBrush
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
@@ -80,12 +77,6 @@ fun TimerScreenRoot(
 
 
 }
-
-//@Preview(
-//    name = "Phone Landscape",
-//    widthDp = 915,
-//    heightDp = 412
-//)
 @Composable
 private fun TimerScreenLandscape(
     state: TimerState = TimerState(),
@@ -94,11 +85,11 @@ private fun TimerScreenLandscape(
     modifier: Modifier = Modifier
 ) {
 
-    MaterialTheme {
+    BoxTimerProTheme {
 
         Box(
             modifier = modifier
-                .background(backgroundGradientBrush)
+                .background(Color.Transparent)
                 .statusBarsPadding()
                 .fillMaxSize()
                 .padding(vertical = 24.dp, horizontal = 16.dp)
@@ -109,7 +100,7 @@ private fun TimerScreenLandscape(
                     .align(Alignment.TopStart)
             ) {
                 Icon(
-                    tint = SubtitleColor,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
                     painter = painterResource(Res.drawable.back_ic),
                     contentDescription = null
                 )
@@ -165,7 +156,7 @@ private fun TimerScreenLandscape(
                         textAlign = TextAlign.Center,
                         style = TextStyle(
                             shadow = Shadow(
-                                color = CoralHaze,
+                                color = MaterialTheme.colorScheme.secondary,
                                 offset = Offset(0f, 4f),
                                 blurRadius = if(state.isTimerRunning) 30f else 0f
                             ),
@@ -183,7 +174,7 @@ private fun TimerScreenLandscape(
                         fontWeight = FontWeight.W600,
                         letterSpacing = 6.sp,
                         textAlign = TextAlign.Center,
-                        color = if (state.isTimerRunning) CoralHaze else Color.LightGray
+                        color = if (state.isTimerRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
                     )
 
                 }
@@ -214,8 +205,8 @@ private fun TimerScreenLandscape(
                                 onAction(TimerActions.StartTimer)
                             }
                         },
-                        unactiveColor = FruitOrange,
-                        activeColor = CoralHaze,
+                        unactiveColor = MaterialTheme.colorScheme.tertiary,
+                        activeColor = MaterialTheme.colorScheme.secondary,
                         text = if (state.isTimerRunning) "Pause" else if (state.currentTime != 0L) "Resume" else "Start",
                     )
 
@@ -258,6 +249,7 @@ private fun TimerScreenPortrait(
 
         Scaffold(
             modifier = Modifier,
+            containerColor = Color.Transparent,
             topBar = {
                 Header(
                     modifier = Modifier
@@ -273,7 +265,6 @@ private fun TimerScreenPortrait(
 
             Column(
                 modifier = modifier
-                    .background(backgroundGradientBrush)
                     .padding(it)
                     .padding(horizontal = 24.dp)
                     .fillMaxSize(),
@@ -340,8 +331,8 @@ private fun TimerScreenPortrait(
                                 onAction(TimerActions.StartTimer)
                             }
                         },
-                        unactiveColor = FruitOrange,
-                        activeColor = CoralHaze,
+                        unactiveColor = MaterialTheme.colorScheme.tertiary,
+                        activeColor = MaterialTheme.colorScheme.secondary,
                         text = if (state.isTimerRunning) "Pause" else if (state.currentTime != 0L) "Resume" else "Start",
                     )
 

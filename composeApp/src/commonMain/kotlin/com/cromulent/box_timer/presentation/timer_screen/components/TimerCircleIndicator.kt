@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cromulent.box_timer.core.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.util.formatTime
@@ -75,7 +77,7 @@ fun TimerCircleIndicator(
                 fontWeight = FontWeight.W600,
                 letterSpacing = 2.sp,
                 textAlign = TextAlign.Center,
-                color = if (isRunning) CoralHaze else Color.LightGray
+                color = if (isRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
             )
         }
 
@@ -86,22 +88,25 @@ fun TimerCircleIndicator(
 @Composable
 private fun Prev() {
 
-    TimerCircleIndicator(
-        modifier = Modifier
-            .size(500.dp),
-        currentTimeMillis = 1000L,
-        totalTimeMillis = 100000L,
-        isRunning = false,
-        message = "Ready"
-    )
+    BoxTimerProTheme {
+
+        TimerCircleIndicator(
+            modifier = Modifier
+                .size(500.dp),
+            currentTimeMillis = 1000L,
+            totalTimeMillis = 100000L,
+            isRunning = false,
+            message = "Ready"
+        )
+    }
 
 }
 
 @Composable
 private fun MyProgressIndicator(
     progress: Float = 0.1f,
-    trackColor: Color = CoralMist,
-    color: Color = CoralHaze,
+    trackColor: Color = MaterialTheme.colorScheme.secondaryContainer,
+    color: Color = MaterialTheme.colorScheme.secondary,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {

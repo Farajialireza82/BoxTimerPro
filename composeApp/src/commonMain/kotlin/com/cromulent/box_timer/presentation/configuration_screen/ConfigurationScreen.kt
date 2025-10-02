@@ -33,8 +33,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
+import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.onVisibilityChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,21 +45,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.settings_ic
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.CoralMist
-import com.cromulent.box_timer.core.theme.backgroundGradientBrush
-import com.cromulent.box_timer.core.theme.titleGradientBrush
-import com.cromulent.box_timer.core.util.findWorkoutMode
+import com.cromulent.box_timer.core.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.util.toWorkoutMode
 import com.cromulent.box_timer.domain.TimerSettings
-import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
 import com.cromulent.box_timer.presentation.configuration_screen.components.WorkoutModeGrid
+import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Play
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ConfigurationScreenRoot(
@@ -80,9 +80,14 @@ fun ConfigurationScreenRoot(
 
 }
 
+@Preview
 @Composable
 private fun ConfigurationScreen(
-    timerSettings: TimerSettings,
+    timerSettings: TimerSettings = TimerSettings(
+        roundDuration = 1000L,
+        restDuration = 2L,
+        totalRounds = 2
+    ),
     modifier: Modifier = Modifier,
     onStartWorkout: (TimerSettings) -> Unit,
     navigateToSettings: () -> Unit,
@@ -108,10 +113,11 @@ private fun ConfigurationScreen(
         lastScrollValue = scrollState.value
     }
 
-    MaterialTheme {
+    BoxTimerProTheme {
 
         Scaffold(
             modifier = Modifier,
+            containerColor = Transparent,
             floatingActionButton = {
 
 
@@ -123,8 +129,8 @@ private fun ConfigurationScreen(
                                 TimerSettings(roundDuration, restDuration, totalRounds)
                             )
                         },
-                        containerColor = CoralMist,
-                        contentColor = CoralHaze
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.secondary
                     ) {
 
                         AnimatedVisibility(isFabExpanded) {
@@ -146,7 +152,7 @@ private fun ConfigurationScreen(
 
             Column(
                 modifier = modifier
-                    .background(backgroundGradientBrush)
+                    .background(Transparent)
                     .padding(it)
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -174,7 +180,7 @@ private fun ConfigurationScreen(
                     Text(
                         text = "Workout Type",
                         fontSize = 22.sp,
-                        color = CoralHaze,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.W600,
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -203,7 +209,7 @@ private fun ConfigurationScreen(
                     Text(
                         text = "Round Settings",
                         fontSize = 22.sp,
-                        color = CoralHaze,
+                        color = MaterialTheme.colorScheme.secondary,
                         fontWeight = FontWeight.W600,
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -287,6 +293,19 @@ fun StartButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
+
+
+    val titleGradientBrush = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.onPrimaryContainer,
+        ),
+        start = Offset(0f, 0f), // Top-left corner
+        end = Offset(1000f, 1000f), // Bottom-right corner, approximates 135deg
+        tileMode = TileMode.Clamp
+    )
+
     Button(
         modifier = modifier
             .height(60.dp)
@@ -300,6 +319,7 @@ fun StartButton(
     ) {
         Text(
             text = "Start Workout",
+            color = Color.White,
             fontSize = 18.sp,
             fontWeight = FontWeight.W800
         )

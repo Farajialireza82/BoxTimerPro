@@ -1,10 +1,11 @@
 package com.cromulent.box_timer.presentation.settings_screen
 
+import androidx.compose.material3.ColorScheme
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cromulent.box_timer.core.util.AudioFile
 import com.cromulent.box_timer.core.util.AudioPlayer
-import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,6 +35,8 @@ class SettingsViewModel(
 
     val state = _state.asStateFlow()
 
+    val settings = settingsRepository.appSettings
+
     fun onAction(action: SettingsActions) {
 
         when (action) {
@@ -47,6 +50,7 @@ class SettingsViewModel(
             is SettingsActions.ToggleMuteAllSounds -> toggleMuteAllSounds(action.isEnabled)
             is SettingsActions.ToggleVibrationHaptic -> toggleVibrationHaptic(action.isEnabled)
             is SettingsActions.PlayAudio -> playAudio(action.uri)
+            is SettingsActions.SetColorScheme -> setColorScheme(action.colorSchemeId)
         }
 
     }
@@ -57,6 +61,16 @@ class SettingsViewModel(
 
     private fun onFeedbackClicked() {
 
+    }
+
+    private fun setColorScheme(colorSchemeId: String){
+        viewModelScope.launch {
+            settingsRepository.updateAppSettings(
+                _state.value.appSettings.copy(
+                    colorSchemeId = colorSchemeId
+                )
+            )
+        }
     }
 
     private fun setCountDownSound(audioFile: AudioFile) {
