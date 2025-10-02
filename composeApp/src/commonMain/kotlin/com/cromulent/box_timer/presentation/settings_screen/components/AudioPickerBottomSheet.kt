@@ -31,8 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.ic_play
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.util.AudioFile
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview

@@ -1,8 +1,6 @@
-package com.cromulent.box_timer.core.theme
+package com.cromulent.box_timer.presentation.theme
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,11 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cromulent.box_timer.domain.AppSettings
@@ -67,7 +65,7 @@ fun BoxTimerProTheme(
 @Composable
 fun ColorScheme.animate(animationDuration: Int = 400): ColorScheme {
 
-    val spec = tween<androidx.compose.ui.graphics.Color>(durationMillis = animationDuration)
+    val spec = tween<Color>(durationMillis = animationDuration)
 
     val primary by animateColorAsState(targetValue = primary, animationSpec = spec)
     val onPrimary by animateColorAsState(targetValue = onPrimary, animationSpec = spec)

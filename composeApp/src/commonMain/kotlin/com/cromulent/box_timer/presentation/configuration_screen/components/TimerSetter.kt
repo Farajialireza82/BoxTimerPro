@@ -27,10 +27,7 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.CoralMist
-import com.cromulent.box_timer.core.theme.SecondarySubtitleColor
-import com.cromulent.box_timer.core.theme.SubtitleColor
+import com.cromulent.box_timer.presentation.theme.SubtitleColor
 import com.cromulent.box_timer.core.util.formatTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

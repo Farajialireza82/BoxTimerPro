@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.back_ic
-import com.cromulent.box_timer.core.theme.BoxTimerProTheme
-import com.cromulent.box_timer.core.theme.SecondarySubtitleColor
+import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
+import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip

@@ -25,9 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cromulent.box_timer.core.theme.BoxTimerProTheme
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.CoralMist
+import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.util.formatTime
 import org.jetbrains.compose.ui.tooling.preview.Preview
 

@@ -4,12 +4,10 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,12 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cromulent.box_timer.core.theme.AmberGlow
-import com.cromulent.box_timer.core.theme.CoffeeBeanBrown
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.CoralMist
-import com.cromulent.box_timer.core.theme.NightSkyBlack
-import com.cromulent.box_timer.core.theme.SecondarySubtitleColor
+import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
 
 @Composable
 fun CircleButton(

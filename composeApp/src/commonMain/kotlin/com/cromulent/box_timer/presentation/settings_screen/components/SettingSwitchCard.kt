@@ -6,8 +6,6 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
-import com.cromulent.box_timer.core.theme.CoralHaze
-import com.cromulent.box_timer.core.theme.CoralMist
 
 @Composable
 fun SettingSwitchCard(

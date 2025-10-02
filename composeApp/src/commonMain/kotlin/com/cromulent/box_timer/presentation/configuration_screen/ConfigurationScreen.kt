@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.settings_ic
-import com.cromulent.box_timer.core.theme.BoxTimerProTheme
+import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.util.toWorkoutMode
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.components.Header

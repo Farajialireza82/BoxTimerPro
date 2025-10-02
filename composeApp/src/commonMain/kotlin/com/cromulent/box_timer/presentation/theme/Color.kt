@@ -1,11 +1,7 @@
-package com.cromulent.box_timer.core.theme
+package com.cromulent.box_timer.presentation.theme
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TileMode
 import com.cromulent.box_timer.data.ColorSchemeDTO
 
 val NightSkyBlack = Color(0xFF0a0a0a)
