@@ -1,6 +1,9 @@
 package com.cromulent.box_timer.domain
 
+import androidx.compose.material3.ColorScheme
+import com.cromulent.box_timer.core.theme.FireColorScheme
 import com.cromulent.box_timer.core.util.AudioFile
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,4 +15,5 @@ data class AppSettings(
     val isVibrationEnabled: Boolean = true,
     val keepScreenOnEnabled: Boolean = true,
     val allowRotation: Boolean = true,
+    val colorSchemeId: String = "fire",
 )

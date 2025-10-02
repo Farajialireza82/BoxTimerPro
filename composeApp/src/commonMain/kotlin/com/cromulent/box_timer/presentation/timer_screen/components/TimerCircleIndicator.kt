@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cromulent.box_timer.core.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.theme.CoralHaze
 import com.cromulent.box_timer.core.theme.CoralMist
 import com.cromulent.box_timer.core.util.formatTime
@@ -87,21 +88,24 @@ fun TimerCircleIndicator(
 @Composable
 private fun Prev() {
 
-    TimerCircleIndicator(
-        modifier = Modifier
-            .size(500.dp),
-        currentTimeMillis = 1000L,
-        totalTimeMillis = 100000L,
-        isRunning = false,
-        message = "Ready"
-    )
+    BoxTimerProTheme {
+
+        TimerCircleIndicator(
+            modifier = Modifier
+                .size(500.dp),
+            currentTimeMillis = 1000L,
+            totalTimeMillis = 100000L,
+            isRunning = false,
+            message = "Ready"
+        )
+    }
 
 }
 
 @Composable
 private fun MyProgressIndicator(
     progress: Float = 0.1f,
-    trackColor: Color = MaterialTheme.colorScheme.surfaceVariant,
+    trackColor: Color = MaterialTheme.colorScheme.secondaryContainer,
     color: Color = MaterialTheme.colorScheme.secondary,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit

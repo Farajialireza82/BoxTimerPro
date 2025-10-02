@@ -29,20 +29,8 @@ fun App() {
 
     BoxTimerProTheme {
 
-        val backgroundGradientBrush = Brush.linearGradient(
-            colors = listOf(
-                MaterialTheme.colorScheme.background,
-                MaterialTheme.colorScheme.surface,
-                MaterialTheme.colorScheme.primaryContainer
-            ),
-            start = Offset(0f, 0f), // Top-left corner
-            end = Offset(1000f, 1000f), // Bottom-right corner, approximates 145deg
-            tileMode = TileMode.Clamp
-        )
-
         Box(
             modifier = Modifier
-                .background(backgroundGradientBrush)
                 .fillMaxSize()
         ) {
 

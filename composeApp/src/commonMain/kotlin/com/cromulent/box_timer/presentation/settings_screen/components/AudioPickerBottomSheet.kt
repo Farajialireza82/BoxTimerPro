@@ -131,13 +131,13 @@ private fun AudioFileItem(
             ) {
                 Icon(
                     painter = painterResource(Res.drawable.ic_play),
-                    tint = if (isSelected) CoralHaze else White,
+                    tint = if (isSelected) MaterialTheme.colorScheme.secondary else White,
                     contentDescription = null
                 )
             }
             Text(
                 text = file.title,
-                color = if (isSelected) CoralHaze else White,
+                color = if (isSelected) MaterialTheme.colorScheme.secondary else White,
                 fontWeight = FontWeight.W500
             )
         }

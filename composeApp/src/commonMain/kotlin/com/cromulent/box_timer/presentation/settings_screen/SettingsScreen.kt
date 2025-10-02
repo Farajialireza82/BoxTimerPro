@@ -25,9 +25,11 @@ import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.cromulent.box_timer.core.theme.SubtitleColor
+import com.cromulent.box_timer.core.theme.colorSchemes
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
+import com.cromulent.box_timer.presentation.settings_screen.components.ColorSchemePicker
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingSwitchCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingsStringPickerCard
@@ -35,7 +37,6 @@ import com.cromulent.box_timer.presentation.settings_screen.components.TitleText
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.ArrowRight
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SettingsScreenRoot(
@@ -55,10 +56,9 @@ fun SettingsScreenRoot(
 
 }
 
-@Preview
 @Composable
 private fun SettingsScreen(
-    state: SettingsState = SettingsState(),
+    state: SettingsState,
     onAction: (SettingsActions) -> Unit,
     onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
@@ -165,6 +165,16 @@ private fun SettingsScreen(
                         onCheckedChange = {
                             onAction(SettingsActions.ToggleKeepScreenOn(it))
 
+                        }
+                    )
+
+                    Spacer(Modifier.size(20.dp))
+
+                    ColorSchemePicker(
+                        items = colorSchemes,
+                        selectedColorSchemeId = state.appSettings.colorSchemeId,
+                        onItemSelected = {colorSchemeId ->
+                            onAction(SettingsActions.SetColorScheme(colorSchemeId))
                         }
                     )
 
