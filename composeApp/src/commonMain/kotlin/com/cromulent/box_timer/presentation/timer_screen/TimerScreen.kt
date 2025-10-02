@@ -109,7 +109,7 @@ private fun TimerScreenLandscape(
                     .align(Alignment.TopStart)
             ) {
                 Icon(
-                    tint = SubtitleColor,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
                     painter = painterResource(Res.drawable.back_ic),
                     contentDescription = null
                 )

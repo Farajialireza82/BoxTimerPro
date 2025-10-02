@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -67,7 +68,7 @@ fun Header(
                 text = subtitle,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.W500,
-                color = SubtitleColor,
+                color = MaterialTheme.colorScheme.onSecondaryContainer,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .padding(bottom = 8.dp)
@@ -83,7 +84,7 @@ fun Header(
                     .align(Alignment.TopStart)
             ) {
                 Icon(
-                    tint = SubtitleColor,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
                     painter = painterResource(Res.drawable.back_ic),
                     contentDescription = null
                 )
@@ -98,7 +99,7 @@ fun Header(
                     .align(Alignment.TopEnd)
             ) {
                 Icon(
-                    tint = SubtitleColor,
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer,
                     painter = painterResource(actionButtonResource!!),
                     contentDescription = null
                 )
