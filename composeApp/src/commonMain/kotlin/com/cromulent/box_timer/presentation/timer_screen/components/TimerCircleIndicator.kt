@@ -56,10 +56,11 @@ fun TimerCircleIndicator(
 
             Text(
                 modifier = Modifier
-                    .animateContentSize()
+                    .fillMaxWidth()
                     .padding(vertical = 4.dp),
                 text = formatTime(totalTimeMillis - currentTimeMillis),
                 fontSize = 64.sp,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.W900,
                 color = Color.White
             )

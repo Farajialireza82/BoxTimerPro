@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -80,11 +81,11 @@ fun TimerScreenRoot(
 
 }
 
-@Preview(
-    name = "Phone Landscape",
-    widthDp = 915,
-    heightDp = 412
-)
+//@Preview(
+//    name = "Phone Landscape",
+//    widthDp = 915,
+//    heightDp = 412
+//)
 @Composable
 private fun TimerScreenLandscape(
     state: TimerState = TimerState(),
@@ -159,7 +160,7 @@ private fun TimerScreenLandscape(
 
                     Text(
                         modifier = Modifier
-                            .animateContentSize(),
+                            .fillMaxWidth(),
                         text = formatTime(state.roundDuration - state.currentTime),
                         textAlign = TextAlign.Center,
                         style = TextStyle(
@@ -243,6 +244,7 @@ private fun TimerScreenLandscape(
 
 }
 
+@Preview
 @Composable
 private fun TimerScreenPortrait(
     state: TimerState = TimerState(),
@@ -282,22 +284,25 @@ private fun TimerScreenPortrait(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 12.dp, bottom = 12.dp),
+                        .padding(top = 12.dp, bottom = 12.dp)
+                        .weight(0.3f),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
 
                     Chip(
                         modifier = Modifier
-                            .width(150.dp)
-                            .height(78.dp),
+                            .aspectRatio(1.9f)
+                            .padding(horizontal = 18.dp, vertical = 6.dp)
+                            .weight(1f),
                         fontSize = 24.sp,
                         text = "Round ${state.currentRound}"
                     )
 
                     Chip(
                         modifier = Modifier
-                            .width(150.dp)
-                            .height(78.dp),
+                            .aspectRatio(1.9f)
+                            .padding(horizontal = 18.dp, vertical = 6.dp)
+                            .weight(1f),
                         fontSize = 24.sp,
                         text = "of ${state.totalRounds}"
                     )
@@ -305,6 +310,10 @@ private fun TimerScreenPortrait(
                 }
 
                 TimerCircleIndicator(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .weight(2f)
+                    ,
                     currentTimeMillis = state.currentTime,
                     totalTimeMillis = state.roundDuration,
                     isRunning = state.isTimerRunning,
@@ -314,10 +323,11 @@ private fun TimerScreenPortrait(
                 Column(
                     modifier = Modifier
                         .padding(top = 12.dp)
+                        .weight(1f)
                         .fillMaxWidth()
                         .animateContentSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceBetween
+                    verticalArrangement = Arrangement.Top
                 ) {
 
 
