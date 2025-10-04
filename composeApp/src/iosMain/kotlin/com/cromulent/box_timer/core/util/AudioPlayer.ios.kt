@@ -8,12 +8,18 @@ import platform.posix.err
 
 actual class AudioPlayer {
 
+    private var avAudioPlayer: AVAudioPlayer? = null
+
     @OptIn(ExperimentalForeignApi::class)
     actual fun playSound(uri: String) {
-        val avAudioPlayer = AVAudioPlayer(NSURL.URLWithString(Res.getUri(uri))!!, error = null)
-        avAudioPlayer.prepareToPlay()
-        avAudioPlayer.play()
+        val url = NSURL.URLWithString(Res.getUri(uri))!!
+        avAudioPlayer = AVAudioPlayer(url, error = null)
+        avAudioPlayer?.prepareToPlay()
+        avAudioPlayer?.play()
     }
 
-    actual fun release() {}
+    actual fun release() {
+        avAudioPlayer?.stop()
+        avAudioPlayer = null
+    }
 }
