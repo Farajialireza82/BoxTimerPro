@@ -31,15 +31,12 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TimerCircleIndicator(
-    currentTimeMillis: Long,
-    totalTimeMillis: Long,
+    remainingTime: Long,
+    progress: Float,
     isRunning: Boolean = false,
     message: String,
     modifier: Modifier = Modifier,
 ) {
-
-    val progress = currentTimeMillis / totalTimeMillis.toFloat()
-
 
     MyProgressIndicator(
         modifier = modifier
@@ -58,7 +55,7 @@ fun TimerCircleIndicator(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                text = formatTime(totalTimeMillis - currentTimeMillis),
+                text = formatTime(remainingTime),
                 fontSize = 64.sp,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.W900,
@@ -85,18 +82,6 @@ fun TimerCircleIndicator(
 @Preview
 @Composable
 private fun Prev() {
-
-    BoxTimerProTheme {
-
-        TimerCircleIndicator(
-            modifier = Modifier
-                .size(500.dp),
-            currentTimeMillis = 1000L,
-            totalTimeMillis = 100000L,
-            isRunning = false,
-            message = "Ready"
-        )
-    }
 
 }
 

@@ -152,7 +152,7 @@ private fun TimerScreenLandscape(
                     Text(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        text = formatTime(state.roundDuration - state.currentTime),
+                        text = formatTime(state.remainingTime),
                         textAlign = TextAlign.Center,
                         style = TextStyle(
                             shadow = Shadow(
@@ -207,7 +207,7 @@ private fun TimerScreenLandscape(
                         },
                         unactiveColor = MaterialTheme.colorScheme.tertiary,
                         activeColor = MaterialTheme.colorScheme.secondary,
-                        text = if (state.isTimerRunning) "Pause" else if (state.currentTime != 0L) "Resume" else "Start",
+                        text = if (state.isTimerRunning) "Pause" else "Start",
                     )
 
                     Spacer(Modifier.size(18.dp))
@@ -303,10 +303,9 @@ private fun TimerScreenPortrait(
                 TimerCircleIndicator(
                     modifier = Modifier
                         .padding(vertical = 8.dp)
-                        .weight(2f)
-                    ,
-                    currentTimeMillis = state.currentTime,
-                    totalTimeMillis = state.roundDuration,
+                        .weight(2f),
+                    remainingTime = state.remainingTime,
+                    progress = state.progress,
                     isRunning = state.isTimerRunning,
                     message = state.timerMessage,
                 )
@@ -333,7 +332,7 @@ private fun TimerScreenPortrait(
                         },
                         unactiveColor = MaterialTheme.colorScheme.tertiary,
                         activeColor = MaterialTheme.colorScheme.secondary,
-                        text = if (state.isTimerRunning) "Pause" else if (state.currentTime != 0L) "Resume" else "Start",
+                        text = if (state.isTimerRunning) "Pause" else if(state.isPaused) "Resume" else "Start",
                     )
 
                     Spacer(Modifier.size(18.dp))

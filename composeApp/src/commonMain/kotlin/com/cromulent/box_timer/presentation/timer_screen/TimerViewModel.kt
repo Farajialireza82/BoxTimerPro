@@ -23,6 +23,7 @@ class TimerViewModel(
     val state = _state.asStateFlow()
 
     lateinit var appSettings: AppSettings
+    private var isResting = false
 
 
     init {
@@ -33,8 +34,8 @@ class TimerViewModel(
                 }
             }
             appSettings = settingsRepository.getAppSettings() ?: AppSettings()
+            start()
         }
-        start()
     }
 
     private var timerJob: Job? = null
@@ -49,43 +50,94 @@ class TimerViewModel(
 
     private fun start() {
         if (_state.value.isTimerRunning) return
+        if (_state.value.isPaused.not()) {
+            _state.update {
+                it.copy(
+                    remainingTime = _state.value.roundDuration,
+                    progress = 0f
+                )
+            }
+        }
+        _state.update { it.copy(isPaused = false, isTimerRunning = true) }
         toggleKeepScreenOn(appSettings.keepScreenOnEnabled)
 
-        _state.update { it.copy(isTimerRunning = true) }
 
         timerJob = viewModelScope.launch {
-            var round = _state.value.currentRound
 
-            // loop through all rounds
-            while (round <= _state.value.totalRounds && _state.value.isTimerRunning) {
-                // Countdown before fight
-                if (_state.value.phase == TimerPhase.IDLE || _state.value.phase == TimerPhase.COUNTDOWN) {
-                    runCountdown(3)
+            while (_state.value.currentRound <= _state.value.totalRounds && _state.value.isTimerRunning) {
+
+                if (_state.value.currentRound == 1 && _state.value.remainingTime == _state.value.roundDuration) {
+                    runTimer(
+                        duration = 2000L,
+                        delay = 1000L,
+                        callBack = { currentTime, remainingTime ->
+                            countDownAlert()
+                            _state.update {
+                                it.copy(
+                                    timerMessage = "Get Ready: ${
+                                        remainingTime.toString().take(1).toInt() + 1
+                                    }"
+                                )
+                            }
+                        }
+                    )
                 }
 
-                // Fight phase
-                runPhase(_state.value.roundDuration, TimerPhase.FIGHT, "Fight")
-                if (!_state.value.isTimerRunning) break
 
-                // Last round → stop
-                if (round == _state.value.totalRounds) {
+                if (isResting.not()) {
+                    if (_state.value.remainingTime == _state.value.roundDuration) startRoundAlert()
+                    _state.update { it.copy(timerMessage = "Fight") }
+                    runTimer(
+                        duration = _state.value.remainingTime,
+                        delay = 10L,
+                        callBack = { currentTime, remainingTime ->
+                            _state.update {
+                                it.copy(
+                                    remainingTime = remainingTime,
+                                    progress = 1f - _state.value.remainingTime / state.value.roundDuration.toFloat()
+                                )
+                            }
+                            if (remainingTime == 3000L) countDownAlert()
+                            if (remainingTime == 2000L) countDownAlert()
+                            if (remainingTime == 1000L) countDownAlert()
+                        }
+                    )
+                    endRoundAlert()
+                }
+
+                if (_state.value.currentRound != _state.value.totalRounds) {
+                    _state.update { it.copy(timerMessage = "Rest", remainingTime = if(isResting) it.remainingTime else it.restDuration) }
+                    isResting = true
+                    runTimer(
+                        duration = _state.value.remainingTime,
+                        delay = 10L,
+                        callBack = { currentTime, remainingTime ->
+                            _state.update {
+                                it.copy(
+                                    remainingTime = remainingTime,
+                                    progress = 1f - (_state.value.remainingTime.toFloat() / state.value.restDuration.toFloat())
+                                )
+                            }
+                            if (remainingTime == 3000L) countDownAlert()
+                            if (remainingTime == 2000L) countDownAlert()
+                            if (remainingTime == 1000L) countDownAlert()
+                        }
+                    )
+                    isResting = false
+                    _state.update { it.copy(currentRound = it.currentRound + 1) }
+                    _state.update {
+                        it.copy(
+                            remainingTime = _state.value.roundDuration,
+                            progress = 0f
+                        )
+                    }
+                } else {
                     reset()
                     break
                 }
-
-                // Rest phase (with "Get Ready" in last 3 seconds)
-                runPhase(
-                    _state.value.restDuration,
-                    TimerPhase.REST,
-                    "Rest",
-                    showCountdownAtEnd = true
-                )
-                if (!_state.value.isTimerRunning) break
-
-                // Next round
-                round++
-                _state.update { it.copy(currentRound = round) }
             }
+
+
         }
     }
 
@@ -93,7 +145,7 @@ class TimerViewModel(
         toggleKeepScreenOn(false)
         timerJob?.cancel()
         timerJob = null
-        _state.update { it.copy(isTimerRunning = false, timerMessage = "Paused") }
+        _state.update { it.copy(isTimerRunning = false, timerMessage = "Paused", isPaused = true) }
     }
 
     private fun reset() {
@@ -104,58 +156,34 @@ class TimerViewModel(
             it.copy(
                 isTimerRunning = false,
                 currentRound = 1,
-                currentTime = 0L,
-                phase = TimerPhase.IDLE,
+                progress = 0f,
+                isPaused = false,
+                remainingTime = it.roundDuration,
                 timerMessage = "Ready"
             )
         }
     }
 
-    // --- HELPERS ---
-
-    private suspend fun runCountdown(seconds: Int) {
-        _state.update { it.copy(phase = TimerPhase.COUNTDOWN, currentTime = 0L) }
-        for (i in seconds downTo 1) {
-            if (!_state.value.isTimerRunning) break
-            _state.update { it.copy(timerMessage = "Get Ready: $i") }
-            countDownAlert()
-            delay(1000L)
-        }
-    }
-
-    private suspend fun runPhase(
+    private suspend fun runTimer(
         duration: Long,
-        phase: TimerPhase,
-        defaultMessage: String,
-        showCountdownAtEnd: Boolean = false
+        delay: Long = 10L,
+        callBack: (Long, Long) -> Unit,
     ) {
-        _state.update { it.copy(phase = phase, timerMessage = defaultMessage) }
-        if (phase == TimerPhase.FIGHT && state.value.currentTime == 0L) startRoundAlert()
-        while (_state.value.currentTime < duration && _state.value.isTimerRunning) {
-            delay(10L)
-            _state.update { state ->
-                val newTime = state.currentTime + 10L
-                val remaining = duration - newTime
-                val msg = if (showCountdownAtEnd && remaining in 1000L..4000L) {
-                    "Get Ready"
-                } else defaultMessage
-                if (remaining == 3000L) countDownAlert()
-                if (remaining == 2000L) countDownAlert()
-                if (remaining == 1000L) countDownAlert()
-                if (phase == TimerPhase.FIGHT) {
-                    if (remaining == 0L) endRoundAlert()
-                }
-                state.copy(currentTime = newTime, timerMessage = msg)
-            }
+        var currentTime = 0L
+        while (currentTime <= duration) {
+            callBack(currentTime, duration - currentTime)
+            delay(delay)
+            currentTime = currentTime + delay
         }
     }
 
-    private fun endRoundAlert(){
+
+    private fun endRoundAlert() {
         vibratePhone(1000L)
         playAudio(appSettings.endRoundAudioFile.uri)
     }
 
-    private fun startRoundAlert(){
+    private fun startRoundAlert() {
         vibratePhone(700L)
         playAudio(appSettings.startRoundAudioFile.uri)
     }
@@ -165,8 +193,8 @@ class TimerViewModel(
         playAudio(appSettings.countDownAudioFile.uri)
     }
 
-    private fun vibratePhone(duration: Long = 1000L){
-        if(appSettings.isVibrationEnabled) systemEngine.vibrate(duration)
+    private fun vibratePhone(duration: Long = 1000L) {
+        if (appSettings.isVibrationEnabled) systemEngine.vibrate(duration)
     }
 
     private fun playAudio(uri: String) {
@@ -174,7 +202,7 @@ class TimerViewModel(
         audioPlayer.playSound(uri)
     }
 
-    private fun toggleKeepScreenOn(enabled: Boolean){
+    private fun toggleKeepScreenOn(enabled: Boolean) {
         systemEngine.keepScreenOn(enabled)
     }
 
