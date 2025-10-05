@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -38,6 +42,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onVisibilityChanged
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -49,10 +54,12 @@ import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.util.toWorkoutMode
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.components.Header
+import com.cromulent.box_timer.presentation.configuration_screen.components.ModeCard
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
 import com.cromulent.box_timer.presentation.configuration_screen.components.WorkoutModeGrid
 import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
+import com.cromulent.box_timer.presentation.theme.IceColorScheme
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Play
@@ -80,7 +87,6 @@ fun ConfigurationScreenRoot(
 
 }
 
-@Preview
 @Composable
 private fun ConfigurationScreen(
     timerSettings: TimerSettings = TimerSettings(
@@ -187,22 +193,55 @@ private fun ConfigurationScreen(
 
                 Spacer(Modifier.size(8.dp))
 
-                WorkoutModeGrid(
-                    selectedMode = selectedMode,
-                    onModeSelected = { mode ->
-                        selectedMode = mode
-                        if (selectedMode != WorkoutMode.CUSTOM) {
-                            roundDuration = mode.roundDuration
-                            restDuration = mode.restDuration
-                            totalRounds = mode.rounds
-                        }
-                    },
-                    emojiSize = 24.sp,
-                    titleSize = 18.sp,
-                    descriptionSize = 12.sp,
-                )
+                LazyRow(
+                    modifier = Modifier
+                        .layout { measurable, constraints ->
+                            val placable = measurable.measure(
+                                constraints.copy(
+                                    maxWidth = constraints.maxWidth + 48.dp.roundToPx()
+                                )
+                            )
+                            layout(placable.width, placable.height) {
+                                placable.place(0, 0)
+                            }
 
-                Spacer(Modifier.size(22.dp))
+                        }
+                ) {
+                    val workoutModes = WorkoutMode.entries.toTypedArray()
+                    items(
+                        items = workoutModes,
+                        key = { it.name },
+                        contentType = { it.name }
+                    ) { mode ->
+
+                        Spacer(Modifier.size(if (workoutModes.first() == mode) 20.dp else 10.dp))
+
+                        ModeCard(
+                            modifier = Modifier
+                                .height(120.dp),
+                            mode = mode,
+                            isSelected = selectedMode == mode,
+                            onClick = { mode ->
+                                selectedMode = mode
+                                if (selectedMode != WorkoutMode.CUSTOM) {
+                                    roundDuration = mode.roundDuration
+                                    restDuration = mode.restDuration
+                                    totalRounds = mode.rounds
+                                }
+                            },
+                            emojiSize = 24.sp,
+                            titleSize = 18.sp,
+                            descriptionSize = 12.sp
+                        )
+                        if (workoutModes.last() == mode) {
+                            Spacer(Modifier.size(12.dp))
+                        }
+
+
+                    }
+                }
+
+                Spacer(Modifier.size(8.dp))
 
                 Text(
                     text = "Round Settings",
@@ -321,4 +360,18 @@ fun StartButton(
             fontWeight = FontWeight.W800
         )
     }
+}
+
+@Preview
+@Composable
+private fun ConfigScreenPrev() {
+
+    MaterialTheme(colorScheme = IceColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
 }
