@@ -31,8 +31,8 @@ fun TimerControlButton(
                 ),
                 shape = CircleShape
             )
-            .size(40.dp)
-            .clickable(enabled = enabled) { onClick() },
+            .size(40.dp),
+        enabled = enabled,
         onClick = onClick,
 
         ) {
