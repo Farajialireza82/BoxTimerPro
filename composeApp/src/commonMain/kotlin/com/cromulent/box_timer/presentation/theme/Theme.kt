@@ -8,32 +8,44 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.presentation.settings_screen.SettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun BoxTimerProTheme(
+    settingsViewModel: SettingsViewModel = koinViewModel(),
     content: @Composable () -> Unit
 ) {
 
-    val settingsViewModel: SettingsViewModel = koinViewModel()
 
-    val settings by settingsViewModel.settings.collectAsStateWithLifecycle(AppSettings())
+    val settings by settingsViewModel.settings.collectAsStateWithLifecycle(null)
+
+    var isFirstLoad by rememberSaveable { mutableStateOf(true) }
 
     val targetColorScheme = colorSchemes
-        .firstOrNull {
-            it.id == (settings?.colorSchemeId)
-        }?.colorScheme ?: IceColorScheme
+        .firstOrNull { it.id == settings?.colorSchemeId }
+        ?.colorScheme ?: IceColorScheme
 
-    val animatedColorScheme = targetColorScheme.animate(animationDuration = 600)
+    // Skip animation on first load
+    val animatedColorScheme = if (isFirstLoad) {
+        LaunchedEffect(Unit) {
+            isFirstLoad = false
+        }
+        targetColorScheme
+    } else {
+        targetColorScheme.animate()
+    }
 
     val backgroundGradientBrush = Brush.linearGradient(
         colors = listOf(
