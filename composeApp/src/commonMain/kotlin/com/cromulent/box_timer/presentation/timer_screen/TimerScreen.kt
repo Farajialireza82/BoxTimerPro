@@ -364,7 +364,7 @@ private fun TimerScreenPortrait(
 
             Column(
                 modifier = Modifier
-                    .padding(top = 12.dp)
+                    .padding(bottom = 12.dp, top = 6.dp)
                     .weight(1f)
                     .fillMaxWidth()
                     .animateContentSize(),
@@ -374,6 +374,8 @@ private fun TimerScreenPortrait(
 
 
                 RectangleButton(
+                    modifier = Modifier
+                        .weight(if(state.isTimerRunning) 4f else 3f),
                     isActive = state.isTimerRunning,
                     onButtonClicked = {
                         if (state.isTimerRunning) {
@@ -392,7 +394,7 @@ private fun TimerScreenPortrait(
 
                 RectangleButton(
                     modifier = Modifier
-                        .height(58.dp),
+                        .weight(2f),
                     isActive = false,
                     text = "Reset",
                     onButtonClicked = {
