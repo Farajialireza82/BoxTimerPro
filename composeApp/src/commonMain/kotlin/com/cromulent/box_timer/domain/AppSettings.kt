@@ -12,5 +12,5 @@ data class AppSettings(
     val isVibrationEnabled: Boolean = true,
     val keepScreenOnEnabled: Boolean = true,
     val allowRotation: Boolean = true,
-    val colorSchemeId: String = "fire",
+    val colorSchemeId: String = "ice",
 )

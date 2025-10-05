@@ -456,8 +456,8 @@ val SakuraSunsetColorScheme = darkColorScheme(
 )
 
 val colorSchemes = listOf(
-    ColorSchemeDTO("fire" ,FireColorScheme),
     ColorSchemeDTO("ice" ,IceColorScheme),
+    ColorSchemeDTO("fire" ,FireColorScheme),
     ColorSchemeDTO("venom" ,VenomColorScheme),
     ColorSchemeDTO("royal" ,RoyalColorScheme),
     ColorSchemeDTO("shadow" ,ShadowColorScheme),

@@ -30,8 +30,8 @@ fun BoxTimerProTheme(
 
     val targetColorScheme = colorSchemes
         .firstOrNull {
-            it.id == (settings?.colorSchemeId ?: "fire")
-        }?.colorScheme ?: FireColorScheme
+            it.id == (settings?.colorSchemeId)
+        }?.colorScheme ?: IceColorScheme
 
     val animatedColorScheme = targetColorScheme.animate(animationDuration = 600)
 
