@@ -115,6 +115,17 @@ private fun SettingsScreen(
 
                 Spacer(Modifier.size(10.dp))
 
+                SettingSwitchCard(
+                    isChecked = appSettings.isVibrationEnabled,
+                    title = "Vibration",
+                    subtitle = "Haptic feedback for timer events",
+                    onCheckedChange = {
+                        onAction(SettingsActions.ToggleVibrationHaptic(it))
+                    }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
                 SettingsStringPickerCard(
                     title = "Countdown Sound",
                     subtitle = "Sound before round starts",
@@ -138,17 +149,6 @@ private fun SettingsScreen(
                     subtitle = "Sound when round ends",
                     selectedTitle = appSettings.endRoundAudioFile.title,
                     onClick = { endRoundBsVisibility = true }
-                )
-
-                Spacer(Modifier.size(10.dp))
-
-                SettingSwitchCard(
-                    isChecked = appSettings.isVibrationEnabled,
-                    title = "Vibration",
-                    subtitle = "Haptic feedback for timer events",
-                    onCheckedChange = {
-                        onAction(SettingsActions.ToggleVibrationHaptic(it))
-                    }
                 )
 
                 Spacer(Modifier.size(30.dp))
