@@ -57,6 +57,7 @@ import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
 import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
+import com.cromulent.box_timer.presentation.theme.IceColorScheme
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
@@ -289,7 +290,6 @@ private fun TimerScreenLandscape(
 
 }
 
-@Preview
 @Composable
 private fun TimerScreenPortrait(
     state: TimerState = TimerState(),
@@ -444,7 +444,6 @@ fun ExitTimerDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Title
                 Text(
                     text = "Timer is Running",
                     style = MaterialTheme.typography.headlineSmall,
@@ -454,22 +453,19 @@ fun ExitTimerDialog(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Message
                 Text(
                     text = "Your workout is still in progress. Are you sure you want to stop and go back?",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    // Cancel button
                     OutlinedButton(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f),
@@ -481,7 +477,6 @@ fun ExitTimerDialog(
                         )
                     }
 
-                    // Confirm button
                     Button(
                         onClick = onConfirmExit,
                         modifier = Modifier.weight(1f),
@@ -499,4 +494,18 @@ fun ExitTimerDialog(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun Oref() {
+
+    MaterialTheme(colorScheme = IceColorScheme) {
+
+        ExitTimerDialog(
+            onDismiss = {},
+            onConfirmExit = {}
+        )
+    }
+
 }

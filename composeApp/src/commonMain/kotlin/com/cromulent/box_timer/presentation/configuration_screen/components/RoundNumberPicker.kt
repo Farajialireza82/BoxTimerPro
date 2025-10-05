@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
@@ -62,7 +63,7 @@ fun RoundNumberPicker(
                     fontWeight = FontWeight.Medium,
                     color = White
                 )
-                
+
                 Text(
                     text = rounds.toString(),
                     style = MaterialTheme.typography.headlineSmall,
@@ -70,16 +71,16 @@ fun RoundNumberPicker(
                     color = MaterialTheme.colorScheme.secondary
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(15.dp))
-            
+
             // Quick preset buttons for common round counts
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 val commonRounds = listOf(3, 6, 10, 12, 15)
-                
+
                 commonRounds.forEach { preset ->
                     RoundPresetButton(
                         rounds = preset,
@@ -88,9 +89,9 @@ fun RoundNumberPicker(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(15.dp))
-            
+
             // Fine control buttons
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -99,27 +100,27 @@ fun RoundNumberPicker(
             ) {
                 TimerControlButton(
                     icon = FontAwesomeIcons.Solid.Minus,
-                    onClick = { 
+                    onClick = {
                         val newRounds = (rounds - 1).coerceAtLeast(minRounds)
                         onRoundsChanged(newRounds)
                     },
                     enabled = rounds > minRounds
                 )
-                
+
                 Spacer(modifier = Modifier.width(20.dp))
-                
+
                 Text(
                     text = "rounds",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Center
                 )
-                
+
                 Spacer(modifier = Modifier.width(20.dp))
-                
+
                 TimerControlButton(
                     icon = FontAwesomeIcons.Solid.Plus,
-                    onClick = { 
+                    onClick = {
                         val newRounds = (rounds + 1).coerceAtMost(maxRounds)
                         onRoundsChanged(newRounds)
                     },
@@ -139,6 +140,7 @@ private fun RoundPresetButton(
 ) {
     Card(
         modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
             .clickable { onClick() }
             .padding(horizontal = 2.dp),
         shape = RoundedCornerShape(8.dp),

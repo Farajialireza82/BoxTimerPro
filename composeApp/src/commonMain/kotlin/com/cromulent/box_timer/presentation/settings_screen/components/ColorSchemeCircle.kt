@@ -155,6 +155,8 @@ fun ColorSchemePicker(
                         onClick = { onItemSelected(it.id) }
                     )
 
+                    if(it.id != items.last().id) Spacer(Modifier.size(16.dp))
+
                 }
             }
 
