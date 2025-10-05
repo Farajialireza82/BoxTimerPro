@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.cromulent.box_timer.BuildKonfig
 import com.cromulent.box_timer.presentation.theme.SubtitleColor
 import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.components.Header
@@ -189,7 +190,7 @@ private fun SettingsScreen(
                         onClick = { }
                     ) {
                         Text(
-                            text = "v1.2.0",
+                            text = "v${BuildKonfig.APP_VERSION}",
                             color = SubtitleColor,
                             modifier = Modifier.padding(end = 4.dp)
                         )

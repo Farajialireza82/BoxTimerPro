@@ -1,4 +1,4 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -7,7 +7,9 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.buildkonfig)
 }
+
 
 kotlin {
     androidTarget {
@@ -31,6 +33,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.media3.exoplayer)
+            implementation(libs.androidx.core.splashscreen)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -84,6 +87,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
+
+buildkonfig {
+    packageName = "com.cromulent.box_timer"
+
+    defaultConfigs {
+        buildConfigField(STRING, "APP_VERSION", "${project.findProperty("PROJECT_VERSION")}")
+    }
+
+}
+
 
 dependencies {
     debugImplementation(compose.uiTooling)
