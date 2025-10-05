@@ -2,16 +2,21 @@ package com.cromulent.box_timer.core.util
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.view.WindowManager
+import androidx.core.net.toUri
+
 
 actual class SystemEngine(val activity: Activity) {
 
     private var vibrator: Vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val vibratorManager = activity.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        val vibratorManager =
+            activity.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         vibratorManager.defaultVibrator
     } else {
         @Suppress("DEPRECATION")
@@ -30,11 +35,17 @@ actual class SystemEngine(val activity: Activity) {
         }
     }
 
-    actual fun keepScreenOn(keepScreenOn: Boolean){
-            if (keepScreenOn) {
-                activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            } else {
-                activity.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            }
+    actual fun keepScreenOn(keepScreenOn: Boolean) {
+        if (keepScreenOn) {
+            activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        } else {
+            activity.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        }
+    }
+
+    actual fun openEmail() {
+        val intent = Intent(Intent.ACTION_SENDTO)
+            .setData("mailto:farajialireza001@gmail.com".toUri())
+            activity.startActivity(intent)
     }
 }

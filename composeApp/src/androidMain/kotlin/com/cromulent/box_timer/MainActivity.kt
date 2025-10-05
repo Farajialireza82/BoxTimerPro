@@ -15,11 +15,22 @@ import org.koin.dsl.module
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen() //call this first
-        enableEdgeToEdge() // and then call this
+        var keepSplashScreenOn = true
+        installSplashScreen().apply {
+            keepSplashScreenOn
+        }
+        enableEdgeToEdge()
+
+        loadKoinModules(module{
+            single { this@MainActivity as Activity }
+        })
 
         setContent {
             App()
         }
+        Thread {
+            Thread.sleep(500)
+            keepSplashScreenOn = false
+        }.start()
     }
 }

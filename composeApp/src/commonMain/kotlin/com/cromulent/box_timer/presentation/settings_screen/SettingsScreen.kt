@@ -73,196 +73,196 @@ private fun SettingsScreen(
     var endRoundBsVisibility by remember { mutableStateOf(false) }
 
 
-        Scaffold(
-            modifier = Modifier,
-            containerColor = Transparent
+    Scaffold(
+        modifier = Modifier,
+        containerColor = Transparent
+    ) {
+
+        Column(
+            modifier = modifier
+                .padding(it)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
 
+            Header(
+                modifier = Modifier,
+                title = "Settings",
+                subtitle = "Customize Your Experience",
+                hasBackButton = true,
+                onBackButtonClicked = onBackButtonClicked
+            )
+
             Column(
-                modifier = modifier
-                    .padding(it)
-                    .fillMaxSize(),
+                modifier = Modifier
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
 
-                Header(
-                    modifier = Modifier,
-                    title = "Settings",
-                    subtitle = "Customize Your Experience",
-                    hasBackButton = true,
-                    onBackButtonClicked = onBackButtonClicked
+                TitleText("Audio Settings")
+
+                Spacer(Modifier.size(20.dp))
+
+                SettingSwitchCard(
+                    isChecked = appSettings.muteAllSounds,
+                    title = "Mute All Sounds",
+                    subtitle = "Mute all sounds in the app",
+                    onCheckedChange = { onAction(ToggleMuteAllSounds(it)) }
                 )
 
-                Column(
-                    modifier = Modifier
-                        .verticalScroll(scrollState)
-                        .padding(horizontal = 24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceBetween
+                Spacer(Modifier.size(10.dp))
+
+                SettingsStringPickerCard(
+                    title = "Countdown Sound",
+                    subtitle = "Sound before round starts",
+                    selectedTitle = appSettings.countDownAudioFile.title,
+                    onClick = { countDownBsVisibility = true }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
+                SettingsStringPickerCard(
+                    title = "Start Round Sound",
+                    subtitle = "Sound when round begins",
+                    selectedTitle = appSettings.startRoundAudioFile.title,
+                    onClick = { startRoundBsVisibility = true }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
+                SettingsStringPickerCard(
+                    title = "End Round Sound",
+                    subtitle = "Sound when round ends",
+                    selectedTitle = appSettings.endRoundAudioFile.title,
+                    onClick = { endRoundBsVisibility = true }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
+                SettingSwitchCard(
+                    isChecked = appSettings.isVibrationEnabled,
+                    title = "Vibration",
+                    subtitle = "Haptic feedback for timer events",
+                    onCheckedChange = {
+                        onAction(SettingsActions.ToggleVibrationHaptic(it))
+                    }
+                )
+
+                Spacer(Modifier.size(30.dp))
+
+                TitleText("Display Settings")
+
+                Spacer(Modifier.size(20.dp))
+
+                SettingSwitchCard(
+                    isChecked = appSettings.keepScreenOnEnabled,
+                    title = "Keep Screen On",
+                    subtitle = "Prevent screen from sleeping during workout",
+                    onCheckedChange = {
+                        onAction(SettingsActions.ToggleKeepScreenOn(it))
+
+                    }
+                )
+
+                Spacer(Modifier.size(20.dp))
+
+                ColorSchemePicker(
+                    items = colorSchemes,
+                    selectedColorSchemeId = state.appSettings.colorSchemeId,
+                    onItemSelected = { colorSchemeId ->
+                        onAction(SettingsActions.SetColorScheme(colorSchemeId))
+                    }
+                )
+
+                Spacer(Modifier.size(30.dp))
+
+                TitleText("About & Support")
+
+                Spacer(Modifier.size(20.dp))
+
+
+                SettingCard(
+                    title = "App Version",
+                    subtitle = "Current version information",
+                    onClick = { }
                 ) {
-
-                    TitleText("Audio Settings")
-
-                    Spacer(Modifier.size(20.dp))
-
-                    SettingSwitchCard(
-                        isChecked = appSettings.muteAllSounds,
-                        title = "Mute All Sounds",
-                        subtitle = "Mute all sounds in the app",
-                        onCheckedChange = { onAction(ToggleMuteAllSounds(it)) }
+                    Text(
+                        text = "v${BuildKonfig.APP_VERSION}",
+                        color = SubtitleColor,
+                        modifier = Modifier.padding(end = 4.dp)
                     )
-
-                    Spacer(Modifier.size(10.dp))
-
-                    SettingsStringPickerCard(
-                        title = "Countdown Sound",
-                        subtitle = "Sound before round starts",
-                        selectedTitle = appSettings.countDownAudioFile.title,
-                        onClick = { countDownBsVisibility = true }
-                    )
-
-                    Spacer(Modifier.size(10.dp))
-
-                    SettingsStringPickerCard(
-                        title = "Start Round Sound",
-                        subtitle = "Sound when round begins",
-                        selectedTitle = appSettings.startRoundAudioFile.title,
-                        onClick = { startRoundBsVisibility = true }
-                    )
-
-                    Spacer(Modifier.size(10.dp))
-
-                    SettingsStringPickerCard(
-                        title = "End Round Sound",
-                        subtitle = "Sound when round ends",
-                        selectedTitle = appSettings.endRoundAudioFile.title,
-                        onClick = { endRoundBsVisibility = true }
-                    )
-
-                    Spacer(Modifier.size(10.dp))
-
-                    SettingSwitchCard(
-                        isChecked = appSettings.isVibrationEnabled,
-                        title = "Vibration",
-                        subtitle = "Haptic feedback for timer events",
-                        onCheckedChange = {
-                            onAction(SettingsActions.ToggleVibrationHaptic(it))
-                        }
-                    )
-
-                    Spacer(Modifier.size(30.dp))
-
-                    TitleText("Display Settings")
-
-                    Spacer(Modifier.size(20.dp))
-
-                    SettingSwitchCard(
-                        isChecked = appSettings.keepScreenOnEnabled,
-                        title = "Keep Screen On",
-                        subtitle = "Prevent screen from sleeping during workout",
-                        onCheckedChange = {
-                            onAction(SettingsActions.ToggleKeepScreenOn(it))
-
-                        }
-                    )
-
-                    Spacer(Modifier.size(20.dp))
-
-                    ColorSchemePicker(
-                        items = colorSchemes,
-                        selectedColorSchemeId = state.appSettings.colorSchemeId,
-                        onItemSelected = {colorSchemeId ->
-                            onAction(SettingsActions.SetColorScheme(colorSchemeId))
-                        }
-                    )
-
-                    Spacer(Modifier.size(30.dp))
-
-                    TitleText("About & Support")
-
-                    Spacer(Modifier.size(20.dp))
-
-
-                    SettingCard(
-                        title = "App Version",
-                        subtitle = "Current version information",
-                        onClick = { }
-                    ) {
-                        Text(
-                            text = "v${BuildKonfig.APP_VERSION}",
-                            color = SubtitleColor,
-                            modifier = Modifier.padding(end = 4.dp)
-                        )
-                    }
-
-                    Spacer(Modifier.size(10.dp))
-
-                    SettingCard(
-                        title = "Feedback & Support",
-                        subtitle = "Get help or send feedback",
-                        onClick = { }
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "Contact",
-                                color = MaterialTheme.colorScheme.secondary,
-                                fontWeight = FontWeight.W600,
-                                modifier = Modifier.padding(end = 4.dp)
-                            )
-                            Icon(
-                                modifier = Modifier.size(16.dp),
-                                imageVector = FontAwesomeIcons.Solid.ArrowRight,
-                                tint = MaterialTheme.colorScheme.secondary,
-                                contentDescription = null
-                            )
-                        }
-                    }
-
-                    Spacer(Modifier.size(32.dp))
-
                 }
 
+                Spacer(Modifier.size(10.dp))
+
+                SettingCard(
+                    title = "Feedback & Support",
+                    subtitle = "Get help or send feedback",
+                    onClick = { onAction(SettingsActions.OnFeedbackClick) }
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Contact",
+                            color = MaterialTheme.colorScheme.secondary,
+                            fontWeight = FontWeight.W600,
+                            modifier = Modifier.padding(end = 4.dp)
+                        )
+                        Icon(
+                            modifier = Modifier.size(16.dp),
+                            imageVector = FontAwesomeIcons.Solid.ArrowRight,
+                            tint = MaterialTheme.colorScheme.secondary,
+                            contentDescription = null
+                        )
+                    }
+                }
+
+                Spacer(Modifier.size(32.dp))
 
             }
+
+
         }
+    }
 
 
 
-        if (startRoundBsVisibility) {
-            AudioPickerBottomSheet(
-                onDismissRequest = { startRoundBsVisibility = false },
-                onItemSelected = { onAction(SettingsActions.SetStartRoundSound(it)) },
-                title = "Start Round Sound",
-                selectedAudioFile = appSettings.startRoundAudioFile,
-                playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
-                items = state.startRoundAudioFiles
-            )
-        }
+    if (startRoundBsVisibility) {
+        AudioPickerBottomSheet(
+            onDismissRequest = { startRoundBsVisibility = false },
+            onItemSelected = { onAction(SettingsActions.SetStartRoundSound(it)) },
+            title = "Start Round Sound",
+            selectedAudioFile = appSettings.startRoundAudioFile,
+            playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
+            items = state.startRoundAudioFiles
+        )
+    }
 
 
-        if (endRoundBsVisibility) {
-            AudioPickerBottomSheet(
-                onDismissRequest = { endRoundBsVisibility = false },
-                onItemSelected = { onAction(SettingsActions.SetEndRoundSound(it)) },
-                title = "End Round Sound",
-                selectedAudioFile = appSettings.endRoundAudioFile,
-                playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
-                items = state.endRoundAudioFiles
-            )
-        }
+    if (endRoundBsVisibility) {
+        AudioPickerBottomSheet(
+            onDismissRequest = { endRoundBsVisibility = false },
+            onItemSelected = { onAction(SettingsActions.SetEndRoundSound(it)) },
+            title = "End Round Sound",
+            selectedAudioFile = appSettings.endRoundAudioFile,
+            playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
+            items = state.endRoundAudioFiles
+        )
+    }
 
 
-        if (countDownBsVisibility) {
-            AudioPickerBottomSheet(
-                onDismissRequest = { countDownBsVisibility = false },
-                onItemSelected = { onAction(SettingsActions.SetCountdownSound(it)) },
-                title = "Countdown Sound",
-                selectedAudioFile = appSettings.countDownAudioFile,
-                playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
-                items = state.countDownAudioFiles
-            )
-        }
+    if (countDownBsVisibility) {
+        AudioPickerBottomSheet(
+            onDismissRequest = { countDownBsVisibility = false },
+            onItemSelected = { onAction(SettingsActions.SetCountdownSound(it)) },
+            title = "Countdown Sound",
+            selectedAudioFile = appSettings.countDownAudioFile,
+            playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
+            items = state.countDownAudioFiles
+        )
+    }
 }

@@ -1,11 +1,10 @@
 package com.cromulent.box_timer.presentation.settings_screen
 
-import androidx.compose.material3.ColorScheme
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cromulent.box_timer.core.util.AudioFile
 import com.cromulent.box_timer.core.util.AudioPlayer
+import com.cromulent.box_timer.core.util.SystemEngine
 import com.cromulent.box_timer.domain.SettingsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,8 +12,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
+    val settingsRepository: SettingsRepository,
     val audioPlayer: AudioPlayer,
-    val settingsRepository: SettingsRepository
+    val systemEngine: SystemEngine,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SettingsState())
@@ -40,8 +40,8 @@ class SettingsViewModel(
     fun onAction(action: SettingsActions) {
 
         when (action) {
-            SettingsActions.OnAppVersionClick -> {}
-            SettingsActions.OnFeedbackClick -> onFeedbackClicked()
+            is SettingsActions.OnAppVersionClick -> {}
+            is SettingsActions.OnFeedbackClick -> onFeedbackClicked()
             is SettingsActions.SetCountdownSound -> setCountDownSound(action.audioFile)
             is SettingsActions.SetEndRoundSound -> setEndRoundSound(action.audioFile)
             is SettingsActions.SetStartRoundSound -> setStartRoundSound(action.audioFile)
@@ -55,15 +55,15 @@ class SettingsViewModel(
 
     }
 
-    private fun playAudio(uri: String){
+    private fun playAudio(uri: String) {
         audioPlayer.playSound(uri)
     }
 
     private fun onFeedbackClicked() {
-
+        systemEngine.openEmail()
     }
 
-    private fun setColorScheme(colorSchemeId: String){
+    private fun setColorScheme(colorSchemeId: String) {
         viewModelScope.launch {
             settingsRepository.updateAppSettings(
                 _state.value.appSettings.copy(
