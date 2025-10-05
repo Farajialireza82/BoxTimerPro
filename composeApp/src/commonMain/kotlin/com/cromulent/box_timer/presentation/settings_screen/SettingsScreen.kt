@@ -72,8 +72,6 @@ private fun SettingsScreen(
     var endRoundBsVisibility by remember { mutableStateOf(false) }
 
 
-    MaterialTheme {
-
         Scaffold(
             modifier = Modifier,
             containerColor = Transparent
@@ -266,5 +264,4 @@ private fun SettingsScreen(
                 items = state.countDownAudioFiles
             )
         }
-    }
 }

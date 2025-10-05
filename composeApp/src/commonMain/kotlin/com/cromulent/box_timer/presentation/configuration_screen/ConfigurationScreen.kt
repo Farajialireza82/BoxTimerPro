@@ -113,176 +113,173 @@ private fun ConfigurationScreen(
         lastScrollValue = scrollState.value
     }
 
-    BoxTimerProTheme {
-
-        Scaffold(
-            modifier = Modifier,
-            containerColor = Transparent,
-            floatingActionButton = {
+    Scaffold(
+        modifier = Modifier,
+        containerColor = Transparent,
+        floatingActionButton = {
 
 
-                AnimatedVisibility(isFabVisible) {
+            AnimatedVisibility(isFabVisible) {
 
-                    ExtendedFloatingActionButton(
-                        onClick = {
-                            onStartWorkout(
-                                TimerSettings(roundDuration, restDuration, totalRounds)
-                            )
-                        },
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                        contentColor = MaterialTheme.colorScheme.secondary
-                    ) {
-
-                        AnimatedVisibility(isFabExpanded) {
-                            Row {
-                                Text("Start Workout")
-                                Spacer(Modifier.size(8.dp))
-                            }
-                        }
-
-                        Icon(
-                            modifier = Modifier.size(18.dp),
-                            imageVector = FontAwesomeIcons.Solid.Play,
-                            contentDescription = null
+                ExtendedFloatingActionButton(
+                    onClick = {
+                        onStartWorkout(
+                            TimerSettings(roundDuration, restDuration, totalRounds)
                         )
+                    },
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    contentColor = MaterialTheme.colorScheme.secondary
+                ) {
+
+                    AnimatedVisibility(isFabExpanded) {
+                        Row {
+                            Text("Start Workout")
+                            Spacer(Modifier.size(8.dp))
+                        }
                     }
+
+                    Icon(
+                        modifier = Modifier.size(18.dp),
+                        imageVector = FontAwesomeIcons.Solid.Play,
+                        contentDescription = null
+                    )
                 }
             }
+        }
+    ) {
+
+        Column(
+            modifier = modifier
+                .background(Transparent)
+                .padding(it)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
 
+            Header(
+                modifier = Modifier.padding(horizontal = 8.dp),
+                title = "BoxTimer Pro",
+                subtitle = "Configure Your Workout",
+                hasBackButton = false,
+                hasActionButton = true,
+                actionButtonResource = Res.drawable.settings_ic,
+                onActionButtonClicked = { navigateToSettings() }
+            )
+
             Column(
-                modifier = modifier
-                    .background(Transparent)
-                    .padding(it)
-                    .fillMaxSize(),
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .verticalScroll(scrollState),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
 
-                Header(
-                    modifier = Modifier.padding(horizontal = 8.dp),
-                    title = "BoxTimer Pro",
-                    subtitle = "Configure Your Workout",
-                    hasBackButton = false,
-                    hasActionButton = true,
-                    actionButtonResource = Res.drawable.settings_ic,
-                    onActionButtonClicked = { navigateToSettings() }
+                Text(
+                    text = "Workout Type",
+                    fontSize = 22.sp,
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.W600,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Start
                 )
 
-                Column(
+                Spacer(Modifier.size(8.dp))
+
+                WorkoutModeGrid(
+                    selectedMode = selectedMode,
+                    onModeSelected = { mode ->
+                        selectedMode = mode
+                        if (selectedMode != WorkoutMode.CUSTOM) {
+                            roundDuration = mode.roundDuration
+                            restDuration = mode.restDuration
+                            totalRounds = mode.rounds
+                        }
+                    },
+                    emojiSize = 24.sp,
+                    titleSize = 18.sp,
+                    descriptionSize = 12.sp,
+                )
+
+                Spacer(Modifier.size(22.dp))
+
+                Text(
+                    text = "Round Settings",
+                    fontSize = 22.sp,
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontWeight = FontWeight.W600,
                     modifier = Modifier
-                        .padding(horizontal = 24.dp)
-                        .verticalScroll(scrollState),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Top
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Start
+                )
+
+                Spacer(Modifier.size(12.dp))
+
+                TimerSetter(
+                    title = "Round Duration",
+                    timeInMillis = roundDuration,
+                    onPlusClicked = {
+                        roundDuration = roundDuration + 30000
+                        selectedMode = WorkoutMode.CUSTOM
+                    },
+                    onMinusClicked = {
+                        selectedMode = WorkoutMode.CUSTOM
+                        if ((roundDuration - 30000 < 0).not()) {
+                            roundDuration = roundDuration - 30000
+                        }
+                    },
+                )
+
+                Spacer(Modifier.size(12.dp))
+
+                TimerSetter(
+                    title = "Rest Duration",
+                    timeInMillis = restDuration,
+                    onPlusClicked = {
+                        selectedMode = WorkoutMode.CUSTOM
+                        restDuration = restDuration + 30000
+                    },
+                    onMinusClicked = {
+                        selectedMode = WorkoutMode.CUSTOM
+                        if ((restDuration - 30000 < 0).not()) {
+                            restDuration = restDuration - 30000
+                        }
+                    },
+                )
+
+                Spacer(Modifier.size(12.dp))
+
+                RoundNumberPicker(
+                    title = "Rounds Number",
+                    rounds = totalRounds,
+                    onRoundsChanged = { rounds ->
+                        selectedMode = WorkoutMode.CUSTOM
+                        totalRounds = rounds
+                    },
+                    minRounds = 1,
+                    maxRounds = 12,
+                )
+
+                Spacer(Modifier.size(12.dp))
+
+
+                StartButton(
+                    modifier = Modifier
+                        .onVisibilityChanged(
+                            callback = { isVisible ->
+                                isFabVisible = !isVisible
+                            }
+                        )
                 ) {
-
-                    Text(
-                        text = "Workout Type",
-                        fontSize = 22.sp,
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontWeight = FontWeight.W600,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Start
-                    )
-
-                    Spacer(Modifier.size(8.dp))
-
-                    WorkoutModeGrid(
-                        selectedMode = selectedMode,
-                        onModeSelected = { mode ->
-                            selectedMode = mode
-                            if (selectedMode != WorkoutMode.CUSTOM) {
-                                roundDuration = mode.roundDuration
-                                restDuration = mode.restDuration
-                                totalRounds = mode.rounds
-                            }
-                        },
-                        emojiSize = 24.sp,
-                        titleSize = 18.sp,
-                        descriptionSize = 12.sp,
-                    )
-
-                    Spacer(Modifier.size(22.dp))
-
-                    Text(
-                        text = "Round Settings",
-                        fontSize = 22.sp,
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontWeight = FontWeight.W600,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Start
-                    )
-
-                    Spacer(Modifier.size(12.dp))
-
-                    TimerSetter(
-                        title = "Round Duration",
-                        timeInMillis = roundDuration,
-                        onPlusClicked = {
-                            roundDuration = roundDuration + 30000
-                            selectedMode = WorkoutMode.CUSTOM
-                        },
-                        onMinusClicked = {
-                            selectedMode = WorkoutMode.CUSTOM
-                            if ((roundDuration - 30000 < 0).not()) {
-                                roundDuration = roundDuration - 30000
-                            }
-                        },
-                    )
-
-                    Spacer(Modifier.size(12.dp))
-
-                    TimerSetter(
-                        title = "Rest Duration",
-                        timeInMillis = restDuration,
-                        onPlusClicked = {
-                            selectedMode = WorkoutMode.CUSTOM
-                            restDuration = restDuration + 30000
-                        },
-                        onMinusClicked = {
-                            selectedMode = WorkoutMode.CUSTOM
-                            if ((restDuration - 30000 < 0).not()) {
-                                restDuration = restDuration - 30000
-                            }
-                        },
-                    )
-
-                    Spacer(Modifier.size(12.dp))
-
-                    RoundNumberPicker(
-                        title = "Rounds Number",
-                        rounds = totalRounds,
-                        onRoundsChanged = { rounds ->
-                            selectedMode = WorkoutMode.CUSTOM
-                            totalRounds = rounds
-                        },
-                        minRounds = 1,
-                        maxRounds = 12,
-                    )
-
-                    Spacer(Modifier.size(12.dp))
-
-
-                    StartButton(
-                        modifier = Modifier
-                            .onVisibilityChanged(
-                                callback = { isVisible ->
-                                    isFabVisible = !isVisible
-                                }
-                            )
-                    ) {
-                        onStartWorkout(TimerSettings(roundDuration, restDuration, totalRounds))
-                    }
-
-                    Spacer(Modifier.size(72.dp))
-
+                    onStartWorkout(TimerSettings(roundDuration, restDuration, totalRounds))
                 }
 
+                Spacer(Modifier.size(72.dp))
 
             }
+
+
         }
     }
 

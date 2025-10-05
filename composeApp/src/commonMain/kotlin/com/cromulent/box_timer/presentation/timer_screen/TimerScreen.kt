@@ -85,8 +85,6 @@ private fun TimerScreenLandscape(
     modifier: Modifier = Modifier
 ) {
 
-    BoxTimerProTheme {
-
         Box(
             modifier = modifier
                 .background(Color.Transparent)
@@ -231,8 +229,6 @@ private fun TimerScreenLandscape(
 
         }
 
-    }
-
 }
 
 @Preview
@@ -244,8 +240,6 @@ private fun TimerScreenPortrait(
     modifier: Modifier = Modifier
 ) {
 
-
-    MaterialTheme {
 
         Scaffold(
             modifier = Modifier,
@@ -354,5 +348,4 @@ private fun TimerScreenPortrait(
             }
         }
     }
-}
 
