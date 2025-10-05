@@ -17,3 +17,9 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
+/key/Untitled.rtf
+/key/keystore.jks
+/composeApp/release/composeApp-release.apk
+/composeApp/release/baselineProfiles/0/composeApp-release.dm
+/composeApp/release/baselineProfiles/1/composeApp-release.dm
+/composeApp/release/output-metadata.json
