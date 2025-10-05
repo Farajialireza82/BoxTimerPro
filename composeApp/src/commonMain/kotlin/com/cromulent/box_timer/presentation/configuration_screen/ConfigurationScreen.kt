@@ -258,16 +258,27 @@ private fun ConfigurationScreen(
                 TimerSetter(
                     title = "Round Duration",
                     timeInMillis = roundDuration,
+                    isPlusButtonEnabled = true,
+                    isMinusButtonEnabled = roundDuration - 10000 > 0,
+                    timeUnitLabel = "10 Seconds",
                     onPlusClicked = {
-                        roundDuration = roundDuration + 30000
+                        roundDuration = roundDuration + 10000
                         selectedMode = WorkoutMode.CUSTOM
                     },
                     onMinusClicked = {
                         selectedMode = WorkoutMode.CUSTOM
-                        if ((roundDuration - 30000 < 0).not()) {
-                            roundDuration = roundDuration - 30000
-                        }
+                        roundDuration = roundDuration - 10000
                     },
+                    onDoublePlusClicked = {
+                        selectedMode = WorkoutMode.CUSTOM
+                        roundDuration = roundDuration + 60000
+                    },
+                    onDoubleMinusClicked = {
+                        selectedMode = WorkoutMode.CUSTOM
+                        roundDuration = roundDuration - 60000
+                    },
+                    isDoublePlusEnabled = roundDuration + 60000 > 0,
+                    isDoubleMinusEnabled = roundDuration - 60000 > 0
                 )
 
                 Spacer(Modifier.size(12.dp))
@@ -275,16 +286,27 @@ private fun ConfigurationScreen(
                 TimerSetter(
                     title = "Rest Duration",
                     timeInMillis = restDuration,
+                    isPlusButtonEnabled = true,
+                    isMinusButtonEnabled = restDuration - 10000 > 0,
+                    timeUnitLabel = "10 Seconds",
                     onPlusClicked = {
                         selectedMode = WorkoutMode.CUSTOM
-                        restDuration = restDuration + 30000
+                        restDuration = restDuration + 10000
                     },
                     onMinusClicked = {
                         selectedMode = WorkoutMode.CUSTOM
-                        if ((restDuration - 30000 < 0).not()) {
-                            restDuration = restDuration - 30000
-                        }
+                        restDuration = restDuration - 10000
                     },
+                    onDoublePlusClicked = {
+                        selectedMode = WorkoutMode.CUSTOM
+                        restDuration = restDuration + 60000
+                    },
+                    onDoubleMinusClicked = {
+                        selectedMode = WorkoutMode.CUSTOM
+                        restDuration = restDuration - 60000
+                    },
+                    isDoublePlusEnabled = restDuration + 60000 > 0,
+                    isDoubleMinusEnabled = restDuration - 60000 > 0
                 )
 
                 Spacer(Modifier.size(12.dp))
@@ -297,7 +319,7 @@ private fun ConfigurationScreen(
                         totalRounds = rounds
                     },
                     minRounds = 1,
-                    maxRounds = 12,
+                    maxRounds = Int.MAX_VALUE,
                 )
 
                 Spacer(Modifier.size(12.dp))

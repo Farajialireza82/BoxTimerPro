@@ -23,6 +23,10 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Minus
+import compose.icons.fontawesomeicons.solid.Plus
 
 @Composable
 fun RoundNumberPicker(
@@ -94,7 +98,7 @@ fun RoundNumberPicker(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TimerControlButton(
-                    icon = "−",
+                    icon = FontAwesomeIcons.Solid.Minus,
                     onClick = { 
                         val newRounds = (rounds - 1).coerceAtLeast(minRounds)
                         onRoundsChanged(newRounds)
@@ -114,7 +118,7 @@ fun RoundNumberPicker(
                 Spacer(modifier = Modifier.width(20.dp))
                 
                 TimerControlButton(
-                    icon = "+",
+                    icon = FontAwesomeIcons.Solid.Plus,
                     onClick = { 
                         val newRounds = (rounds + 1).coerceAtMost(maxRounds)
                         onRoundsChanged(newRounds)
