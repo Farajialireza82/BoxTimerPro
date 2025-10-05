@@ -57,7 +57,7 @@ fun App() {
                         val viewModel = koinViewModel<TimerViewModel>()
                         TimerScreenRoot(
                             viewModel = viewModel,
-                            onBackButtonClicked = {
+                            closeTimerScreen = {
                                 navController.popBackStack()
                             })
 
