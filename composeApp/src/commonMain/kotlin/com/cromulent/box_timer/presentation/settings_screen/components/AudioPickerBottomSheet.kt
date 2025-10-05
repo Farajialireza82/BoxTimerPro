@@ -97,7 +97,7 @@ fun AudioPickerBottomSheet(
 @Preview
 @Composable
 private fun AudioFileItem(
-    file: AudioFile = AudioFile("Audio File", ""),
+    file: AudioFile = AudioFile("Audio File", "null"),
     isSelected: Boolean = false,
     playAudio: (AudioFile) -> Unit,
     onItemSelected: (AudioFile) -> Unit,
@@ -121,17 +121,24 @@ private fun AudioFileItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(MaterialTheme.colorScheme.surfaceVariant)
-                .padding(vertical = 8.dp),
+                .padding(vertical = 24.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(
-                onClick = { playAudio(file) }
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.ic_play),
-                    tint = if (isSelected) MaterialTheme.colorScheme.secondary else White,
-                    contentDescription = null
-                )
+            if (file.uri != null) {
+                IconButton(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .size(24.dp),
+                    onClick = { playAudio(file) }
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.ic_play),
+                        tint = if (isSelected) MaterialTheme.colorScheme.secondary else White,
+                        contentDescription = null
+                    )
+                }
+            } else {
+                Spacer(Modifier.padding(horizontal = 16.dp).size(24.dp))
             }
             Text(
                 text = file.title,

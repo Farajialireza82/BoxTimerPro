@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class AudioFile(
     val title: String,
-    val uri: String
+    val uri: String?
 )

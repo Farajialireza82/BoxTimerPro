@@ -8,7 +8,8 @@ data class SettingsState(
     val audioFiles: List<AudioFile> = listOf(
         AudioFile("Beep", "files/beep.mp3"),
         AudioFile("Single Bell", "files/bell-single.mp3"),
-        AudioFile("Bell Three Times", "files/bell-three-times.mp3")
+        AudioFile("Bell Three Times", "files/bell-three-times.mp3"),
+        AudioFile("Mute", null),
     ),
     val startRoundAudioFiles: List<AudioFile> = listOf(
         AudioFile("Bell Single", "files/bell-single.mp3"),
@@ -20,6 +21,7 @@ data class SettingsState(
         AudioFile("Buzzer Short", "files/buzzer-short.mp3"),
         AudioFile("Gun Shot", "files/gun-shot.mp3"),
         AudioFile("Pistol Shot", "files/pistol-shot.mp3"),
+        AudioFile("Mute", null),
     ),
     val endRoundAudioFiles: List<AudioFile> = listOf(
         AudioFile("Bell Single", "files/bell-single.mp3"),
@@ -31,6 +33,7 @@ data class SettingsState(
         AudioFile("Buzzer Short", "files/buzzer-short.mp3"),
         AudioFile("Gun Shot", "files/gun-shot.mp3"),
         AudioFile("Pistol Shot", "files/pistol-shot.mp3"),
+        AudioFile("Mute", null),
     ),
     val countDownAudioFiles: List<AudioFile> = listOf(
         AudioFile("Beep", "files/beep.mp3"),
@@ -40,5 +43,6 @@ data class SettingsState(
         AudioFile("Electric Beep", "files/Electric-Beep.mp3"),
         AudioFile("Drop", "files/Drop.mp3"),
         AudioFile("Modern Drop", "files/Modern-Drop.mp3"),
+        AudioFile("Mute", null),
     ).sortedBy { it.title }
 )

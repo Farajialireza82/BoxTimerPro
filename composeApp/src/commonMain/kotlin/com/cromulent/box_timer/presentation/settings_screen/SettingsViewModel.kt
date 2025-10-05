@@ -55,7 +55,7 @@ class SettingsViewModel(
 
     }
 
-    private fun playAudio(uri: String) {
+    private fun playAudio(uri: String?) {
         audioPlayer.playSound(uri)
     }
 

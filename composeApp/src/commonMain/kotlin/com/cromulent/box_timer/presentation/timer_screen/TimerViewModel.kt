@@ -197,7 +197,7 @@ class TimerViewModel(
         if (appSettings.isVibrationEnabled) systemEngine.vibrate(duration)
     }
 
-    private fun playAudio(uri: String) {
+    private fun playAudio(uri: String?) {
         if (appSettings.muteAllSounds) return
         audioPlayer.playSound(uri)
     }

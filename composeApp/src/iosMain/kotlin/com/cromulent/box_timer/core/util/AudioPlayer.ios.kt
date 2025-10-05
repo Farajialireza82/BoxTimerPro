@@ -11,7 +11,8 @@ actual class AudioPlayer {
     private var avAudioPlayer: AVAudioPlayer? = null
 
     @OptIn(ExperimentalForeignApi::class)
-    actual fun playSound(uri: String) {
+    actual fun playSound(uri: String?) {
+        if (uri == null) return
         val url = NSURL.URLWithString(Res.getUri(uri))!!
         avAudioPlayer = AVAudioPlayer(url, error = null)
         avAudioPlayer?.prepareToPlay()

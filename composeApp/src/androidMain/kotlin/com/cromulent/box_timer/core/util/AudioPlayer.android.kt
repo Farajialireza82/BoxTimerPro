@@ -9,7 +9,8 @@ actual class AudioPlayer(private val context: Context) {
     private var mediaPlayer = MediaPlayer()
 
     @OptIn(ExperimentalResourceApi::class)
-    actual fun playSound(uri: String) {
+    actual fun playSound(uri: String?) {
+        if (uri == null) return
         mediaPlayer = MediaPlayer()
         try {
             val assetPath = Res.getUri(uri).removePrefix("file:///android_asset/")
