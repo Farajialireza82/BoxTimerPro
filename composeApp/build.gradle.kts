@@ -68,12 +68,19 @@ android {
     namespace = "com.cromulent.box_timer"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
+    applicationVariants.all {
+        outputs.all {
+            (this as? com.android.build.gradle.internal.api.BaseVariantOutputImpl)?.outputFileName =
+                "BoxTimerPro-${project.findProperty("PROJECT_VERSION")}-${name}.apk"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.cromulent.box_timer"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
-        versionName = "1.0"
+        versionName = "${project.findProperty("PROJECT_VERSION")}"
     }
     packaging {
         resources {
