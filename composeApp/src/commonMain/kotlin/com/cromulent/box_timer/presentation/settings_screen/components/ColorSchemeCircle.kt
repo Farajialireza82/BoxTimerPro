@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
@@ -44,8 +45,6 @@ fun ColorSchemeCircle(
         colorScheme.surface,
         colorScheme.tertiary,
     )
-
-    val size = if (isSelected) size + 4.dp else size
 
     val sweepAngle = 90f
 
@@ -74,22 +73,20 @@ fun ColorSchemeCircle(
                 )
             }
 
-            if (isSelected) {
 
-                drawCircle(
-                    color = colorScheme.secondary,
-                    radius = radius,
-                    style = Stroke(width = 8.dp.toPx()) // Draw only the border
-                )
-
+            drawCircle(
+                color = if (isSelected) colorScheme.secondary else Transparent,
+                radius = radius,
+                style = Stroke(width = 8.dp.toPx()) // Draw only the border
+            )
 
 
-                drawCircle(
-                    color = colorScheme.surfaceVariant,
-                    radius = radius,
-                    style = Stroke(width = 3.dp.toPx()) // Draw only the border
-                )
-            }
+
+            drawCircle(
+                color = if (isSelected) colorScheme.surfaceVariant else Transparent,
+                radius = radius,
+                style = Stroke(width = 3.dp.toPx()) // Draw only the border
+            )
         }
     }
 }
