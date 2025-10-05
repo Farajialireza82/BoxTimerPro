@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +30,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
+import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
+import com.cromulent.box_timer.presentation.theme.IceColorScheme
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ModeCard(
@@ -49,10 +53,14 @@ fun ModeCard(
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(
             width = if (isSelected) 2.dp else 1.dp,
-            color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.05f)
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant.copy(
+                alpha = 0.05f
+            )
         ),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else White.copy(alpha = 0.05f),
+            containerColor = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else White.copy(
+                alpha = 0.05f
+            ),
         )
     ) {
         Column(
@@ -84,6 +92,11 @@ fun ModeCard(
                 Spacer(Modifier.size(4.dp))
 
                 Text(
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 12.dp
+                        )
+                        .fillMaxWidth(),
                     text = mode.description,
                     style = MaterialTheme.typography.bodySmall,
                     color = White.copy(alpha = 0.7f),
