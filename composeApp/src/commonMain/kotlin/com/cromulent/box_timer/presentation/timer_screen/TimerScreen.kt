@@ -18,6 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -47,6 +49,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -136,6 +139,7 @@ fun TimerScreenRoot(
 
 }
 
+@Preview(heightDp = 350, widthDp = 720)
 @Composable
 private fun TimerScreenLandscape(
     state: TimerState = TimerState(),
@@ -179,6 +183,7 @@ private fun TimerScreenLandscape(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .weight(1.5f)
                         .padding(bottom = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement
@@ -206,33 +211,50 @@ private fun TimerScreenLandscape(
 
                 }
 
-                Text(
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    text = formatTime(state.remainingTime),
-                    textAlign = TextAlign.Center,
-                    style = TextStyle(
-                        shadow = Shadow(
-                            color = MaterialTheme.colorScheme.secondary,
-                            offset = Offset(0f, 4f),
-                            blurRadius = if (state.isTimerRunning) 30f else 0f
+                        .fillMaxWidth()
+                        .fillMaxHeight()
+                        .weight(3f),
+                    contentAlignment = Alignment.Center
+                ) {
+                    BasicText(
+                        modifier = Modifier
+                            .align(Alignment.Center),
+                        text = formatTime(state.remainingTime),
+                        autoSize = TextAutoSize.StepBased(maxFontSize = 400.sp),
+                        style = TextStyle(
+                            shadow = Shadow(
+                                color = MaterialTheme.colorScheme.secondary,
+                                offset = Offset(0f, 4f),
+                                blurRadius = if (state.isTimerRunning) 30f else 0f
+                            ),
+                            textAlign = TextAlign.Center,
+                            fontWeight = FontWeight.W900,
+                            color = Color.White,
                         ),
-                    ),
-                    fontSize = 150.sp,
-                    fontWeight = FontWeight.W900,
-                    color = Color.White
-                )
+                    )
+                }
 
-                Text(
-                    modifier = Modifier
-                        .animateContentSize(),
-                    text = state.timerMessage.uppercase(),
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.W600,
-                    letterSpacing = 6.sp,
-                    textAlign = TextAlign.Center,
-                    color = if (state.isTimerRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
-                )
+                Box(
+                    Modifier
+                        .weight(1.3f)
+                        .animateContentSize()
+                ) {
+                    BasicText(
+                        modifier = Modifier
+                            .animateContentSize()
+                            .align(Alignment.Center),
+                        autoSize = TextAutoSize.StepBased(minFontSize = 48.sp),
+                        style = TextStyle(
+                            fontWeight = FontWeight.W600,
+                            letterSpacing = 6.sp,
+                            textAlign = TextAlign.Center,
+                            color = if (state.isTimerRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
+                        ),
+                        text = state.timerMessage.uppercase(),
+                    )
+                }
 
             }
 
@@ -375,7 +397,7 @@ private fun TimerScreenPortrait(
 
                 RectangleButton(
                     modifier = Modifier
-                        .weight(if(state.isTimerRunning) 4f else 3f),
+                        .weight(if (state.isTimerRunning) 4f else 3f),
                     isActive = state.isTimerRunning,
                     onButtonClicked = {
                         if (state.isTimerRunning) {
@@ -494,18 +516,4 @@ fun ExitTimerDialog(
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun Oref() {
-
-    MaterialTheme(colorScheme = IceColorScheme) {
-
-        ExitTimerDialog(
-            onDismiss = {},
-            onConfirmExit = {}
-        )
-    }
-
 }
