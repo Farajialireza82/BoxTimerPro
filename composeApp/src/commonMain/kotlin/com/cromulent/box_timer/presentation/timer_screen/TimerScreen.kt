@@ -209,14 +209,14 @@ private fun TimerScreenLandscape(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        text = stringResource(Res.string.chip_round_number, state.currentRound) // Interpolated string
+                        text = "Round ${state.currentRound}"
                     )
 
                     Chip(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        text = stringResource(Res.string.chip_total_rounds, state.totalRounds) // Interpolated string
+                        text = "Of ${state.totalRounds}"
                     )
 
                 }
@@ -296,7 +296,9 @@ private fun TimerScreenLandscape(
                     },
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
-                    text = if (state.isTimerRunning) stringResource(Res.string.button_pause) else stringResource(Res.string.button_start),
+                    text = if (state.isTimerRunning) stringResource(Res.string.button_pause) else stringResource(
+                        Res.string.button_start
+                    ),
                 )
 
                 Spacer(Modifier.size(18.dp))
@@ -370,7 +372,7 @@ fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = stringResource(Res.string.chip_round_number, state.currentRound) // Interpolated string
+                    text = "Round ${state.currentRound}"
                 )
 
                 Chip(
@@ -378,7 +380,7 @@ fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = stringResource(Res.string.chip_total_rounds, state.totalRounds) // Interpolated string
+                    text = "Of ${state.totalRounds}"
                 )
 
             }

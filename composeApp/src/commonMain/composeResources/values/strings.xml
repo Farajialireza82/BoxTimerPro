@@ -37,8 +37,8 @@
     <string name="header_title_app">BoxTimer Pro</string>
     <string name="header_subtitle_ready_to_train">Ready to train</string>
 
-    <string name="chip_round_number">Round %d</string>
-    <string name="chip_total_rounds">of %d</string>
+    <string name="chip_round_number">Round &amp;</string>
+    <string name="chip_total_rounds">of &amp;</string>
 
     <string name="button_start">Start</string>
     <string name="button_pause">Pause</string>
