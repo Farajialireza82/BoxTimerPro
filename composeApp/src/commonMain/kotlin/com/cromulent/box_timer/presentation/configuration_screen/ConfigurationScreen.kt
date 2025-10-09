@@ -182,7 +182,7 @@ private fun ConfigurationScreen(
             ) {
 
                 Text(
-                    text = "Workout Type",
+                    text = "Presets",
                     fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W600,
@@ -191,7 +191,7 @@ private fun ConfigurationScreen(
                     textAlign = TextAlign.Start
                 )
 
-                Spacer(Modifier.size(8.dp))
+                Spacer(Modifier.size(14.dp))
 
                 LazyRow(
                     modifier = Modifier
@@ -241,7 +241,7 @@ private fun ConfigurationScreen(
                     }
                 }
 
-                Spacer(Modifier.size(8.dp))
+                Spacer(Modifier.size(18.dp))
 
                 Text(
                     text = "Round Settings",
@@ -253,7 +253,7 @@ private fun ConfigurationScreen(
                     textAlign = TextAlign.Start
                 )
 
-                Spacer(Modifier.size(12.dp))
+                Spacer(Modifier.size(14.dp))
 
                 TimerSetter(
                     title = "Round Duration",

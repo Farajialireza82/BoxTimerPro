@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +27,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -34,15 +37,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.cromulent.box_timer.presentation.theme.SubtitleColor
 import com.cromulent.box_timer.core.util.formatTime
+import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
+import com.cromulent.box_timer.presentation.theme.IceColorScheme
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.AngleLeft
+import compose.icons.fontawesomeicons.solid.AngleRight
+import compose.icons.fontawesomeicons.solid.ArrowLeft
 import compose.icons.fontawesomeicons.solid.Backspace
 import compose.icons.fontawesomeicons.solid.Backward
+import compose.icons.fontawesomeicons.solid.CaretLeft
 import compose.icons.fontawesomeicons.solid.FastBackward
 import compose.icons.fontawesomeicons.solid.FastForward
 import compose.icons.fontawesomeicons.solid.Forward
+import compose.icons.fontawesomeicons.solid.HandPointLeft
 import compose.icons.fontawesomeicons.solid.Minus
 import compose.icons.fontawesomeicons.solid.Plus
+import compose.icons.fontawesomeicons.solid.QuoteLeft
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -61,12 +72,12 @@ fun TimerSetter(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondaryContainer),
+        border = BorderStroke(0.2.dp, MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.3f)),
         colors = CardDefaults.cardColors(
-            containerColor = White.copy(alpha = 0.05f)
-        )
+            containerColor = Transparent,
+        ),
     ) {
         Column(
             modifier = Modifier
@@ -98,12 +109,12 @@ fun TimerSetter(
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
                 TimerControlButton(
-                    icon = FontAwesomeIcons.Solid.Backward,
+                    icon = FontAwesomeIcons.Solid.AngleLeft,
                     onClick = onDoubleMinusClicked,
                     enabled = isDoubleMinusEnabled
                 )
@@ -137,7 +148,7 @@ fun TimerSetter(
                 Spacer(modifier = Modifier.width(12.dp))
 
                 TimerControlButton(
-                    icon = FontAwesomeIcons.Solid.Forward,
+                    icon = FontAwesomeIcons.Solid.AngleRight,
                     onClick = onDoublePlusClicked,
                     enabled = isDoublePlusEnabled
                 )
@@ -151,18 +162,22 @@ fun TimerSetter(
 @Composable
 private fun TimeSetterPrev() {
 
-    TimerSetter(
-        title = "Round Settings",
-        timeInMillis = 300000,
-        isMinusButtonEnabled = true,
-        isPlusButtonEnabled = true,
-        onPlusClicked = {},
-        onMinusClicked = {},
-        timeUnitLabel = "10 seconds",
-        onDoublePlusClicked = {},
-        onDoubleMinusClicked = {},
-        isDoublePlusEnabled = true,
-        isDoubleMinusEnabled = true
-    )
+    MaterialTheme(colorScheme = IceColorScheme) {
+
+        TimerSetter(
+            title = "Round Settings",
+            timeInMillis = 300000,
+            isMinusButtonEnabled = true,
+            isPlusButtonEnabled = true,
+            onPlusClicked = {},
+            onMinusClicked = {},
+            timeUnitLabel = "10 seconds",
+            onDoublePlusClicked = {},
+            onDoubleMinusClicked = {},
+            isDoublePlusEnabled = true,
+            isDoubleMinusEnabled = true
+        )
+
+    }
 
 }

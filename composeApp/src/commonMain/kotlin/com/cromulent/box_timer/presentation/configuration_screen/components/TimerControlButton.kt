@@ -26,7 +26,7 @@ fun TimerControlButton(
         modifier = modifier
             .border(
                 BorderStroke(
-                    width = 2.dp,
+                    width = 0.5.dp,
                     color = if (enabled) MaterialTheme.colorScheme.secondary else SubtitleColor
                 ),
                 shape = CircleShape

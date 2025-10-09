@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,12 +41,15 @@ fun RoundNumberPicker(
     maxRounds: Int = 50
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSecondaryContainer),
-        colors = CardDefaults.cardColors(
-            containerColor = White.copy(alpha = 0.05f)
+        border = BorderStroke(
+            0.2.dp,
+            MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.3f)
         ),
+        colors = CardDefaults.cardColors(
+            containerColor = Transparent
+        )
     ) {
         Column(
             modifier = Modifier
@@ -145,7 +150,7 @@ private fun RoundPresetButton(
             .padding(horizontal = 2.dp),
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(
-            width = if (isSelected) 2.dp else 1.dp,
+            width = if (isSelected) 0.8.dp else 0.4.dp,
             color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSecondaryContainer
         ),
         colors = CardDefaults.cardColors(
