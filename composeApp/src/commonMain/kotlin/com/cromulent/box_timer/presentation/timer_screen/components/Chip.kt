@@ -51,7 +51,7 @@ fun Chip(
         BasicText(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(12.dp),
             text = text,
             autoSize = TextAutoSize.StepBased(),
             maxLines = 1,
