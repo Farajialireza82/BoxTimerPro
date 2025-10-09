@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +23,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -51,15 +54,20 @@ fun TimerCircleIndicator(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
-            Text(
+            BasicText(
+                text = formatTime(remainingTime),
+                autoSize = TextAutoSize.StepBased(
+                    minFontSize = 64.sp,
+                ),
+                style = TextStyle(
+                    fontWeight = FontWeight.W900,
+                    color = Color.White,
+                    textAlign = TextAlign.Center
+                ),
+                maxLines = 1,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 4.dp),
-                text = formatTime(remainingTime),
-                fontSize = 64.sp,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.W900,
-                color = Color.White
+                    .padding(vertical = 4.dp, horizontal = 64.dp),
             )
 
 
@@ -82,7 +90,12 @@ fun TimerCircleIndicator(
 @Preview
 @Composable
 private fun Prev() {
-
+    TimerCircleIndicator(
+        remainingTime = 3600,
+        progress = 0.5f,
+        isRunning = true,
+        message = "FIGHT",
+    )
 }
 
 @Composable

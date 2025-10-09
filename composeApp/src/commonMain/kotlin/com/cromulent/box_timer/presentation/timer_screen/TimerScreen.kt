@@ -139,7 +139,6 @@ fun TimerScreenRoot(
 
 }
 
-@Preview(heightDp = 350, widthDp = 720)
 @Composable
 private fun TimerScreenLandscape(
     state: TimerState = TimerState(),
@@ -197,7 +196,6 @@ private fun TimerScreenLandscape(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        fontSize = 20.sp,
                         text = "Round ${state.currentRound}"
                     )
 
@@ -205,7 +203,6 @@ private fun TimerScreenLandscape(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        fontSize = 20.sp,
                         text = "of ${state.totalRounds}"
                     )
 
@@ -312,8 +309,9 @@ private fun TimerScreenLandscape(
 
 }
 
+@Preview(widthDp = 350, heightDp = 720)
 @Composable
-private fun TimerScreenPortrait(
+fun TimerScreenPortrait(
     state: TimerState = TimerState(),
     onAction: (TimerActions) -> Unit,
     onBackButtonClicked: () -> Unit,
@@ -359,7 +357,6 @@ private fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    fontSize = 24.sp,
                     text = "Round ${state.currentRound}"
                 )
 
@@ -368,7 +365,6 @@ private fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    fontSize = 24.sp,
                     text = "of ${state.totalRounds}"
                 )
 

@@ -348,77 +348,7 @@ val DesertDuneColorScheme = darkColorScheme(
     surfaceTint = Color(0xFFB8860B),
 )
 
-val NeonSynthColorScheme = darkColorScheme(
-    primary = Color(0xFFFF69B4), // Hot Pink
-    onPrimary = Color(0xFF1A0A1A),
-    primaryContainer = Color(0xFF3A1A2A),
-    onPrimaryContainer = Color(0xFFFFB3D9),
 
-    secondary = Color(0xFF00FFFF), // Cyan
-    onSecondary = Color(0xFF1A0A1A),
-    secondaryContainer = Color(0xFF1A3A3A),
-    onSecondaryContainer = Color(0xFFB8C5C5),
-
-    tertiary = Color(0xFF6A5ACD), // Slate Blue
-    onTertiary = Color(0xFF1A0A1A),
-    tertiaryContainer = Color(0xFF2A1A3A),
-    onTertiaryContainer = Color(0xFFB8C5C5),
-
-    background = Color(0xFF0A0A0F),
-    onBackground = Color(0xFFF0F0F5),
-
-    surface = Color(0xFF14141A),
-    onSurface = Color(0xFFF0F0F5),
-    surfaceVariant = Color(0xFF3A1A2A),
-    onSurfaceVariant = Color(0xFFB8C5C5),
-
-    error = Color(0xFFFF6B6B),
-    onError = Color(0xFF1A0A1A),
-    errorContainer = Color(0xFF93000A),
-    onErrorContainer = Color(0xFFFFDAD6),
-
-    outline = Color(0xFFFF69B4),
-    outlineVariant = Color(0xFF1A3A3A),
-    scrim = Color(0xFF000000),
-
-    surfaceTint = Color(0xFFFF69B4),
-)
-
-val EmeraldForestColorScheme = darkColorScheme(
-    primary = Color(0xFF3CB371), // Medium Sea Green
-    onPrimary = Color(0xFF0A1A0A),
-    primaryContainer = Color(0xFF1A3A1A),
-    onPrimaryContainer = Color(0xFF66CC99),
-
-    secondary = Color(0xFF556B2F), // Dark Olive Green
-    onSecondary = Color(0xFF0A1A0A),
-    secondaryContainer = Color(0xFF2A3A2A),
-    onSecondaryContainer = Color(0xFFB8C5B8),
-
-    tertiary = Color(0xFF808000), // Olive
-    onTertiary = Color(0xFF0A1A0A),
-    tertiaryContainer = Color(0xFF1A2A10),
-    onTertiaryContainer = Color(0xFFB8C5B8),
-
-    background = Color(0xFF0F190F),
-    onBackground = Color(0xFFCCFFCC),
-
-    surface = Color(0xFF1A2A1A),
-    onSurface = Color(0xFFCCFFCC),
-    surfaceVariant = Color(0xFF1A3A1A),
-    onSurfaceVariant = Color(0xFFB8C5B8),
-
-    error = Color(0xFFFF6B6B),
-    onError = Color(0xFF0A1A0A),
-    errorContainer = Color(0xFF93000A),
-    onErrorContainer = Color(0xFFFFDAD6),
-
-    outline = Color(0xFF3CB371),
-    outlineVariant = Color(0xFF2A3A2A),
-    scrim = Color(0xFF000000),
-
-    surfaceTint = Color(0xFF3CB371),
-)
 val SakuraSunsetColorScheme = darkColorScheme(
     primary = Color(0xFFE91E63), // Deep Pink/Raspberry
     onPrimary = Color(0xFF0A0A0A),
@@ -465,7 +395,5 @@ val colorSchemes = listOf(
     ColorSchemeDTO("crimson" ,CrimsonDawnColorScheme),
     ColorSchemeDTO("deepOcean" ,DeepOceanColorScheme),
     ColorSchemeDTO("desert" ,DesertDuneColorScheme),
-    ColorSchemeDTO("neonSynth" ,NeonSynthColorScheme),
-    ColorSchemeDTO("EmeraldForest" ,EmeraldForestColorScheme),
     ColorSchemeDTO("princessPink", SakuraSunsetColorScheme)
 )
