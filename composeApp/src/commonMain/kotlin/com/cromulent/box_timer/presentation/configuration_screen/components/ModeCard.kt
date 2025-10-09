@@ -30,9 +30,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
-import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
-import com.cromulent.box_timer.presentation.theme.IceColorScheme
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ModeCard(
@@ -71,7 +69,7 @@ fun ModeCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = mode.icon,
+                text = stringResource(mode.iconRes),
                 fontSize = emojiSize
             )
 
@@ -79,7 +77,7 @@ fun ModeCard(
 
 
             Text(
-                text = mode.displayName,
+                text = stringResource(mode.displayNameRes),
                 fontWeight = FontWeight.W600,
                 style = MaterialTheme.typography.titleMedium,
                 color = White,
@@ -97,7 +95,7 @@ fun ModeCard(
                             horizontal = 12.dp
                         )
                         .fillMaxWidth(),
-                    text = mode.description,
+                    text = stringResource(mode.descriptionRes),
                     style = MaterialTheme.typography.bodySmall,
                     color = White.copy(alpha = 0.7f),
                     textAlign = TextAlign.Center,

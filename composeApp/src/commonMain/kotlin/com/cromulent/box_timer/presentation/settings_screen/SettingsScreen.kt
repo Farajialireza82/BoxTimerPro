@@ -24,6 +24,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.about_and_support_title
+import boxtimerpro.composeapp.generated.resources.app_version_subtitle
+import boxtimerpro.composeapp.generated.resources.app_version_title
+import boxtimerpro.composeapp.generated.resources.audio_settings_title
+import boxtimerpro.composeapp.generated.resources.contact_button_text
+import boxtimerpro.composeapp.generated.resources.countdown_sound_subtitle
+import boxtimerpro.composeapp.generated.resources.countdown_sound_title
+import boxtimerpro.composeapp.generated.resources.display_settings_title
+import boxtimerpro.composeapp.generated.resources.end_round_sound_subtitle
+import boxtimerpro.composeapp.generated.resources.end_round_sound_title
+import boxtimerpro.composeapp.generated.resources.feedback_support_subtitle
+import boxtimerpro.composeapp.generated.resources.feedback_support_title
+import boxtimerpro.composeapp.generated.resources.keep_screen_on_subtitle
+import boxtimerpro.composeapp.generated.resources.keep_screen_on_title
+import boxtimerpro.composeapp.generated.resources.mute_all_sounds_subtitle
+import boxtimerpro.composeapp.generated.resources.mute_all_sounds_title
+import boxtimerpro.composeapp.generated.resources.settings_subtitle
+import boxtimerpro.composeapp.generated.resources.settings_title
+import boxtimerpro.composeapp.generated.resources.start_round_sound_subtitle
+import boxtimerpro.composeapp.generated.resources.start_round_sound_title
+import boxtimerpro.composeapp.generated.resources.vibration_subtitle
+import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
 import com.cromulent.box_timer.presentation.theme.SubtitleColor
 import com.cromulent.box_timer.presentation.theme.colorSchemes
@@ -38,6 +61,7 @@ import com.cromulent.box_timer.presentation.settings_screen.components.TitleText
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.ArrowRight
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun SettingsScreenRoot(
@@ -88,8 +112,8 @@ private fun SettingsScreen(
 
             Header(
                 modifier = Modifier,
-                title = "Settings",
-                subtitle = "Customize Your Experience",
+                title = stringResource(Res.string.settings_title),
+                subtitle = stringResource(Res.string.settings_subtitle),
                 hasBackButton = true,
                 onBackButtonClicked = onBackButtonClicked
             )
@@ -102,14 +126,14 @@ private fun SettingsScreen(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
 
-                TitleText("Audio Settings")
+                TitleText(stringResource(Res.string.audio_settings_title))
 
                 Spacer(Modifier.size(20.dp))
 
                 SettingSwitchCard(
                     isChecked = appSettings.muteAllSounds,
-                    title = "Mute All Sounds",
-                    subtitle = "Mute all sounds in the app",
+                    title = stringResource(Res.string.mute_all_sounds_title),
+                    subtitle = stringResource(Res.string.mute_all_sounds_subtitle),
                     onCheckedChange = { onAction(ToggleMuteAllSounds(it)) }
                 )
 
@@ -117,8 +141,8 @@ private fun SettingsScreen(
 
                 SettingSwitchCard(
                     isChecked = appSettings.isVibrationEnabled,
-                    title = "Vibration",
-                    subtitle = "Haptic feedback for timer events",
+                    title = stringResource(Res.string.vibration_title),
+                    subtitle = stringResource(Res.string.vibration_subtitle),
                     onCheckedChange = {
                         onAction(SettingsActions.ToggleVibrationHaptic(it))
                     }
@@ -127,8 +151,8 @@ private fun SettingsScreen(
                 Spacer(Modifier.size(10.dp))
 
                 SettingsStringPickerCard(
-                    title = "Countdown Sound",
-                    subtitle = "Sound before round starts",
+                    title = stringResource(Res.string.countdown_sound_title),
+                    subtitle = stringResource(Res.string.countdown_sound_subtitle),
                     selectedTitle = appSettings.countDownAudioFile.title,
                     onClick = { countDownBsVisibility = true }
                 )
@@ -136,8 +160,8 @@ private fun SettingsScreen(
                 Spacer(Modifier.size(10.dp))
 
                 SettingsStringPickerCard(
-                    title = "Start Round Sound",
-                    subtitle = "Sound when round begins",
+                    title = stringResource(Res.string.start_round_sound_title),
+                    subtitle = stringResource(Res.string.start_round_sound_subtitle),
                     selectedTitle = appSettings.startRoundAudioFile.title,
                     onClick = { startRoundBsVisibility = true }
                 )
@@ -145,22 +169,22 @@ private fun SettingsScreen(
                 Spacer(Modifier.size(10.dp))
 
                 SettingsStringPickerCard(
-                    title = "End Round Sound",
-                    subtitle = "Sound when round ends",
+                    title = stringResource(Res.string.end_round_sound_title),
+                    subtitle = stringResource(Res.string.end_round_sound_subtitle),
                     selectedTitle = appSettings.endRoundAudioFile.title,
                     onClick = { endRoundBsVisibility = true }
                 )
 
                 Spacer(Modifier.size(30.dp))
 
-                TitleText("Display Settings")
+                TitleText(stringResource(Res.string.display_settings_title))
 
                 Spacer(Modifier.size(20.dp))
 
                 SettingSwitchCard(
                     isChecked = appSettings.keepScreenOnEnabled,
-                    title = "Keep Screen On",
-                    subtitle = "Prevent screen from sleeping during workout",
+                    title = stringResource(Res.string.keep_screen_on_title),
+                    subtitle = stringResource(Res.string.keep_screen_on_subtitle),
                     onCheckedChange = {
                         onAction(SettingsActions.ToggleKeepScreenOn(it))
 
@@ -179,14 +203,14 @@ private fun SettingsScreen(
 
                 Spacer(Modifier.size(30.dp))
 
-                TitleText("About & Support")
+                TitleText(stringResource(Res.string.about_and_support_title))
 
                 Spacer(Modifier.size(20.dp))
 
 
                 SettingCard(
-                    title = "App Version",
-                    subtitle = "Current version information",
+                    title = stringResource(Res.string.app_version_title),
+                    subtitle = stringResource(Res.string.app_version_subtitle),
                     onClick = { }
                 ) {
                     Text(
@@ -199,15 +223,15 @@ private fun SettingsScreen(
                 Spacer(Modifier.size(10.dp))
 
                 SettingCard(
-                    title = "Feedback & Support",
-                    subtitle = "Get help or send feedback",
+                    title = stringResource(Res.string.feedback_support_title),
+                    subtitle = stringResource(Res.string.feedback_support_subtitle),
                     onClick = { onAction(SettingsActions.OnFeedbackClick) }
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Contact",
+                            text = stringResource(Res.string.contact_button_text),
                             color = MaterialTheme.colorScheme.secondary,
                             fontWeight = FontWeight.W600,
                             modifier = Modifier.padding(end = 4.dp)
@@ -230,12 +254,13 @@ private fun SettingsScreen(
     }
 
 
+    // Bottom Sheets (reusing string resources)
 
     if (startRoundBsVisibility) {
         AudioPickerBottomSheet(
             onDismissRequest = { startRoundBsVisibility = false },
             onItemSelected = { onAction(SettingsActions.SetStartRoundSound(it)) },
-            title = "Start Round Sound",
+            title = stringResource(Res.string.start_round_sound_title),
             selectedAudioFile = appSettings.startRoundAudioFile,
             playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
             items = state.startRoundAudioFiles
@@ -247,7 +272,7 @@ private fun SettingsScreen(
         AudioPickerBottomSheet(
             onDismissRequest = { endRoundBsVisibility = false },
             onItemSelected = { onAction(SettingsActions.SetEndRoundSound(it)) },
-            title = "End Round Sound",
+            title = stringResource(Res.string.end_round_sound_title),
             selectedAudioFile = appSettings.endRoundAudioFile,
             playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
             items = state.endRoundAudioFiles
@@ -259,7 +284,7 @@ private fun SettingsScreen(
         AudioPickerBottomSheet(
             onDismissRequest = { countDownBsVisibility = false },
             onItemSelected = { onAction(SettingsActions.SetCountdownSound(it)) },
-            title = "Countdown Sound",
+            title = stringResource(Res.string.countdown_sound_title),
             selectedAudioFile = appSettings.countDownAudioFile,
             playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
             items = state.countDownAudioFiles

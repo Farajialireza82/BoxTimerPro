@@ -2,6 +2,14 @@ package com.cromulent.box_timer.presentation.timer_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.button_pause
+import boxtimerpro.composeapp.generated.resources.start_workout
+import boxtimerpro.composeapp.generated.resources.sth
+import boxtimerpro.composeapp.generated.resources.title_fight
+import boxtimerpro.composeapp.generated.resources.title_paused
+import boxtimerpro.composeapp.generated.resources.title_ready
+import boxtimerpro.composeapp.generated.resources.title_rest
 import com.cromulent.box_timer.core.util.AudioPlayer
 import com.cromulent.box_timer.core.util.SystemEngine
 import com.cromulent.box_timer.domain.AppSettings
@@ -12,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 
 class TimerViewModel(
     settingsRepository: SettingsRepository,

@@ -56,6 +56,18 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.back_ic
+import boxtimerpro.composeapp.generated.resources.button_continue
+import boxtimerpro.composeapp.generated.resources.button_pause
+import boxtimerpro.composeapp.generated.resources.button_reset
+import boxtimerpro.composeapp.generated.resources.button_resume
+import boxtimerpro.composeapp.generated.resources.button_start
+import boxtimerpro.composeapp.generated.resources.button_stop_exit
+import boxtimerpro.composeapp.generated.resources.chip_round_number
+import boxtimerpro.composeapp.generated.resources.chip_total_rounds
+import boxtimerpro.composeapp.generated.resources.dialog_timer_running_message
+import boxtimerpro.composeapp.generated.resources.dialog_timer_running_title
+import boxtimerpro.composeapp.generated.resources.header_subtitle_ready_to_train
+import boxtimerpro.composeapp.generated.resources.header_title_app
 import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
 import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
 import com.cromulent.box_timer.core.util.formatTime
@@ -68,6 +80,7 @@ import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Exclamation
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -196,14 +209,14 @@ private fun TimerScreenLandscape(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        text = "Round ${state.currentRound}"
+                        text = stringResource(Res.string.chip_round_number, state.currentRound) // Interpolated string
                     )
 
                     Chip(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        text = "of ${state.totalRounds}"
+                        text = stringResource(Res.string.chip_total_rounds, state.totalRounds) // Interpolated string
                     )
 
                 }
@@ -249,7 +262,7 @@ private fun TimerScreenLandscape(
                             textAlign = TextAlign.Center,
                             color = if (state.isTimerRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
                         ),
-                        text = state.timerMessage.uppercase(),
+                        text = state.timerMessage.uppercase(), // Assuming timerMessage is dynamic and doesn't need external string res
                     )
                 }
 
@@ -283,7 +296,7 @@ private fun TimerScreenLandscape(
                     },
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
-                    text = if (state.isTimerRunning) "Pause" else "Start",
+                    text = if (state.isTimerRunning) stringResource(Res.string.button_pause) else stringResource(Res.string.button_start),
                 )
 
                 Spacer(Modifier.size(18.dp))
@@ -294,7 +307,7 @@ private fun TimerScreenLandscape(
                         .weight(1f)
                         .height(58.dp),
                     isActive = false,
-                    text = "Reset",
+                    text = stringResource(Res.string.button_reset),
                     onButtonClicked = {
                         onAction(TimerActions.ResetTimer)
                     }
@@ -326,8 +339,8 @@ fun TimerScreenPortrait(
             Header(
                 modifier = Modifier
                     .statusBarsPadding(),
-                title = "BoxTimer Pro",
-                subtitle = "Ready to train",
+                title = stringResource(Res.string.header_title_app),
+                subtitle = stringResource(Res.string.header_subtitle_ready_to_train),
                 hasBackButton = true,
                 onBackButtonClicked = onBackButtonClicked
             )
@@ -357,7 +370,7 @@ fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = "Round ${state.currentRound}"
+                    text = stringResource(Res.string.chip_round_number, state.currentRound) // Interpolated string
                 )
 
                 Chip(
@@ -365,7 +378,7 @@ fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = "of ${state.totalRounds}"
+                    text = stringResource(Res.string.chip_total_rounds, state.totalRounds) // Interpolated string
                 )
 
             }
@@ -377,7 +390,7 @@ fun TimerScreenPortrait(
                 remainingTime = state.remainingTime,
                 progress = state.progress,
                 isRunning = state.isTimerRunning,
-                message = state.timerMessage,
+                message = state.timerMessage, // Assuming timerMessage is dynamic and doesn't need external string res
             )
 
             Column(
@@ -404,7 +417,11 @@ fun TimerScreenPortrait(
                     },
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
-                    text = if (state.isTimerRunning) "Pause" else if (state.isPaused) "Resume" else "Start",
+                    text = when {
+                        state.isTimerRunning -> stringResource(Res.string.button_pause)
+                        state.isPaused -> stringResource(Res.string.button_resume)
+                        else -> stringResource(Res.string.button_start)
+                    },
                 )
 
                 Spacer(Modifier.size(18.dp))
@@ -414,7 +431,7 @@ fun TimerScreenPortrait(
                     modifier = Modifier
                         .weight(2f),
                     isActive = false,
-                    text = "Reset",
+                    text = stringResource(Res.string.button_reset),
                     onButtonClicked = {
                         onAction(TimerActions.ResetTimer)
                     }
@@ -463,7 +480,7 @@ fun ExitTimerDialog(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Timer is Running",
+                    text = stringResource(Res.string.dialog_timer_running_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -472,7 +489,7 @@ fun ExitTimerDialog(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "Your workout is still in progress. Are you sure you want to stop and go back?",
+                    text = stringResource(Res.string.dialog_timer_running_message),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center
@@ -490,7 +507,7 @@ fun ExitTimerDialog(
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Text(
-                            text = "Continue",
+                            text = stringResource(Res.string.button_continue),
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -504,7 +521,7 @@ fun ExitTimerDialog(
                         )
                     ) {
                         Text(
-                            text = "Stop & Exit",
+                            text = stringResource(Res.string.button_stop_exit),
                             fontWeight = FontWeight.Bold
                         )
                     }

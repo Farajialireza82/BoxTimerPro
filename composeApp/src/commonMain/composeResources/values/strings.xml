@@ -1,0 +1,109 @@
+<resources>
+    <string name="start_workout">Start Workout</string>
+    <string name="configure_your_workout">Configure Your Workout</string>
+    <string name="presets">Presets</string>
+    <string name="round_settings">Round Settings</string>
+    <string name="round_number">Rounds Number</string>
+    <string name="round_duration">Round Duration</string>
+    <string name="ten_seconds">10 Seconds</string>
+    <string name="rest_duration">Rest Duration</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">Customize Your Experience</string>
+
+    <string name="audio_settings_title">Audio Settings</string>
+    <string name="mute_all_sounds_title">Mute All Sounds</string>
+    <string name="mute_all_sounds_subtitle">Mute all sounds in the app</string>
+    <string name="vibration_title">Vibration</string>
+    <string name="vibration_subtitle">Haptic feedback for timer events</string>
+    <string name="countdown_sound_title">Countdown Sound</string>
+    <string name="countdown_sound_subtitle">Sound before round starts</string>
+    <string name="start_round_sound_title">Start Round Sound</string>
+    <string name="start_round_sound_subtitle">Sound when round begins</string>
+    <string name="end_round_sound_title">End Round Sound</string>
+    <string name="end_round_sound_subtitle">Sound when round ends</string>
+
+    <string name="display_settings_title">Display Settings</string>
+    <string name="keep_screen_on_title">Keep Screen On</string>
+    <string name="keep_screen_on_subtitle">Prevent screen from sleeping during workout</string>
+
+    <string name="about_and_support_title">About &amp; Support</string>
+    <string name="app_version_title">App Version</string>
+    <string name="app_version_subtitle">Current version information</string>
+    <string name="feedback_support_title">Feedback &amp; Support</string>
+    <string name="feedback_support_subtitle">Get help or send feedback</string>
+    <string name="contact_button_text">Contact</string>
+
+    <string name="header_title_app">BoxTimer Pro</string>
+    <string name="header_subtitle_ready_to_train">Ready to train</string>
+
+    <string name="chip_round_number">Round %d</string>
+    <string name="chip_total_rounds">of %d</string>
+
+    <string name="button_start">Start</string>
+    <string name="button_pause">Pause</string>
+    <string name="button_resume">Resume</string>
+    <string name="button_reset">Reset</string>
+
+    <string name="title_ready">Reset</string>
+    <string name="title_paused">Paused</string>
+    <string name="title_fight">Reset</string>
+    <string name="title_rest">Reset</string>
+
+    <string name="dialog_timer_running_title">Timer is Running</string>
+    <string name="dialog_timer_running_message">Your workout is still in progress. Are you sure you want to stop and go back?</string>
+    <string name="button_continue">Continue</string>
+    <string name="button_stop_exit">Stop &amp; Exit</string>
+    <string name= "sth">"Get Ready: &amp;</string>
+
+    <string name="audio_title_mute">Mute</string>
+    <string name="audio_title_beep">Beep</string>
+    <string name="audio_title_single_bell">Single Bell</string>
+    <string name="audio_title_bell_single">Bell Single</string>
+    <string name="audio_title_bell_three_times">Bell Three Times</string>
+
+    <string name="audio_title_whistle">Whistle</string>
+    <string name="audio_title_air_horn_long">Air Horn Long</string>
+    <string name="audio_title_air_horn_short">Air Horn Short</string>
+    <string name="audio_title_buzzer_long">Buzzer Long</string>
+    <string name="audio_title_buzzer_short">Buzzer Short</string>
+    <string name="audio_title_gun_shot">Gun Shot</string>
+    <string name="audio_title_pistol_shot">Pistol Shot</string>
+
+    <string name="audio_title_barcode">Barcode</string>
+    <string name="audio_title_car_horn">Car Horn</string>
+    <string name="audio_title_clock_beep">Clock Beep</string>
+    <string name="audio_title_electric_beep">Electric Beep</string>
+    <string name="audio_title_drop">Drop</string>
+    <string name="audio_title_modern_drop">Modern Drop</string>
+
+
+
+    <!-- Workout Mode Titles -->
+    <string name="workout_mode_mma">MMA</string>
+    <string name="workout_mode_boxing">Boxing</string>
+    <string name="workout_mode_strength">Strength</string>
+    <string name="workout_mode_cardio">Cardio</string>
+    <string name="workout_mode_hiit">HIIT</string>
+    <string name="workout_mode_tabata">Tabata</string>
+    <string name="workout_mode_custom">Custom</string>
+
+    <!-- Workout Mode Descriptions -->
+    <string name="workout_mode_mma_desc">Mixed Martial Arts</string>
+    <string name="workout_mode_boxing_desc">Traditional boxing rounds</string>
+    <string name="workout_mode_strength_desc">Strength training circuits</string>
+    <string name="workout_mode_cardio_desc">Cardio intervals</string>
+    <string name="workout_mode_hiit_desc">High-Intensity Interval Training</string>
+    <string name="workout_mode_tabata_desc">4-minute Tabata protocol</string>
+    <string name="workout_mode_custom_desc">Create your own workout</string>
+
+    <!-- Workout Mode Emojis -->
+    <string name="workout_mode_mma_emoji">🦅</string>
+    <string name="workout_mode_boxing_emoji">🥊</string>
+    <string name="workout_mode_strength_emoji">💪</string>
+    <string name="workout_mode_cardio_emoji">🏃</string>
+    <string name="workout_mode_hiit_emoji">🔥</string>
+    <string name="workout_mode_tabata_emoji">⚡</string>
+    <string name="workout_mode_custom_emoji">⚙️</string>
+
+</resources>

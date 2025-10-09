@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -49,20 +47,27 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.configure_your_workout
+import boxtimerpro.composeapp.generated.resources.presets
+import boxtimerpro.composeapp.generated.resources.rest_duration
+import boxtimerpro.composeapp.generated.resources.round_duration
+import boxtimerpro.composeapp.generated.resources.round_number
+import boxtimerpro.composeapp.generated.resources.round_settings
 import boxtimerpro.composeapp.generated.resources.settings_ic
-import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
+import boxtimerpro.composeapp.generated.resources.start_workout
+import boxtimerpro.composeapp.generated.resources.ten_seconds
+import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 import com.cromulent.box_timer.core.util.toWorkoutMode
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.configuration_screen.components.ModeCard
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
-import com.cromulent.box_timer.presentation.configuration_screen.components.WorkoutModeGrid
-import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 import com.cromulent.box_timer.presentation.theme.IceColorScheme
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Play
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -139,7 +144,7 @@ private fun ConfigurationScreen(
 
                     AnimatedVisibility(isFabExpanded) {
                         Row {
-                            Text("Start Workout")
+                            Text(stringResource(Res.string.start_workout))
                             Spacer(Modifier.size(8.dp))
                         }
                     }
@@ -166,7 +171,7 @@ private fun ConfigurationScreen(
             Header(
                 modifier = Modifier.padding(horizontal = 8.dp),
                 title = "BoxTimer Pro",
-                subtitle = "Configure Your Workout",
+                subtitle = stringResource(Res.string.configure_your_workout),
                 hasBackButton = false,
                 hasActionButton = true,
                 actionButtonResource = Res.drawable.settings_ic,
@@ -182,7 +187,7 @@ private fun ConfigurationScreen(
             ) {
 
                 Text(
-                    text = "Presets",
+                    text = stringResource(Res.string.presets),
                     fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W600,
@@ -244,7 +249,7 @@ private fun ConfigurationScreen(
                 Spacer(Modifier.size(18.dp))
 
                 Text(
-                    text = "Round Settings",
+                    text = stringResource(Res.string.round_settings),
                     fontSize = 22.sp,
                     color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.W600,
@@ -256,11 +261,11 @@ private fun ConfigurationScreen(
                 Spacer(Modifier.size(14.dp))
 
                 TimerSetter(
-                    title = "Round Duration",
+                    title = stringResource(Res.string.round_duration),
                     timeInMillis = roundDuration,
                     isPlusButtonEnabled = true,
                     isMinusButtonEnabled = roundDuration - 10000 > 0,
-                    timeUnitLabel = "10 Seconds",
+                    timeUnitLabel = stringResource(Res.string.ten_seconds),
                     onPlusClicked = {
                         roundDuration = roundDuration + 10000
                         selectedMode = WorkoutMode.CUSTOM
@@ -284,11 +289,11 @@ private fun ConfigurationScreen(
                 Spacer(Modifier.size(12.dp))
 
                 TimerSetter(
-                    title = "Rest Duration",
+                    title = stringResource(Res.string.rest_duration),
                     timeInMillis = restDuration,
                     isPlusButtonEnabled = true,
                     isMinusButtonEnabled = restDuration - 10000 > 0,
-                    timeUnitLabel = "10 Seconds",
+                    timeUnitLabel = stringResource(Res.string.ten_seconds),
                     onPlusClicked = {
                         selectedMode = WorkoutMode.CUSTOM
                         restDuration = restDuration + 10000
@@ -312,7 +317,7 @@ private fun ConfigurationScreen(
                 Spacer(Modifier.size(12.dp))
 
                 RoundNumberPicker(
-                    title = "Rounds Number",
+                    title = stringResource(Res.string.round_number),
                     rounds = totalRounds,
                     onRoundsChanged = { rounds ->
                         selectedMode = WorkoutMode.CUSTOM
@@ -376,7 +381,7 @@ fun StartButton(
         onClick = onClick
     ) {
         Text(
-            text = "Start Workout",
+            text = stringResource(Res.string.start_workout),
             color = Color.White,
             fontSize = 18.sp,
             fontWeight = FontWeight.W800
