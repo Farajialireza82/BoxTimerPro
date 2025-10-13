@@ -57,6 +57,7 @@ fun TimerCircleIndicator(
             BasicText(
                 text = formatTime(remainingTime),
                 autoSize = TextAutoSize.StepBased(
+                    stepSize = 6.sp,
                     minFontSize = 64.sp,
                 ),
                 style = TextStyle(
@@ -67,6 +68,7 @@ fun TimerCircleIndicator(
                 maxLines = 1,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .animateContentSize()
                     .padding(vertical = 4.dp, horizontal = 64.dp),
             )
 
