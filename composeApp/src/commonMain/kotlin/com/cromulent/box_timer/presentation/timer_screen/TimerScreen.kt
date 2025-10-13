@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -20,7 +21,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -31,7 +31,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,11 +46,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
@@ -64,19 +60,14 @@ import boxtimerpro.composeapp.generated.resources.button_reset
 import boxtimerpro.composeapp.generated.resources.button_resume
 import boxtimerpro.composeapp.generated.resources.button_start
 import boxtimerpro.composeapp.generated.resources.button_stop_exit
-import boxtimerpro.composeapp.generated.resources.chip_round_number
-import boxtimerpro.composeapp.generated.resources.chip_total_rounds
 import boxtimerpro.composeapp.generated.resources.dialog_timer_running_message
 import boxtimerpro.composeapp.generated.resources.dialog_timer_running_title
 import boxtimerpro.composeapp.generated.resources.header_subtitle_ready_to_train
 import boxtimerpro.composeapp.generated.resources.header_title_app
-import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
-import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
-import com.cromulent.box_timer.presentation.theme.IceColorScheme
+import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
-import com.cromulent.box_timer.presentation.timer_screen.components.calculateOptimalTextSize
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
 import compose.icons.FontAwesomeIcons
@@ -155,6 +146,7 @@ fun TimerScreenRoot(
 
 }
 
+@Preview(widthDp = 660, heightDp = 320)
 @Composable
 private fun TimerScreenLandscape(
     state: TimerState = TimerState(),
@@ -162,39 +154,6 @@ private fun TimerScreenLandscape(
     onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    // Calculate shared text size for both chips
-    val textMeasurer = rememberTextMeasurer()
-    val roundText = "Round ${state.currentRound}"
-    val ofText = "Of ${state.totalRounds}"
-    
-    // Calculate optimal text sizes for both texts
-    val roundTextSize = calculateOptimalTextSize(
-        textMeasurer = textMeasurer,
-        text = roundText,
-        maxWidth = 108, // 140dp - 32dp padding
-        maxHeight = 44, // 68dp - 24dp padding
-        style = TextStyle(
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W800,
-            color = MaterialTheme.colorScheme.secondary
-        )
-    )
-    
-    val ofTextSize = calculateOptimalTextSize(
-        textMeasurer = textMeasurer,
-        text = ofText,
-        maxWidth = 108,
-        maxHeight = 44,
-        style = TextStyle(
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W800,
-            color = MaterialTheme.colorScheme.secondary
-        )
-    )
-    
-    // Use the smaller of the two sizes for both chips
-    val sharedTextSize = minOf(roundTextSize.value, ofTextSize.value).sp
 
     Box(
         modifier = modifier
@@ -245,16 +204,17 @@ private fun TimerScreenLandscape(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
+                        paddingValues = PaddingValues(),
+
                         text = "Round ${state.currentRound}",
-                        textSize = sharedTextSize
                     )
 
                     Chip(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
+                        paddingValues = PaddingValues(),
                         text = "Of ${state.totalRounds}",
-                        textSize = sharedTextSize
                     )
 
                 }
@@ -366,44 +326,10 @@ private fun TimerScreenLandscape(
 @Composable
 fun TimerScreenPortrait(
     state: TimerState = TimerState(),
-    onAction: (TimerActions) -> Unit,
-    onBackButtonClicked: () -> Unit,
+    onAction: (TimerActions) -> Unit = {},
+    onBackButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-
-    // Calculate shared text size for both chips
-    val textMeasurer = rememberTextMeasurer()
-    val roundText = "Round ${state.currentRound}"
-    val ofText = "Of ${state.totalRounds}"
-    
-    // Calculate optimal text sizes for both texts
-    val roundTextSize = calculateOptimalTextSize(
-        textMeasurer = textMeasurer,
-        text = roundText,
-        maxWidth = 200, // Approximate chip width minus padding
-        maxHeight = 50, // Approximate chip height minus padding
-        style = TextStyle(
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W800,
-            color = MaterialTheme.colorScheme.secondary
-        )
-    )
-    
-    val ofTextSize = calculateOptimalTextSize(
-        textMeasurer = textMeasurer,
-        text = ofText,
-        maxWidth = 200,
-        maxHeight = 50,
-        style = TextStyle(
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W800,
-            color = MaterialTheme.colorScheme.secondary
-        )
-    )
-    
-    // Use the smaller of the two sizes for both chips
-    val sharedTextSize = minOf(roundTextSize.value, ofTextSize.value).sp
-
     Scaffold(
         modifier = Modifier,
         containerColor = Color.Transparent,
@@ -443,7 +369,6 @@ fun TimerScreenPortrait(
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
                     text = "Round ${state.currentRound}",
-                    textSize = sharedTextSize
                 )
 
                 Chip(
@@ -452,7 +377,6 @@ fun TimerScreenPortrait(
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
                     text = "Of ${state.totalRounds}",
-                    textSize = sharedTextSize
                 )
 
             }
