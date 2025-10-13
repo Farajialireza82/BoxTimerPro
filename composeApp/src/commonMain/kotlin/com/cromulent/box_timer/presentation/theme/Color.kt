@@ -240,150 +240,217 @@ val SteelColorScheme = darkColorScheme(
 )
 
 
-val CrimsonDawnColorScheme = darkColorScheme(
-    primary = Color(0xFFFF3B30), // Bright Red
-    onPrimary = Color(0xFF1A0A0A),
-    primaryContainer = Color(0xFF331515),
-    onPrimaryContainer = Color(0xFFFF6666),
+val SunsetColorScheme = darkColorScheme(
+    primary = Color(0xFFFF6B6B),
+    onPrimary = Color(0xFF1a0a0a),
+    primaryContainer = Color(0xFF2d1d1d),
+    onPrimaryContainer = Color(0xFFFFB347),
 
-    secondary = Color(0xFFFF9500), // Deep Orange
-    onSecondary = Color(0xFF1A0A0A),
-    secondaryContainer = Color(0xFF3A2A1A),
-    onSecondaryContainer = Color(0xFFC5B8B0),
+    secondary = Color(0xFFFF8C42),
+    onSecondary = Color(0xFF1a0a0a),
+    secondaryContainer = Color(0xFF3a2520),
+    onSecondaryContainer = Color(0xFFC5B0A8),
 
-    tertiary = Color(0xFFFFCC00), // Gold accent
-    onTertiary = Color(0xFF1A0A0A),
-    tertiaryContainer = Color(0xFF2A1A10),
-    onTertiaryContainer = Color(0xFFC5B8B0),
+    tertiary = Color(0xFFFFD93D),
+    onTertiary = Color(0xFF1a0a0a),
+    tertiaryContainer = Color(0xFF2a1d10),
+    onTertiaryContainer = Color(0xFFC5B8A8),
 
-    background = Color(0xFF0F0F0F),
-    onBackground = Color(0xFFF0F0F0),
+    background = Color(0xFF190f0f),
+    onBackground = Color(0xFFFFD93D),
 
-    surface = Color(0xFF1A1A1A),
-    onSurface = Color(0xFFF0F0F0),
-    surfaceVariant = Color(0xFF2A1D1D),
-    onSurfaceVariant = Color(0xFFC5B8B0),
+    surface = Color(0xFF2a1a1a),
+    onSurface = Color(0xFFFFD93D),
+    surfaceVariant = Color(0xFF2d1d1d),
+    onSurfaceVariant = Color(0xFFC5B0A8),
 
-    error = Color(0xFFFF6B6B),
-    onError = Color(0xFF1A0A0A),
+    error = Color(0xFFFF4757),
+    onError = Color(0xFF1a0a0a),
     errorContainer = Color(0xFF93000A),
     onErrorContainer = Color(0xFFFFDAD6),
 
-    outline = Color(0xFFFF3B30),
-    outlineVariant = Color(0xFF3A2A1A),
+    outline = Color(0xFFFF6B6B),
+    outlineVariant = Color(0xFF3a2520),
     scrim = Color(0xFF000000),
 
-    surfaceTint = Color(0xFFFF3B30),
+    surfaceTint = Color(0xFFFF6B6B),
 )
+val OceanColorScheme = darkColorScheme(
+    primary = Color(0xFF0077BE),
+    onPrimary = Color(0xFF0a0e14),
+    primaryContainer = Color(0xFF1d2a3d),
+    onPrimaryContainer = Color(0xFF6DD5FA),
 
-val DeepOceanColorScheme = darkColorScheme(
-    primary = Color(0xFF00BFFF), // Deep Sky Blue
-    onPrimary = Color(0xFF0A0A1A),
-    primaryContainer = Color(0xFF1A2A3A),
-    onPrimaryContainer = Color(0xFFA0E6FF),
+    secondary = Color(0xFF2E8B57),
+    onSecondary = Color(0xFF0a140e),
+    secondaryContainer = Color(0xFF1e3a2f),
+    onSecondaryContainer = Color(0xFFA8C5B8),
 
-    secondary = Color(0xFF40E0D0), // Turquoise
-    onSecondary = Color(0xFF0A0A1A),
-    secondaryContainer = Color(0xFF1E3A47),
-    onSecondaryContainer = Color(0xFFB0BEC5),
+    tertiary = Color(0xFF20B2AA),
+    onTertiary = Color(0xFF0a1414),
+    tertiaryContainer = Color(0xFF102a2a),
+    onTertiaryContainer = Color(0xFFA8C5C5),
 
-    tertiary = Color(0xFF7B68EE), // Medium Slate Blue
-    onTertiary = Color(0xFF0A0A1A),
-    tertiaryContainer = Color(0xFF102A3A),
-    onTertiaryContainer = Color(0xFFB0BEC5),
+    background = Color(0xFF0f1419),
+    onBackground = Color(0xFF6DD5FA),
 
-    background = Color(0xFF0F1419),
-    onBackground = Color(0xFFA0E6FF),
-
-    surface = Color(0xFF1A1E2A),
-    onSurface = Color(0xFFA0E6FF),
-    surfaceVariant = Color(0xFF1A2D3D),
-    onSurfaceVariant = Color(0xFF1E3A47),
+    surface = Color(0xFF1a1e2a),
+    onSurface = Color(0xFF6DD5FA),
+    surfaceVariant = Color(0xFF1d2a3d),
+    onSurfaceVariant = Color(0xFFA8B8C5),
 
     error = Color(0xFFFF6B6B),
-    onError = Color(0xFF0A0A1A),
+    onError = Color(0xFF0a0e14),
     errorContainer = Color(0xFF93000A),
     onErrorContainer = Color(0xFFFFDAD6),
 
-    outline = Color(0xFF00BFFF),
-    outlineVariant = Color(0xFF1E3A47),
+    outline = Color(0xFF0077BE),
+    outlineVariant = Color(0xFF1e3a2f),
     scrim = Color(0xFF000000),
 
-    surfaceTint = Color(0xFF00BFFF),
+    surfaceTint = Color(0xFF0077BE),
 )
+val NeonColorScheme = darkColorScheme(
+    primary = Color(0xFFFF10F0),
+    onPrimary = Color(0xFF0a0a0a),
+    primaryContainer = Color(0xFF2d1d2d),
+    onPrimaryContainer = Color(0xFFFF10F0),
 
-val DesertDuneColorScheme = darkColorScheme(
-    primary = Color(0xFFB8860B), // Dark Goldenrod
-    onPrimary = Color(0xFF1A1A0A),
-    primaryContainer = Color(0xFF2A2A1A),
-    onPrimaryContainer = Color(0xFFDDAA00),
+    secondary = Color(0xFF00FFF0),
+    onSecondary = Color(0xFF0a0a0a),
+    secondaryContainer = Color(0xFF1d2d2d),
+    onSecondaryContainer = Color(0xFFB8C5C5),
 
-    secondary = Color(0xFF8FBC8F), // Dark Sea Green
-    onSecondary = Color(0xFF1A1A0A),
+    tertiary = Color(0xFFFFFF00),
+    onTertiary = Color(0xFF0a0a0a),
+    tertiaryContainer = Color(0xFF2d2d1d),
+    onTertiaryContainer = Color(0xFFC5C5B8),
+
+    background = Color(0xFF0f0f0f),
+    onBackground = Color(0xFFFF10F0),
+
+    surface = Color(0xFF1a1a1a),
+    onSurface = Color(0xFFFF10F0),
+    surfaceVariant = Color(0xFF2d1d2d),
+    onSurfaceVariant = Color(0xFFC5B8C5),
+
+    error = Color(0xFFFF0055),
+    onError = Color(0xFF0a0a0a),
+    errorContainer = Color(0xFF93000A),
+    onErrorContainer = Color(0xFFFFDAD6),
+
+    outline = Color(0xFFFF10F0),
+    outlineVariant = Color(0xFF2d1d2d),
+    scrim = Color(0xFF000000),
+
+    surfaceTint = Color(0xFFFF10F0),
+)
+val ForestColorScheme = darkColorScheme(
+    primary = Color(0xFF4CAF50),
+    onPrimary = Color(0xFF0a140a),
+    primaryContainer = Color(0xFF1d2a1d),
+    onPrimaryContainer = Color(0xFF81C784),
+
+    secondary = Color(0xFF8BC34A),
+    onSecondary = Color(0xFF0a140a),
     secondaryContainer = Color(0xFF253025),
-    onSecondaryContainer = Color(0xFFC5B8B8),
+    onSecondaryContainer = Color(0xFFB8C5A8),
 
-    tertiary = Color(0xFFCD853F), // Peru (Brown/Orange)
-    onTertiary = Color(0xFF1A1A0A),
-    tertiaryContainer = Color(0xFF2A1D10),
-    onTertiaryContainer = Color(0xFFDDAA00),
+    tertiary = Color(0xFF66BB6A),
+    onTertiary = Color(0xFF0a140a),
+    tertiaryContainer = Color(0xFF1a2a1a),
+    onTertiaryContainer = Color(0xFFB8C5B8),
 
-    background = Color(0xFF14140F),
-    onBackground = Color(0xFFDDCCAA),
+    background = Color(0xFF0f190f),
+    onBackground = Color(0xFF81C784),
 
-    surface = Color(0xFF1F1F17),
-    onSurface = Color(0xFFDDCCAA),
-    surfaceVariant = Color(0xFF2A2A1A),
-    onSurfaceVariant = Color(0xFF253025),
+    surface = Color(0xFF1a2a1a),
+    onSurface = Color(0xFF81C784),
+    surfaceVariant = Color(0xFF1d2a1d),
+    onSurfaceVariant = Color(0xFFB8C5A8),
 
     error = Color(0xFFFF6B6B),
-    onError = Color(0xFF1A1A0A),
+    onError = Color(0xFF0a140a),
     errorContainer = Color(0xFF93000A),
     onErrorContainer = Color(0xFFFFDAD6),
 
-    outline = Color(0xFFB8860B),
+    outline = Color(0xFF4CAF50),
     outlineVariant = Color(0xFF253025),
     scrim = Color(0xFF000000),
 
-    surfaceTint = Color(0xFFB8860B),
+    surfaceTint = Color(0xFF4CAF50),
 )
+val MidnightColorScheme = darkColorScheme(
+    primary = Color(0xFF5B7FFF),
+    onPrimary = Color(0xFF0a0a14),
+    primaryContainer = Color(0xFF1d1d2d),
+    onPrimaryContainer = Color(0xFF8FA5FF),
 
+    secondary = Color(0xFF3F51B5),
+    onSecondary = Color(0xFF0a0a14),
+    secondaryContainer = Color(0xFF25253a),
+    onSecondaryContainer = Color(0xFFB0B0C5),
 
-val SakuraSunsetColorScheme = darkColorScheme(
-    primary = Color(0xFFE91E63), // Deep Pink/Raspberry
-    onPrimary = Color(0xFF0A0A0A),
-    primaryContainer = Color(0xFF331520),
-    onPrimaryContainer = Color(0xFFFFC0CB), // Pale Pink
+    tertiary = Color(0xFF7986CB),
+    onTertiary = Color(0xFF0a0a14),
+    tertiaryContainer = Color(0xFF1a1a2a),
+    onTertiaryContainer = Color(0xFFB8B8C5),
 
-    secondary = Color(0xFFBA68C8), // Lavender Accent
-    onSecondary = Color(0xFF0A0A0A),
-    secondaryContainer = Color(0xFF2A1A3A),
-    onSecondaryContainer = Color(0xFFDCC5E0),
+    background = Color(0xFF0f0f19),
+    onBackground = Color(0xFF8FA5FF),
 
-    tertiary = Color(0xFFF48FB1), // Light Pink Accent
-    onTertiary = Color(0xFF0A0A0A),
-    tertiaryContainer = Color(0xFF2A1A2A),
-    onTertiaryContainer = Color(0xFFDCC5E0),
-
-    background = Color(0xFF0F0F14), // Dark background
-    onBackground = Color(0xFFF0F0F5),
-
-    surface = Color(0xFF1A1A2A), // Dark surface
-    onSurface = Color(0xFFF0F0F5),
-    surfaceVariant = Color(0xFF331520),
-    onSurfaceVariant = Color(0xFFDCC5E0),
+    surface = Color(0xFF1a1a2a),
+    onSurface = Color(0xFF8FA5FF),
+    surfaceVariant = Color(0xFF1d1d2d),
+    onSurfaceVariant = Color(0xFFB0B0C5),
 
     error = Color(0xFFFF6B6B),
-    onError = Color(0xFF0A0A0A),
+    onError = Color(0xFF0a0a14),
     errorContainer = Color(0xFF93000A),
     onErrorContainer = Color(0xFFFFDAD6),
 
-    outline = Color(0xFFE91E63),
-    outlineVariant = Color(0xFF2A1A3A),
+    outline = Color(0xFF5B7FFF),
+    outlineVariant = Color(0xFF25253a),
     scrim = Color(0xFF000000),
 
-    surfaceTint = Color(0xFFE91E63),
+    surfaceTint = Color(0xFF5B7FFF),
 )
+val PrincessPinkColorScheme = darkColorScheme(
+    primary = Color(0xFFFF69B4),
+    onPrimary = Color(0xFF140a0f),
+    primaryContainer = Color(0xFF2d1d25),
+    onPrimaryContainer = Color(0xFFFFB6D9),
+
+    secondary = Color(0xFFFF1493),
+    onSecondary = Color(0xFF140a0f),
+    secondaryContainer = Color(0xFF3a2530),
+    onSecondaryContainer = Color(0xFFC5A8B8),
+
+    tertiary = Color(0xFFFF85C1),
+    onTertiary = Color(0xFF140a0f),
+    tertiaryContainer = Color(0xFF2a1a25),
+    onTertiaryContainer = Color(0xFFC5B0BD),
+
+    background = Color(0xFF190f14),
+    onBackground = Color(0xFFFFB6D9),
+
+    surface = Color(0xFF2a1a25),
+    onSurface = Color(0xFFFFB6D9),
+    surfaceVariant = Color(0xFF2d1d25),
+    onSurfaceVariant = Color(0xFFC5A8B8),
+
+    error = Color(0xFFFF0066),
+    onError = Color(0xFF140a0f),
+    errorContainer = Color(0xFF93000A),
+    onErrorContainer = Color(0xFFFFDAD6),
+
+    outline = Color(0xFFFF69B4),
+    outlineVariant = Color(0xFF3a2530),
+    scrim = Color(0xFF000000),
+
+    surfaceTint = Color(0xFFFF69B4),
+)
+
 
 val colorSchemes = listOf(
     ColorSchemeDTO("ice" ,IceColorScheme),
@@ -392,8 +459,11 @@ val colorSchemes = listOf(
     ColorSchemeDTO("royal" ,RoyalColorScheme),
     ColorSchemeDTO("shadow" ,ShadowColorScheme),
     ColorSchemeDTO("steel" ,SteelColorScheme),
-    ColorSchemeDTO("crimson" ,CrimsonDawnColorScheme),
-    ColorSchemeDTO("deepOcean" ,DeepOceanColorScheme),
-    ColorSchemeDTO("desert" ,DesertDuneColorScheme),
-    ColorSchemeDTO("princessPink", SakuraSunsetColorScheme)
+    ColorSchemeDTO("sunset" ,SunsetColorScheme),
+    ColorSchemeDTO("ocean" ,OceanColorScheme),
+    ColorSchemeDTO("neon" ,NeonColorScheme),
+    ColorSchemeDTO("forest" ,ForestColorScheme),
+    ColorSchemeDTO("midnight" ,MidnightColorScheme),
+    ColorSchemeDTO("princess" ,PrincessPinkColorScheme),
+
 )
