@@ -47,7 +47,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
@@ -74,6 +76,7 @@ import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.theme.IceColorScheme
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
+import com.cromulent.box_timer.presentation.timer_screen.components.calculateOptimalTextSize
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
 import compose.icons.FontAwesomeIcons
@@ -160,6 +163,39 @@ private fun TimerScreenLandscape(
     modifier: Modifier = Modifier
 ) {
 
+    // Calculate shared text size for both chips
+    val textMeasurer = rememberTextMeasurer()
+    val roundText = "Round ${state.currentRound}"
+    val ofText = "Of ${state.totalRounds}"
+    
+    // Calculate optimal text sizes for both texts
+    val roundTextSize = calculateOptimalTextSize(
+        textMeasurer = textMeasurer,
+        text = roundText,
+        maxWidth = 108, // 140dp - 32dp padding
+        maxHeight = 44, // 68dp - 24dp padding
+        style = TextStyle(
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.W800,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    )
+    
+    val ofTextSize = calculateOptimalTextSize(
+        textMeasurer = textMeasurer,
+        text = ofText,
+        maxWidth = 108,
+        maxHeight = 44,
+        style = TextStyle(
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.W800,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    )
+    
+    // Use the smaller of the two sizes for both chips
+    val sharedTextSize = minOf(roundTextSize.value, ofTextSize.value).sp
+
     Box(
         modifier = modifier
             .background(Color.Transparent)
@@ -209,14 +245,16 @@ private fun TimerScreenLandscape(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        text = "Round ${state.currentRound}"
+                        text = "Round ${state.currentRound}",
+                        textSize = sharedTextSize
                     )
 
                     Chip(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        text = "Of ${state.totalRounds}"
+                        text = "Of ${state.totalRounds}",
+                        textSize = sharedTextSize
                     )
 
                 }
@@ -333,6 +371,38 @@ fun TimerScreenPortrait(
     modifier: Modifier = Modifier
 ) {
 
+    // Calculate shared text size for both chips
+    val textMeasurer = rememberTextMeasurer()
+    val roundText = "Round ${state.currentRound}"
+    val ofText = "Of ${state.totalRounds}"
+    
+    // Calculate optimal text sizes for both texts
+    val roundTextSize = calculateOptimalTextSize(
+        textMeasurer = textMeasurer,
+        text = roundText,
+        maxWidth = 200, // Approximate chip width minus padding
+        maxHeight = 50, // Approximate chip height minus padding
+        style = TextStyle(
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.W800,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    )
+    
+    val ofTextSize = calculateOptimalTextSize(
+        textMeasurer = textMeasurer,
+        text = ofText,
+        maxWidth = 200,
+        maxHeight = 50,
+        style = TextStyle(
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.W800,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    )
+    
+    // Use the smaller of the two sizes for both chips
+    val sharedTextSize = minOf(roundTextSize.value, ofTextSize.value).sp
 
     Scaffold(
         modifier = Modifier,
@@ -372,7 +442,8 @@ fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = "Round ${state.currentRound}"
+                    text = "Round ${state.currentRound}",
+                    textSize = sharedTextSize
                 )
 
                 Chip(
@@ -380,7 +451,8 @@ fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = "Of ${state.totalRounds}"
+                    text = "Of ${state.totalRounds}",
+                    textSize = sharedTextSize
                 )
 
             }
