@@ -43,6 +43,7 @@ class TimerViewModel(
                 }
             }
             appSettings = settingsRepository.getAppSettings() ?: AppSettings()
+            delay(300)
             start()
         }
     }
