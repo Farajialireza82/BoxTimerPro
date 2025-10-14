@@ -1,5 +1,6 @@
 import com.codingfeline.buildkonfig.compiler.FieldSpec.Type.STRING
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -34,6 +35,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.media3.exoplayer)
             implementation(libs.androidx.core.splashscreen)
+            implementation(libs.analytics)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -98,11 +100,19 @@ android {
     }
 }
 
+// Load local.properties file
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { localProperties.load(it) }
+}
+
 buildkonfig {
     packageName = "com.cromulent.box_timer"
 
     defaultConfigs {
         buildConfigField(STRING, "APP_VERSION", "${project.findProperty("PROJECT_VERSION")}")
+        buildConfigField(STRING, "YANDEX_METRICA_API_KEY", "${localProperties.getProperty("YANDEX_METRICA_API_KEY")}")
     }
 
 }

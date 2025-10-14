@@ -23,3 +23,7 @@ node_modules/
 /composeApp/release/baselineProfiles/0/composeApp-release.dm
 /composeApp/release/baselineProfiles/1/composeApp-release.dm
 /composeApp/release/output-metadata.json
+
+# API Keys - Keep these secure
+gradle.properties.local
+local.properties
