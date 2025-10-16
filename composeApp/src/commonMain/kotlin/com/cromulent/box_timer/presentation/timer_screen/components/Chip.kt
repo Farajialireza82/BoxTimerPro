@@ -19,9 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toIntRect
 import com.cromulent.box_timer.presentation.timer_screen.TimerScreenPortrait
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -33,6 +35,7 @@ fun Chip(
         vertical = 12.dp,
         horizontal = 16.dp
     ),
+    onSizeChanged: (TextUnit) -> Unit
 ) {
 
     Row(
@@ -54,11 +57,13 @@ fun Chip(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
+            onTextLayout = {
+                onSizeChanged(it.layoutInput.style.fontSize)
+            },
             text = text,
             autoSize = TextAutoSize.StepBased(
-                minFontSize = 22.sp,
-                stepSize = 16.sp
-            ), //18,34,50,66...
+                minFontSize = 8.sp,
+            ),
             maxLines = 1,
             style = TextStyle(
                 textAlign = TextAlign.Center,
@@ -68,6 +73,49 @@ fun Chip(
         )
     }
 
+}
+
+
+@Composable
+fun Chip(
+    modifier: Modifier = Modifier,
+    text: String,
+    paddingValues: PaddingValues = PaddingValues(
+        vertical = 12.dp,
+        horizontal = 16.dp
+    ),
+    textSize: TextUnit,
+) {
+
+    Row(
+        modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                shape = RoundedCornerShape(24.dp)
+            )
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.secondary,
+                shape = RoundedCornerShape(24.dp)
+            )
+            .padding(paddingValues),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp),
+            text = text,
+            fontSize = textSize,
+            maxLines = 1,
+            style = TextStyle(
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.W800,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        )
+    }
 
 }
 

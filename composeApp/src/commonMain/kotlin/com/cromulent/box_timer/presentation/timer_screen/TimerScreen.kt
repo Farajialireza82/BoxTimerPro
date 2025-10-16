@@ -155,6 +155,8 @@ private fun TimerScreenLandscape(
     modifier: Modifier = Modifier
 ) {
 
+    var chipTextSize by remember { mutableStateOf(16.sp) }
+
     Box(
         modifier = modifier
             .background(Color.Transparent)
@@ -204,17 +206,26 @@ private fun TimerScreenLandscape(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        paddingValues = PaddingValues(),
-
+                        paddingValues = PaddingValues(
+                            vertical = 4.dp,
+                            horizontal = 8.dp
+                        ),
                         text = "Round ${state.currentRound}",
+                        onSizeChanged = {
+                            chipTextSize = it
+                        }
                     )
 
                     Chip(
                         modifier = Modifier
                             .width(140.dp)
                             .height(68.dp),
-                        paddingValues = PaddingValues(),
+                        paddingValues = PaddingValues(
+                            vertical = 4.dp,
+                            horizontal = 8.dp
+                        ),
                         text = "Of ${state.totalRounds}",
+                        textSize = chipTextSize
                     )
 
                 }
@@ -330,6 +341,9 @@ fun TimerScreenPortrait(
     onBackButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+
+    var chipTextSize by remember { mutableStateOf(16.sp) }
+
     Scaffold(
         modifier = Modifier,
         containerColor = Color.Transparent,
@@ -369,6 +383,9 @@ fun TimerScreenPortrait(
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
                     text = "Round ${state.currentRound}",
+                    onSizeChanged = {
+                        chipTextSize = it
+                    }
                 )
 
                 Chip(
@@ -377,6 +394,7 @@ fun TimerScreenPortrait(
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
                     text = "Of ${state.totalRounds}",
+                    textSize = chipTextSize
                 )
 
             }
