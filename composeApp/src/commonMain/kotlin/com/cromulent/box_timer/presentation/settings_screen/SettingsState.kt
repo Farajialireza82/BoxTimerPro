@@ -6,6 +6,7 @@ import com.cromulent.box_timer.domain.AppSettings
 data class SettingsState(
     val appSettings: AppSettings = AppSettings(),
     val startRoundAudioFiles: List<AudioFile> = listOf(
+        AudioFile("Mute", null),
         AudioFile("Bell Single", "files/bell-single.mp3"),
         AudioFile("Bell Three Times", "files/bell-three-times.mp3"),
         AudioFile("Whistle", "files/whistle.mp3"),
@@ -16,9 +17,9 @@ data class SettingsState(
         AudioFile("Buzzer Short", "files/buzzer-short.mp3"),
         AudioFile("Gun Shot", "files/gun-shot.mp3"),
         AudioFile("Pistol Shot", "files/pistol-shot.mp3"),
-        AudioFile("Mute", null),
     ),
     val endRoundAudioFiles: List<AudioFile> = listOf(
+        AudioFile("Mute", null),
         AudioFile("Bell Single", "files/bell-single.mp3"),
         AudioFile("Bell Three Times", "files/bell-three-times.mp3"),
         AudioFile("Whistle", "files/whistle.mp3"),
@@ -28,15 +29,14 @@ data class SettingsState(
         AudioFile("Buzzer Short", "files/buzzer-short.mp3"),
         AudioFile("Gun Shot", "files/gun-shot.mp3"),
         AudioFile("Pistol Shot", "files/pistol-shot.mp3"),
-        AudioFile("Mute", null),
     ),
     val countDownAudioFiles: List<AudioFile> = listOf(
+        AudioFile("Mute", null),
         AudioFile("Beep", "files/beep.mp3"),
         AudioFile("Barcode", "files/Barcode-Scanner.mp3"),
         AudioFile("Clock Beep", "files/Clock-Beep.mp3"),
         AudioFile("Electric Beep", "files/Electric-Beep.mp3"),
         AudioFile("Drop", "files/Drop.mp3"),
         AudioFile("Modern Drop", "files/Modern-Drop.mp3"),
-        AudioFile("Mute", null),
-    ).sortedBy { it.title }
+    )
 )

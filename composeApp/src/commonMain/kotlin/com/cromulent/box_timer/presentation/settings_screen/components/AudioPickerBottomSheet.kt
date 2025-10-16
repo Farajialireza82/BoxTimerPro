@@ -25,11 +25,13 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.ic_mute
 import boxtimerpro.composeapp.generated.resources.ic_play
 import com.cromulent.box_timer.core.util.AudioFile
 import org.jetbrains.compose.resources.painterResource
@@ -103,6 +105,9 @@ private fun AudioFileItem(
     onItemSelected: (AudioFile) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val iconRes =
+        painterResource(if (file.uri != null) Res.drawable.ic_play else Res.drawable.ic_mute)
+
 
     Card(
         modifier = modifier
@@ -124,21 +129,17 @@ private fun AudioFileItem(
                 .padding(vertical = 24.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            if (file.uri != null) {
-                IconButton(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .size(24.dp),
-                    onClick = { playAudio(file) }
-                ) {
-                    Icon(
-                        painter = painterResource(Res.drawable.ic_play),
-                        tint = if (isSelected) MaterialTheme.colorScheme.secondary else White,
-                        contentDescription = null
-                    )
-                }
-            } else {
-                Spacer(Modifier.padding(horizontal = 16.dp).size(24.dp))
+            IconButton(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .size(24.dp),
+                onClick = { playAudio(file) }
+            ) {
+                Icon(
+                    painter = iconRes,
+                    tint = if (isSelected) MaterialTheme.colorScheme.secondary else White,
+                    contentDescription = null
+                )
             }
             Text(
                 text = file.title,
