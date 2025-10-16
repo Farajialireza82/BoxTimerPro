@@ -37,6 +37,8 @@ import boxtimerpro.composeapp.generated.resources.end_round_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.end_round_sound_title
 import boxtimerpro.composeapp.generated.resources.feedback_support_subtitle
 import boxtimerpro.composeapp.generated.resources.feedback_support_title
+import boxtimerpro.composeapp.generated.resources.ic_dark
+import boxtimerpro.composeapp.generated.resources.ic_light
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_subtitle
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_title
 import boxtimerpro.composeapp.generated.resources.mute_all_sounds_subtitle
@@ -48,6 +50,7 @@ import boxtimerpro.composeapp.generated.resources.start_round_sound_title
 import boxtimerpro.composeapp.generated.resources.vibration_subtitle
 import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
+import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.presentation.theme.SubtitleColor
 import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.components.Header
@@ -115,7 +118,10 @@ private fun SettingsScreen(
                 title = stringResource(Res.string.settings_title),
                 subtitle = stringResource(Res.string.settings_subtitle),
                 hasBackButton = true,
-                onBackButtonClicked = onBackButtonClicked
+                onBackButtonClicked = onBackButtonClicked,
+                hasActionButton = true,
+                actionButtonResource = if (appSettings.isDarkMode) Res.drawable.ic_dark else Res.drawable.ic_light,
+                onActionButtonClicked = { onAction(SettingsActions.ToggleDarkMode) }
             )
 
             Column(

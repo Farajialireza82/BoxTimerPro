@@ -51,8 +51,19 @@ class SettingsViewModel(
             is SettingsActions.ToggleVibrationHaptic -> toggleVibrationHaptic(action.isEnabled)
             is SettingsActions.PlayAudio -> playAudio(action.uri)
             is SettingsActions.SetColorScheme -> setColorScheme(action.colorSchemeId)
+            is SettingsActions.ToggleDarkMode -> toggleDarkMode()
         }
 
+    }
+
+    private fun toggleDarkMode(){
+        viewModelScope.launch {
+            settingsRepository.updateAppSettings(
+                _state.value.appSettings.copy(
+                    isDarkMode = !_state.value.appSettings.isDarkMode
+                )
+            )
+        }
     }
 
     private fun playAudio(uri: String?) {

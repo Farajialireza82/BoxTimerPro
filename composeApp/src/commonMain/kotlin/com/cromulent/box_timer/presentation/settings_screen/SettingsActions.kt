@@ -17,5 +17,6 @@ sealed interface SettingsActions {
 
     object OnAppVersionClick: SettingsActions
     object OnFeedbackClick: SettingsActions
+    object ToggleDarkMode: SettingsActions
 
 }
