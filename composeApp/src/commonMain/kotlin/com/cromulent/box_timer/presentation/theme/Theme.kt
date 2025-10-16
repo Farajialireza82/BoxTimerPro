@@ -35,7 +35,7 @@ fun BoxTimerProTheme(
 
     val targetColorScheme = colorSchemes
         .firstOrNull { it.id == settings?.colorSchemeId }
-        ?.colorScheme ?: IceColorScheme
+        ?.darkColorScheme ?: IceColorScheme
 
     // Skip animation on first load
     val animatedColorScheme = if (isFirstLoad) {

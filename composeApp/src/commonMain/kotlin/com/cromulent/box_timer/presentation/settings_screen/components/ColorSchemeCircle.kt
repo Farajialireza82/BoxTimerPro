@@ -3,6 +3,7 @@ package com.cromulent.box_timer.presentation.settings_screen.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -33,12 +34,15 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ColorSchemeCircle(
-    colorScheme: ColorScheme,
+    colorSchemeDTO: ColorSchemeDTO,
     modifier: Modifier = Modifier,
     isSelected: Boolean,
     size: androidx.compose.ui.unit.Dp = 100.dp,
     onClick: () -> Unit
 ) {
+
+    val colorScheme = colorSchemeDTO.darkColorScheme
+
     val colors = listOf(
         colorScheme.primary,
         colorScheme.secondary,
@@ -149,7 +153,7 @@ fun ColorSchemePicker(
                     Spacer(Modifier.size(16.dp))
 
                     ColorSchemeCircle(
-                        colorScheme = it.colorScheme,
+                        colorSchemeDTO = it,
                         size = 53.dp,
                         isSelected = it.id == selectedColorSchemeId,
                         onClick = { onItemSelected(it.id) }
