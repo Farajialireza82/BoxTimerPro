@@ -63,7 +63,6 @@ import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.configuration_screen.components.ModeCard
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
-import com.cromulent.box_timer.presentation.theme.IceColorScheme
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Play
@@ -393,12 +392,12 @@ fun StartButton(
 @Composable
 private fun ConfigScreenPrev() {
 
-    MaterialTheme(colorScheme = IceColorScheme) {
-        ConfigurationScreen(
-            onStartWorkout = {},
-            navigateToSettings = {}
-        )
-
-    }
+//    MaterialTheme(colorScheme = IceColorScheme) {
+//        ConfigurationScreen(
+//            onStartWorkout = {},
+//            navigateToSettings = {}
+//        )
+//
+//    }
 
 }

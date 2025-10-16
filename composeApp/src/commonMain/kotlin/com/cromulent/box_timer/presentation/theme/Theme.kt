@@ -3,6 +3,7 @@ package com.cromulent.box_timer.presentation.theme
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ColorScheme
@@ -33,9 +34,12 @@ fun BoxTimerProTheme(
 
     var isFirstLoad by rememberSaveable { mutableStateOf(true) }
 
-    val targetColorScheme = colorSchemes
-        .firstOrNull { it.id == settings?.colorSchemeId }
-        ?.darkColorScheme ?: IceColorScheme
+    val targetColorSchemeDTO = colorSchemes
+        .firstOrNull { it.id == settings?.colorSchemeId } ?: colorSchemes.first()
+
+
+    val targetColorScheme =
+        if (settings?.isDarkMode == true) targetColorSchemeDTO.darkColorScheme else targetColorSchemeDTO.lightColorScheme
 
     // Skip animation on first load
     val animatedColorScheme = if (isFirstLoad) {

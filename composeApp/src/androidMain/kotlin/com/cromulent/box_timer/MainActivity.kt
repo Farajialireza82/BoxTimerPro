@@ -23,11 +23,16 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.cromulent.box_timer.core.app.App
 import com.cromulent.box_timer.BuildKonfig.YANDEX_METRICA_API_KEY
+import com.cromulent.box_timer.domain.SettingsRepository
+import com.cromulent.box_timer.presentation.settings_screen.SettingsViewModel
 import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
 import io.appmetrica.analytics.AppMetrica
 import io.appmetrica.analytics.AppMetricaConfig
+import org.koin.android.ext.android.inject
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +52,7 @@ class MainActivity : ComponentActivity() {
         })
 
         setContent {
+
             BoxTimerProTheme {
                 val view = LocalView.current
                 val colorScheme = MaterialTheme.colorScheme
