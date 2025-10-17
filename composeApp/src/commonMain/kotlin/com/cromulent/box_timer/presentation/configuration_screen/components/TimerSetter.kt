@@ -59,7 +59,7 @@ fun TimerSetter(
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
-            // Header with title and time display
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -69,7 +69,7 @@ fun TimerSetter(
                     text = title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
-                    color = White
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(

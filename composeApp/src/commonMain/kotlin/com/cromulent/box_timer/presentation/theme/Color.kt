@@ -115,7 +115,7 @@ val FireDarkColorScheme = darkColorScheme(
     onBackground = GoldenSun,
 
     surface = StormCloudGray,
-    onSurface = GoldenSun,
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = CoralMist,
     onSurfaceVariant = SecondarySubtitleColor,
 
@@ -188,7 +188,7 @@ val VenomDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFFCCFF00),
 
     surface = Color(0xFF1a2a1a),
-    onSurface = Color(0xFFCCFF00),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF1d2a1b),
     onSurfaceVariant = Color(0xFFB8C5B8),
 
@@ -260,7 +260,7 @@ val RoyalDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFFBDB8C5),
 
     surface = Color(0xFF1a1a2a),
-    onSurface = Color(0xFFBDB8C5),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF251d2d),
     onSurfaceVariant = Color(0xFFBDB8C5),
 
@@ -332,7 +332,7 @@ val ShadowDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFFC5B8B8),
 
     surface = Color(0xFF2a1a1a),
-    onSurface = Color(0xFFC5B8B8),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF2a1d1d),
     onSurfaceVariant = Color(0xFFC5B8B8),
 
@@ -404,7 +404,7 @@ val SteelDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFFE0E0E0),
 
     surface = Color(0xFF1a1a1a),
-    onSurface = Color(0xFFE0E0E0),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF1d1d1d),
     onSurfaceVariant = Color(0xFFB8B8B8),
 
@@ -476,7 +476,7 @@ val SunsetDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFFFFD93D),
 
     surface = Color(0xFF2a1a1a),
-    onSurface = Color(0xFFFFD93D),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF2d1d1d),
     onSurfaceVariant = Color(0xFFC5B0A8),
 
@@ -547,7 +547,7 @@ val OceanDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFF6DD5FA),
 
     surface = Color(0xFF1a1e2a),
-    onSurface = Color(0xFF6DD5FA),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF1d2a3d),
     onSurfaceVariant = Color(0xFFA8B8C5),
 
@@ -618,7 +618,7 @@ val NeonDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFFFF10F0),
 
     surface = Color(0xFF1a1a1a),
-    onSurface = Color(0xFFFF10F0),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF2d1d2d),
     onSurfaceVariant = Color(0xFFC5B8C5),
 
@@ -689,7 +689,7 @@ val ForestDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFF81C784),
 
     surface = Color(0xFF1a2a1a),
-    onSurface = Color(0xFF81C784),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF1d2a1d),
     onSurfaceVariant = Color(0xFFB8C5A8),
 
@@ -760,7 +760,7 @@ val MidnightDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFF8FA5FF),
 
     surface = Color(0xFF1a1a2a),
-    onSurface = Color(0xFF8FA5FF),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF1d1d2d),
     onSurfaceVariant = Color(0xFFB0B0C5),
 
@@ -831,7 +831,7 @@ val PrincessPinkDarkColorScheme = darkColorScheme(
     onBackground = Color(0xFFFFB6D9),
 
     surface = Color(0xFF2a1a25),
-    onSurface = Color(0xFFFFB6D9),
+    onSurface = Color(0xFFE0F7FA),
     surfaceVariant = Color(0xFF2d1d25),
     onSurfaceVariant = Color(0xFFC5A8B8),
 

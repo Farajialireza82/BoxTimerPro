@@ -22,12 +22,17 @@ fun TimerControlButton(
     modifier: Modifier = Modifier
 ) {
 
+
+    val color = if (enabled){
+        MaterialTheme.colorScheme.secondary
+    } else MaterialTheme.colorScheme.onSurface.copy(0.7f)
+
     IconButton(
         modifier = modifier
             .border(
                 BorderStroke(
                     width = 0.5.dp,
-                    color = if (enabled) MaterialTheme.colorScheme.secondary else SubtitleColor
+                    color = color
                 ),
                 shape = CircleShape
             )
@@ -38,7 +43,7 @@ fun TimerControlButton(
         ) {
         Icon(
             modifier = Modifier.size(18.dp),
-            tint = if (enabled) MaterialTheme.colorScheme.secondary else SubtitleColor,
+            tint = color,
             imageVector = icon,
             contentDescription = null
         )

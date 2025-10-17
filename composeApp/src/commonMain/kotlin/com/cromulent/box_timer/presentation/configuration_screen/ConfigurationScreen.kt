@@ -63,6 +63,29 @@ import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.configuration_screen.components.ModeCard
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
+import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
+import com.cromulent.box_timer.presentation.theme.FireDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.FireLightColorScheme
+import com.cromulent.box_timer.presentation.theme.ForestDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.ForestLightColorScheme
+import com.cromulent.box_timer.presentation.theme.IceDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.IceLightColorScheme
+import com.cromulent.box_timer.presentation.theme.MidnightDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.MidnightLightColorScheme
+import com.cromulent.box_timer.presentation.theme.NeonDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.NeonLightColorScheme
+import com.cromulent.box_timer.presentation.theme.OceanDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.OceanLightColorScheme
+import com.cromulent.box_timer.presentation.theme.PrincessPinkDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.PrincessPinkLightColorScheme
+import com.cromulent.box_timer.presentation.theme.RoyalDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.RoyalLightColorScheme
+import com.cromulent.box_timer.presentation.theme.ShadowDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.ShadowLightColorScheme
+import com.cromulent.box_timer.presentation.theme.SunsetDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.SunsetLightColorScheme
+import com.cromulent.box_timer.presentation.theme.VenomDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.VenomLightColorScheme
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Play
@@ -386,18 +409,4 @@ fun StartButton(
             fontWeight = FontWeight.W800
         )
     }
-}
-
-@Preview
-@Composable
-private fun ConfigScreenPrev() {
-
-//    MaterialTheme(colorScheme = IceColorScheme) {
-//        ConfigurationScreen(
-//            onStartWorkout = {},
-//            navigateToSettings = {}
-//        )
-//
-//    }
-
 }

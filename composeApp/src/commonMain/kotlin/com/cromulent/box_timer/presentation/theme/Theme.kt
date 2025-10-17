@@ -78,6 +78,42 @@ fun BoxTimerProTheme(
     }
 }
 
+
+@Composable
+fun BoxTimerProThemePrv(
+    colorScheme: ColorScheme,
+    content: @Composable () -> Unit
+) {
+
+
+    MaterialTheme(
+        colorScheme = colorScheme
+    ) {
+    val backgroundGradientBrush = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.background,
+            MaterialTheme.colorScheme.surface,
+            MaterialTheme.colorScheme.primaryContainer
+        ),
+        start = Offset(0f, 0f),
+        end = Offset(1000f, 1000f),
+        tileMode = TileMode.Clamp
+    )
+
+
+
+
+
+        Box(
+            modifier = Modifier
+                .background(backgroundGradientBrush)
+                .fillMaxSize()
+        ) {
+            content()
+        }
+    }
+}
+
 @Composable
 fun ColorScheme.animate(animationDuration: Int = 400): ColorScheme {
 

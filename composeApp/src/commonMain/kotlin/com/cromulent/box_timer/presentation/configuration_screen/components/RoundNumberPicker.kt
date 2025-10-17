@@ -56,7 +56,7 @@ fun RoundNumberPicker(
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
-            // Header with title and current value
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -66,7 +66,7 @@ fun RoundNumberPicker(
                     text = title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
-                    color = White
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Text(
@@ -79,7 +79,6 @@ fun RoundNumberPicker(
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            // Quick preset buttons for common round counts
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -154,14 +153,14 @@ private fun RoundPresetButton(
             color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSecondaryContainer
         ),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Color.Transparent
+            containerColor = if (isSelected) MaterialTheme.colorScheme.surfaceVariant else Transparent
         )
     ) {
         Text(
             text = rounds.toString(),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-            color = if (isSelected) MaterialTheme.colorScheme.secondary else White,
+            color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
     }
