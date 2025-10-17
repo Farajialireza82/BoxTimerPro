@@ -62,7 +62,7 @@ fun TimerCircleIndicator(
                 ),
                 style = TextStyle(
                     fontWeight = FontWeight.W900,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     textAlign = TextAlign.Center
                 ),
                 maxLines = 1,
@@ -82,7 +82,7 @@ fun TimerCircleIndicator(
                 fontWeight = FontWeight.W600,
                 letterSpacing = 2.sp,
                 textAlign = TextAlign.Center,
-                color = if (isRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
+                color = if (isRunning) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
             )
         }
 

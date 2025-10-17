@@ -604,7 +604,7 @@ val NeonDarkColorScheme = darkColorScheme(
     primaryContainer = Color(0xFF2d1d2d),
     onPrimaryContainer = Color(0xFFFF10F0),
 
-    secondary = Color(0xFF00FFF0),
+    secondary = Color(0xFF00B0A3),
     onSecondary = Color(0xFF0a0a0a),
     secondaryContainer = Color(0xFF1d2d2d),
     onSecondaryContainer = Color(0xFFB8C5C5),
