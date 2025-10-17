@@ -410,3 +410,317 @@ fun StartButton(
         )
     }
 }
+
+@Preview
+@Composable
+private fun IceDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = IceDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun IceLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = IceLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun FireDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = FireDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun FireLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = FireLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun VenomDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = VenomDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+@Preview
+@Composable
+private fun VenomLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = VenomLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun RoyalDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = RoyalDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun RoyalLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = RoyalLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun ShadowDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ShadowDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun ShadowLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ShadowLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun SunsetDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = SunsetDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun SunsetLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = SunsetLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun OceanDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = OceanDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun OceanLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = OceanLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun NeonDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = NeonDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun NeonLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = NeonLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun ForestDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ForestDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun ForestLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ForestLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun MidnightDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = MidnightDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun MidnightLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = MidnightLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun PrincessPinkDarkColorScheme() {
+
+    BoxTimerProThemePrv (colorScheme = PrincessPinkDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun PrincessPinkLightColorScheme() {
+
+    BoxTimerProThemePrv (colorScheme = PrincessPinkLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}

@@ -56,11 +56,16 @@ class MainActivity : ComponentActivity() {
             BoxTimerProTheme {
                 val view = LocalView.current
                 val colorScheme = MaterialTheme.colorScheme
+
+                val settingsRepository by inject<SettingsRepository>()
+
+                val setting by settingsRepository.appSettings.collectAsState(null)
                 
                 SideEffect {
                     val window = (view.context as Activity).window
                     window.statusBarColor = colorScheme.background.toArgb()
-                    WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
+                    WindowCompat.getInsetsController(window, view)
+                        .isAppearanceLightStatusBars = (setting?.isDarkMode == false)
                 }
                 
                 App()
