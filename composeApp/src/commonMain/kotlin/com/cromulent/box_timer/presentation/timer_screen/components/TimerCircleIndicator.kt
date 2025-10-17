@@ -57,7 +57,7 @@ fun TimerCircleIndicator(
             BasicText(
                 text = formatTime(remainingTime),
                 autoSize = TextAutoSize.StepBased(
-                    stepSize = 10.sp,
+                    stepSize = 15.sp,
                     minFontSize = 64.sp,
                 ),
                 style = TextStyle(
