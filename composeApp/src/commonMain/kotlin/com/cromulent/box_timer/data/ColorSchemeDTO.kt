@@ -4,5 +4,6 @@ import androidx.compose.material3.ColorScheme
 
 data class ColorSchemeDTO(
     val id: String,
-    val colorScheme: ColorScheme
+    val darkColorScheme: ColorScheme,
+    val lightColorScheme: ColorScheme
 )

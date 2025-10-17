@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -66,13 +67,37 @@ import boxtimerpro.composeapp.generated.resources.header_subtitle_ready_to_train
 import boxtimerpro.composeapp.generated.resources.header_title_app
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
+import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
+import com.cromulent.box_timer.presentation.theme.FireDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.FireLightColorScheme
+import com.cromulent.box_timer.presentation.theme.ForestDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.ForestLightColorScheme
+import com.cromulent.box_timer.presentation.theme.IceDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.IceLightColorScheme
+import com.cromulent.box_timer.presentation.theme.MidnightDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.MidnightLightColorScheme
+import com.cromulent.box_timer.presentation.theme.NeonDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.NeonLightColorScheme
+import com.cromulent.box_timer.presentation.theme.OceanDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.OceanLightColorScheme
+import com.cromulent.box_timer.presentation.theme.PrincessPinkDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.PrincessPinkLightColorScheme
+import com.cromulent.box_timer.presentation.theme.RoyalDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.RoyalLightColorScheme
 import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
+import com.cromulent.box_timer.presentation.theme.ShadowDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.ShadowLightColorScheme
+import com.cromulent.box_timer.presentation.theme.SunsetDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.SunsetLightColorScheme
+import com.cromulent.box_timer.presentation.theme.VenomDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.VenomLightColorScheme
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Exclamation
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -146,7 +171,57 @@ fun TimerScreenRoot(
 
 }
 
-@Preview(widthDp = 660, heightDp = 320)
+
+@Composable
+private fun TimerScreenRoot() {
+
+    var showExitDialog by remember { mutableStateOf(false) }
+    val state = MutableStateFlow(TimerState(
+        currentRound = 2,
+        remainingTime = 11000,
+        roundDuration = 22000,
+        isTimerRunning = true,
+        isPaused = false,
+        progress = 0.5f,
+        totalRounds = 12,
+        restDuration = 10000,
+        timerMessage = "FIGHT",
+    ))
+
+    BoxWithConstraints {
+        val isLandscape = maxWidth > maxHeight
+
+        if (isLandscape) {
+            TimerScreenLandscape(
+                state = state.value,
+                onAction = {},
+                onBackButtonClicked = {}
+            )
+        } else {
+            TimerScreenPortrait(
+                state = state.value,
+                onAction = {},
+                onBackButtonClicked = {}
+            )
+        }
+
+        if (showExitDialog) {
+            ExitTimerDialog(
+                onDismiss = {
+                    showExitDialog = false
+                },
+                onConfirmExit = {
+                    showExitDialog = false
+                }
+            )
+        }
+
+    }
+
+
+}
+
+
 @Composable
 private fun TimerScreenLandscape(
     state: TimerState = TimerState(),
@@ -250,7 +325,7 @@ private fun TimerScreenLandscape(
                             ),
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.W900,
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurface,
                         ),
                     )
                 }
@@ -269,7 +344,7 @@ private fun TimerScreenLandscape(
                             fontWeight = FontWeight.W600,
                             letterSpacing = 6.sp,
                             textAlign = TextAlign.Center,
-                            color = if (state.isTimerRunning) MaterialTheme.colorScheme.secondary else Color.LightGray
+                            color = if (state.isTimerRunning) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         ),
                         text = state.timerMessage.uppercase(), // Assuming timerMessage is dynamic and doesn't need external string res
                     )
@@ -305,6 +380,7 @@ private fun TimerScreenLandscape(
                     },
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
+                    activeTextColor = White,
                     text = if (state.isTimerRunning) stringResource(Res.string.button_pause) else stringResource(
                         Res.string.button_start
                     ),
@@ -318,6 +394,7 @@ private fun TimerScreenLandscape(
                         .weight(1f)
                         .height(58.dp),
                     isActive = false,
+                    unactiveTextColor = Color.White,
                     text = stringResource(Res.string.button_reset),
                     onButtonClicked = {
                         onAction(TimerActions.ResetTimer)
@@ -333,7 +410,6 @@ private fun TimerScreenLandscape(
 
 }
 
-@Preview(widthDp = 350, heightDp = 720)
 @Composable
 fun TimerScreenPortrait(
     state: TimerState = TimerState(),
@@ -433,6 +509,7 @@ fun TimerScreenPortrait(
                     },
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
+                    activeTextColor = White,
                     text = when {
                         state.isTimerRunning -> stringResource(Res.string.button_pause)
                         state.isPaused -> stringResource(Res.string.button_resume)
@@ -447,6 +524,7 @@ fun TimerScreenPortrait(
                     modifier = Modifier
                         .weight(2f),
                     isActive = false,
+                    unactiveTextColor = White,
                     text = stringResource(Res.string.button_reset),
                     onButtonClicked = {
                         onAction(TimerActions.ResetTimer)

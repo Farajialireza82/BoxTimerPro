@@ -3,6 +3,7 @@ package com.cromulent.box_timer.presentation.settings_screen.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,12 +35,15 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun ColorSchemeCircle(
-    colorScheme: ColorScheme,
+    colorSchemeDTO: ColorSchemeDTO,
     modifier: Modifier = Modifier,
     isSelected: Boolean,
     size: androidx.compose.ui.unit.Dp = 100.dp,
     onClick: () -> Unit
 ) {
+
+    val colorScheme = colorSchemeDTO.darkColorScheme
+
     val colors = listOf(
         colorScheme.primary,
         colorScheme.secondary,
@@ -104,9 +109,9 @@ fun ColorSchemePicker(
             .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = White.copy(alpha = 0.05f)
+            containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f)
         ),
-        border = BorderStroke(1.dp, White.copy(alpha = 0.1f))
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
     ) {
 
         Column(
@@ -128,12 +133,12 @@ fun ColorSchemePicker(
                     textAlign = TextAlign.Start,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W500,
-                    color = White,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
                     text = "Choose your color theme",
                     textAlign = TextAlign.Start,
-                    color = White.copy(alpha = 0.6f)
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
             }
 
@@ -149,7 +154,7 @@ fun ColorSchemePicker(
                     Spacer(Modifier.size(16.dp))
 
                     ColorSchemeCircle(
-                        colorScheme = it.colorScheme,
+                        colorSchemeDTO = it,
                         size = 53.dp,
                         isSelected = it.id == selectedColorSchemeId,
                         onClick = { onItemSelected(it.id) }

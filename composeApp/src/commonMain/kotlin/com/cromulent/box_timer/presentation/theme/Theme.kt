@@ -3,6 +3,7 @@ package com.cromulent.box_timer.presentation.theme
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ColorScheme
@@ -33,9 +34,12 @@ fun BoxTimerProTheme(
 
     var isFirstLoad by rememberSaveable { mutableStateOf(true) }
 
-    val targetColorScheme = colorSchemes
-        .firstOrNull { it.id == settings?.colorSchemeId }
-        ?.colorScheme ?: IceColorScheme
+    val targetColorSchemeDTO = colorSchemes
+        .firstOrNull { it.id == settings?.colorSchemeId } ?: colorSchemes.first()
+
+
+    val targetColorScheme =
+        if (settings?.isDarkMode == true) targetColorSchemeDTO.darkColorScheme else targetColorSchemeDTO.lightColorScheme
 
     // Skip animation on first load
     val animatedColorScheme = if (isFirstLoad) {
@@ -64,6 +68,42 @@ fun BoxTimerProTheme(
     MaterialTheme(
         colorScheme = animatedColorScheme
     ) {
+        Box(
+            modifier = Modifier
+                .background(backgroundGradientBrush)
+                .fillMaxSize()
+        ) {
+            content()
+        }
+    }
+}
+
+
+@Composable
+fun BoxTimerProThemePrv(
+    colorScheme: ColorScheme,
+    content: @Composable () -> Unit
+) {
+
+
+    MaterialTheme(
+        colorScheme = colorScheme
+    ) {
+    val backgroundGradientBrush = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.background,
+            MaterialTheme.colorScheme.surface,
+            MaterialTheme.colorScheme.primaryContainer
+        ),
+        start = Offset(0f, 0f),
+        end = Offset(1000f, 1000f),
+        tileMode = TileMode.Clamp
+    )
+
+
+
+
+
         Box(
             modifier = Modifier
                 .background(backgroundGradientBrush)

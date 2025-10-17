@@ -63,7 +63,29 @@ import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.configuration_screen.components.ModeCard
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
-import com.cromulent.box_timer.presentation.theme.IceColorScheme
+import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
+import com.cromulent.box_timer.presentation.theme.FireDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.FireLightColorScheme
+import com.cromulent.box_timer.presentation.theme.ForestDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.ForestLightColorScheme
+import com.cromulent.box_timer.presentation.theme.IceDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.IceLightColorScheme
+import com.cromulent.box_timer.presentation.theme.MidnightDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.MidnightLightColorScheme
+import com.cromulent.box_timer.presentation.theme.NeonDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.NeonLightColorScheme
+import com.cromulent.box_timer.presentation.theme.OceanDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.OceanLightColorScheme
+import com.cromulent.box_timer.presentation.theme.PrincessPinkDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.PrincessPinkLightColorScheme
+import com.cromulent.box_timer.presentation.theme.RoyalDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.RoyalLightColorScheme
+import com.cromulent.box_timer.presentation.theme.ShadowDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.ShadowLightColorScheme
+import com.cromulent.box_timer.presentation.theme.SunsetDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.SunsetLightColorScheme
+import com.cromulent.box_timer.presentation.theme.VenomDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.VenomLightColorScheme
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Play
@@ -391,9 +413,309 @@ fun StartButton(
 
 @Preview
 @Composable
-private fun ConfigScreenPrev() {
+private fun IceDarkColorScheme() {
 
-    MaterialTheme(colorScheme = IceColorScheme) {
+    BoxTimerProThemePrv(colorScheme = IceDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun IceLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = IceLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun FireDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = FireDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun FireLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = FireLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun VenomDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = VenomDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+@Preview
+@Composable
+private fun VenomLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = VenomLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun RoyalDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = RoyalDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun RoyalLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = RoyalLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun ShadowDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ShadowDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun ShadowLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ShadowLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun SunsetDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = SunsetDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun SunsetLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = SunsetLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun OceanDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = OceanDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun OceanLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = OceanLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun NeonDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = NeonDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun NeonLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = NeonLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun ForestDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ForestDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun ForestLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ForestLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun MidnightDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = MidnightDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun MidnightLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = MidnightLightColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun PrincessPinkDarkColorScheme() {
+
+    BoxTimerProThemePrv (colorScheme = PrincessPinkDarkColorScheme) {
+        ConfigurationScreen(
+            onStartWorkout = {},
+            navigateToSettings = {}
+        )
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun PrincessPinkLightColorScheme() {
+
+    BoxTimerProThemePrv (colorScheme = PrincessPinkLightColorScheme) {
         ConfigurationScreen(
             onStartWorkout = {},
             navigateToSettings = {}

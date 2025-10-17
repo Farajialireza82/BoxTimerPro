@@ -23,6 +23,8 @@ fun RectangleButton(
     isActive: Boolean,
     activeColor: Color = MaterialTheme.colorScheme.secondary,
     unactiveColor: Color = SecondarySubtitleColor,
+    activeTextColor: Color = MaterialTheme.colorScheme.onSecondary,
+    unactiveTextColor: Color = MaterialTheme.colorScheme.onSurface,
     text: String,
     onButtonClicked: () -> Unit,
 ) {
@@ -47,7 +49,7 @@ fun RectangleButton(
 
         Text(
             text = text,
-            color = Color.White,
+            color = if(isActive) activeTextColor else unactiveTextColor,
             fontWeight = FontWeight.W700,
             fontSize = 24.sp
         )

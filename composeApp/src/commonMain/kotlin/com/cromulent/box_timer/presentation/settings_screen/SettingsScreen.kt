@@ -37,6 +37,8 @@ import boxtimerpro.composeapp.generated.resources.end_round_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.end_round_sound_title
 import boxtimerpro.composeapp.generated.resources.feedback_support_subtitle
 import boxtimerpro.composeapp.generated.resources.feedback_support_title
+import boxtimerpro.composeapp.generated.resources.ic_dark
+import boxtimerpro.composeapp.generated.resources.ic_light
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_subtitle
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_title
 import boxtimerpro.composeapp.generated.resources.mute_all_sounds_subtitle
@@ -48,6 +50,7 @@ import boxtimerpro.composeapp.generated.resources.start_round_sound_title
 import boxtimerpro.composeapp.generated.resources.vibration_subtitle
 import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
+import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.presentation.theme.SubtitleColor
 import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.components.Header
@@ -58,10 +61,35 @@ import com.cromulent.box_timer.presentation.settings_screen.components.SettingCa
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingSwitchCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingsStringPickerCard
 import com.cromulent.box_timer.presentation.settings_screen.components.TitleText
+import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
+import com.cromulent.box_timer.presentation.theme.FireDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.FireLightColorScheme
+import com.cromulent.box_timer.presentation.theme.ForestDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.ForestLightColorScheme
+import com.cromulent.box_timer.presentation.theme.IceDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.IceLightColorScheme
+import com.cromulent.box_timer.presentation.theme.MidnightDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.MidnightLightColorScheme
+import com.cromulent.box_timer.presentation.theme.NeonDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.NeonLightColorScheme
+import com.cromulent.box_timer.presentation.theme.OceanDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.OceanLightColorScheme
+import com.cromulent.box_timer.presentation.theme.PrincessPinkDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.PrincessPinkLightColorScheme
+import com.cromulent.box_timer.presentation.theme.RoyalDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.RoyalLightColorScheme
+import com.cromulent.box_timer.presentation.theme.ShadowDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.ShadowLightColorScheme
+import com.cromulent.box_timer.presentation.theme.SunsetDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.SunsetLightColorScheme
+import com.cromulent.box_timer.presentation.theme.VenomDarkColorScheme
+import com.cromulent.box_timer.presentation.theme.VenomLightColorScheme
+import com.cromulent.box_timer.presentation.timer_screen.TimerScreenRoot
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.ArrowRight
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SettingsScreenRoot(
@@ -115,7 +143,10 @@ private fun SettingsScreen(
                 title = stringResource(Res.string.settings_title),
                 subtitle = stringResource(Res.string.settings_subtitle),
                 hasBackButton = true,
-                onBackButtonClicked = onBackButtonClicked
+                onBackButtonClicked = onBackButtonClicked,
+                hasActionButton = true,
+                actionButtonResource = if (appSettings.isDarkMode) Res.drawable.ic_dark else Res.drawable.ic_light,
+                onActionButtonClicked = { onAction(SettingsActions.ToggleDarkMode) }
             )
 
             Column(
@@ -215,7 +246,7 @@ private fun SettingsScreen(
                 ) {
                     Text(
                         text = "v${BuildKonfig.APP_VERSION}",
-                        color = SubtitleColor,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                         modifier = Modifier.padding(end = 4.dp)
                     )
                 }
@@ -290,4 +321,355 @@ private fun SettingsScreen(
             items = state.countDownAudioFiles
         )
     }
+}
+
+
+@Preview
+@Composable
+private fun IceDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = IceDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+    }
+
+}
+
+@Preview
+@Composable
+private fun IceLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = IceLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun FireDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = FireDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+    }
+
+}
+
+@Preview
+@Composable
+private fun FireLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = FireLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun VenomDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = VenomDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun VenomLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = VenomLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun RoyalDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = RoyalDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun RoyalLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = RoyalLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun ShadowDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ShadowDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun ShadowLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ShadowLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+
+@Preview
+@Composable
+private fun SunsetDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = SunsetDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun SunsetLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = SunsetLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun OceanDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = OceanDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun OceanLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = OceanLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun NeonDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = NeonDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun NeonLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = NeonLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun ForestDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ForestDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun ForestLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = ForestLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun MidnightDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = MidnightDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun MidnightLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = MidnightLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+
+
+    }
+
+}
+
+@Preview
+@Composable
+private fun PrincessPinkDarkColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = PrincessPinkDarkColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+    }
+
+}
+
+@Preview
+@Composable
+private fun PrincessPinkLightColorScheme() {
+
+    BoxTimerProThemePrv(colorScheme = PrincessPinkLightColorScheme) {
+        SettingsScreen(
+            state = SettingsState(),
+            onAction = {},
+            onBackButtonClicked = {}
+        )
+    }
+
 }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,7 +51,7 @@ fun ModeCard(
             .clickable { onClick(mode) },
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(
-            width = if (isSelected) 2.dp else 1.dp,
+            width = if (isSelected) 2.dp else 3.dp,
             color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant.copy(
                 alpha = 0.05f
             )
@@ -80,7 +81,7 @@ fun ModeCard(
                 text = stringResource(mode.displayNameRes),
                 fontWeight = FontWeight.W600,
                 style = MaterialTheme.typography.titleMedium,
-                color = White,
+                color = MaterialTheme.colorScheme.onSurface,
                 textAlign = TextAlign.Center,
                 fontSize = titleSize
 
@@ -97,7 +98,7 @@ fun ModeCard(
                         .fillMaxWidth(),
                     text = stringResource(mode.descriptionRes),
                     style = MaterialTheme.typography.bodySmall,
-                    color = White.copy(alpha = 0.7f),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                     textAlign = TextAlign.Center,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,

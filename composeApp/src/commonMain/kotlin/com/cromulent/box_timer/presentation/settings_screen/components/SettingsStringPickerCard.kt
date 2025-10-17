@@ -54,7 +54,7 @@ fun SettingsStringPickerCard(
                     maxLines = 1,
                     fontWeight = FontWeight.Medium,
                     overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
                 )
             }
 
