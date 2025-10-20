@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toIntRect
-import com.cromulent.box_timer.presentation.timer_screen.TimerScreenPortrait
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -117,13 +116,4 @@ fun Chip(
         )
     }
 
-}
-
-@Preview(widthDp = 350, heightDp = 720)
-@Composable
-private fun Orev() {
-    TimerScreenPortrait(
-        onAction = {},
-        onBackButtonClicked = {}
-    )
 }

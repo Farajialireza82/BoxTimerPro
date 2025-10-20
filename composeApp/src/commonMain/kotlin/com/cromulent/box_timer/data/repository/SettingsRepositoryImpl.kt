@@ -31,25 +31,11 @@ class SettingsRepositoryImpl() : SettingsRepository {
         settings.putString("app_settings", Json.encodeToString(appSettings))
     }
 
-    override suspend fun updateTimerSettings(timerSettings: TimerSettings) {
-        settings.putString("timer_settings", Json.encodeToString(timerSettings))
-    }
-
     override suspend fun getAppSettings(): AppSettings? {
         val appStringJson = settings.getStringOrNull("app_settings")
         return if (appStringJson != null) {
             Json.decodeFromString(appStringJson)
         } else null
     }
-
-    override suspend fun getTimerSettings(): TimerSettings? {
-        val timerJson = settings.getStringOrNull("timer_settings")
-        return if (timerJson != null) {
-            Json.decodeFromString(timerJson)
-        } else {
-            null
-        }
-    }
-
 
 }

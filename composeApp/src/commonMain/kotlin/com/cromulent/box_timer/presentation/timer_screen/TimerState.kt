@@ -2,13 +2,18 @@ package com.cromulent.box_timer.presentation.timer_screen
 
 
 data class TimerState(
-    val isTimerRunning: Boolean = false,
-    val isPaused: Boolean = false,
+    val timerStatus: TimerStatus = TimerStatus.Ready,
     val remainingTime: Long = 0L,
     val progress: Float = 0f,
     val currentRound: Int = 1,
-    val totalRounds: Int = 12,
-    val roundDuration: Long = 180_000L, // 3 min
-    val restDuration: Long = 30_000L,
-    val timerMessage: String = "Ready",
+    val totalRounds: Int = 9,
 )
+
+enum class TimerStatus(val message: String){
+    Ready("Ready"), Running("FIGHT"), Paused("Paused"), Resting("Rest")
+}
+fun TimerStatus.isInActiveState(): Boolean{
+    return this == TimerStatus.Running || this == TimerStatus.Resting
+}
+
+fun TimerState.isInActiveState(): Boolean = timerStatus.isInActiveState()
