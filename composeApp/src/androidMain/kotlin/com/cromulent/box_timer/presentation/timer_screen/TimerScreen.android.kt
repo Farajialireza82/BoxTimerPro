@@ -1,5 +1,6 @@
 package com.cromulent.box_timer.presentation.timer_screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -52,7 +53,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.back_ic
 import boxtimerpro.composeapp.generated.resources.button_continue
@@ -68,13 +68,13 @@ import boxtimerpro.composeapp.generated.resources.header_title_app
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.CountDown
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Exclamation
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -97,7 +97,7 @@ fun TimerScreenRoot(
     }
 
     val onBackButtonClicked = {
-        if(state.timerStatus != TimerStatus.Ready) showExitDialog = true
+        if (state.timerStatus != TimerStatus.Ready) showExitDialog = true
         else closeTimerScreen()
     }
 
@@ -260,9 +260,11 @@ private fun TimerScreenLandscape(
                             fontWeight = FontWeight.W600,
                             letterSpacing = 6.sp,
                             textAlign = TextAlign.Center,
-                            color = if (state.isInActiveState()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                            color = if (state.isInActiveState()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.7f
+                            )
                         ),
-                        text = state.timerStatus.message.uppercase(), // Assuming timerMessage is dynamic and doesn't need external string res
+                        text = if (state.timerStatus == CountDown) state.countDownText else state.timerStatus.message.uppercase(),
                     )
                 }
 
@@ -398,7 +400,7 @@ fun TimerScreenPortrait(
                 remainingTime = state.remainingTime,
                 progress = state.progress,
                 isRunning = state.isInActiveState(),
-                message = state.timerStatus.message, // Assuming timerMessage is dynamic and doesn't need external string res
+                message = if (state.timerStatus == CountDown) state.countDownText else state.timerStatus.message
             )
 
             Column(
@@ -417,6 +419,7 @@ fun TimerScreenPortrait(
                         .weight(if (state.isInActiveState()) 4f else 3f),
                     isActive = state.isInActiveState(),
                     onButtonClicked = {
+                        if (state.timerStatus == CountDown) return@RectangleButton
                         if (state.isInActiveState()) {
                             onAction(TimerActions.PauseTimer)
                         } else {
@@ -425,8 +428,10 @@ fun TimerScreenPortrait(
                     },
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
-                    activeTextColor = White,
+                    activeTextColor = MaterialTheme.colorScheme.onSecondary,
+                    unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
                     text = when {
+                        state.timerStatus == CountDown -> "Counting Down..."
                         state.isInActiveState() -> stringResource(Res.string.button_pause)
                         state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
                         else -> stringResource(Res.string.button_start)
@@ -448,9 +453,9 @@ fun TimerScreenPortrait(
                 )
 
             }
-
-
         }
+
+
     }
 }
 

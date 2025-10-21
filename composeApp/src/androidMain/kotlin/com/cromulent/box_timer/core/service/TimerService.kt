@@ -89,7 +89,8 @@ class TimerService : Service() {
             appSettings = settingsRepository.getAppSettings()
             _timerState.update {
                 it.copy(
-                    totalRounds = timerSettings.totalRounds
+                    totalRounds = timerSettings.totalRounds,
+                    remainingTime = timerSettings.roundDuration
                 )
             }
         }
@@ -97,7 +98,7 @@ class TimerService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
-        if(appSettings.stopTimerOnClose) {
+        if (appSettings.stopTimerOnClose) {
             resetTimer()
             stopForegroundService()
         }
@@ -155,7 +156,16 @@ class TimerService : Service() {
 
             _timerState.update { it.copy(timerStatus = nextStatus) }
 
-            scope.launch { runTimerLoop() }
+
+
+            scope.launch {
+                timerState.value.let {
+                    if(it.currentRound == 1 && it.remainingTime == timerSettings.roundDuration){
+                        runCountDown()
+                    }
+                }
+                runTimerLoop()
+            }
         }
     }
 
@@ -212,6 +222,27 @@ class TimerService : Service() {
 
             delay(10L)
         }
+    }
+
+    private suspend fun runCountDown() {
+        val beforeStatus = timerState.value.timerStatus
+        for (i in 1..3) {
+            _timerState.update {
+                it.copy(
+                    timerStatus = TimerStatus.CountDown,
+                    countDownText = "Get Ready: ${4 - i}",
+                )
+            }
+            countDownAlert()
+            delay(1000L)
+        }
+        _timerState.update {
+            it.copy(
+                timerStatus = beforeStatus,
+                countDownText = ""
+            )
+        }
+
     }
 
     private suspend fun handlePhaseComplete() {
