@@ -33,7 +33,7 @@ actual class TimerViewModel(
 
     init {
         viewModelScope.launch {
-            appSettings = settingsRepository.getAppSettings() ?: AppSettings()
+            appSettings = settingsRepository.getAppSettings()
             timerSettings = timerRepository.getTimerSettings()
             delay(300)
             start()
@@ -70,18 +70,7 @@ actual class TimerViewModel(
             while (_state.value.currentRound <= _state.value.totalRounds && _state.value.timerStatus.isInActiveState()) {
 
                 if (_state.value.currentRound == 1 && _state.value.remainingTime == timerSettings.roundDuration) {
-                    runTimer(
-                        duration = 2000L,
-                        delay = 1000L,
-                        callBack = { currentTime, remainingTime ->
-                            countDownAlert()
-                            _state.update {
-                                it.copy(
-                                    timerStatus = TimerStatus.Running,
-                                )
-                            }
-                        }
-                    )
+                    runCountDown()
                 }
 
 
@@ -203,6 +192,26 @@ actual class TimerViewModel(
 
     private fun toggleKeepScreenOn(enabled: Boolean) {
         systemEngine.keepScreenOn(enabled)
+    }
+
+    private suspend fun runCountDown() {
+        val beforeStatus = state.value.timerStatus
+        for (i in 1..3) {
+            _state.update {
+                it.copy(
+                    timerStatus = TimerStatus.CountDown,
+                    countDownText = "Get Ready: ${4 - i}",
+                )
+            }
+            countDownAlert()
+            delay(1000L)
+        }
+        _state.update {
+            it.copy(
+                timerStatus = beforeStatus,
+                countDownText = ""
+            )
+        }
     }
 
     override fun onCleared() {

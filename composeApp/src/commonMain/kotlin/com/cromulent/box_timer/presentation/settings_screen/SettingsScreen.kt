@@ -52,9 +52,6 @@ import boxtimerpro.composeapp.generated.resources.stop_timer_on_close_title
 import boxtimerpro.composeapp.generated.resources.vibration_subtitle
 import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
-import com.cromulent.box_timer.domain.AppSettings
-import com.cromulent.box_timer.presentation.theme.SubtitleColor
-import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
@@ -86,7 +83,7 @@ import com.cromulent.box_timer.presentation.theme.SunsetDarkColorScheme
 import com.cromulent.box_timer.presentation.theme.SunsetLightColorScheme
 import com.cromulent.box_timer.presentation.theme.VenomDarkColorScheme
 import com.cromulent.box_timer.presentation.theme.VenomLightColorScheme
-import com.cromulent.box_timer.presentation.timer_screen.TimerScreenRoot
+import com.cromulent.box_timer.presentation.theme.colorSchemes
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.ArrowRight

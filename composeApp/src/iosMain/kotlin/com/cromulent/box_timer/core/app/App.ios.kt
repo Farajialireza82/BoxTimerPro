@@ -3,7 +3,10 @@ package com.cromulent.box_timer.core.app
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -55,11 +58,14 @@ actual fun App() {
 
                     composable<Route.TimerScreen> {
                         val viewModel = koinViewModel<TimerViewModel>()
+                        val state by viewModel.state.collectAsStateWithLifecycle()
                         TimerScreenRoot(
                             viewModel = viewModel,
+                            state = state,
                             closeTimerScreen = {
                                 navController.popBackStack()
-                            })
+                            },
+                            modifier = Modifier)
 
                     }
 

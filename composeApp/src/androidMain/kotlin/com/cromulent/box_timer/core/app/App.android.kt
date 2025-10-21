@@ -48,8 +48,7 @@ actual fun App() {
                     startDestination = Route.ConfigurationScreen
                 ) {
 
-                    composable<Route.ConfigurationScreen>(
-                    ) {
+                    composable<Route.ConfigurationScreen>{
                         val viewModel = koinViewModel<ConfigurationViewModel>()
                         ConfigurationScreenRoot(
                             viewModel = viewModel,
