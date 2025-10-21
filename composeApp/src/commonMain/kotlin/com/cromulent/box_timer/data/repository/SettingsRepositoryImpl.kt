@@ -19,23 +19,24 @@ class SettingsRepositoryImpl() : SettingsRepository {
     val settings = Settings() as ObservableSettings
 
     @OptIn(ExperimentalSettingsApi::class)
-    override val appSettings: Flow<AppSettings?>  = settings.getStringFlow("app_settings", "NULL").map { settings ->
-        if (settings == "NULL") {
-            null
-        } else {
-            Json.decodeFromString(settings)
+    override val appSettings: Flow<AppSettings> =
+        settings.getStringFlow("app_settings", "NULL").map { settings ->
+            if (settings == "NULL") {
+                AppSettings()
+            } else {
+                Json.decodeFromString(settings)
+            }
         }
-    }
 
     override suspend fun updateAppSettings(appSettings: AppSettings) {
         settings.putString("app_settings", Json.encodeToString(appSettings))
     }
 
-    override suspend fun getAppSettings(): AppSettings? {
+    override suspend fun getAppSettings(): AppSettings {
         val appStringJson = settings.getStringOrNull("app_settings")
         return if (appStringJson != null) {
             Json.decodeFromString(appStringJson)
-        } else null
+        } else AppSettings()
     }
 
 }

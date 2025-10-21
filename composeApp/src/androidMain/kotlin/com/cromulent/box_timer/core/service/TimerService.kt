@@ -52,7 +52,7 @@ class TimerService : Service() {
     private var statusBeforePause: TimerStatus? = null
 
     lateinit var timerSettings: TimerSettings
-    var appSettings: AppSettings? = null
+    lateinit var appSettings: AppSettings
 
     init {
         scope.launch {
@@ -227,25 +227,25 @@ class TimerService : Service() {
 
     private fun endRoundAlert() {
         vibratePhone(1000L)
-        playAudio(appSettings?.endRoundAudioFile?.uri)
+        playAudio(appSettings.endRoundAudioFile.uri)
     }
 
     private fun startRoundAlert() {
         vibratePhone(700L)
-        playAudio(appSettings?.startRoundAudioFile?.uri)
+        playAudio(appSettings.startRoundAudioFile.uri)
     }
 
     private fun countDownAlert() {
         vibratePhone(500L)
-        playAudio(appSettings?.countDownAudioFile?.uri)
+        playAudio(appSettings.countDownAudioFile.uri)
     }
 
     private fun vibratePhone(duration: Long = 1000L) {
-        if (appSettings?.isVibrationEnabled == true) systemEngine.vibrate(duration)
+        if (appSettings.isVibrationEnabled) systemEngine.vibrate(duration)
     }
 
     private fun playAudio(uri: String?) {
-        if (appSettings?.muteAllSounds == true) return
+        if (appSettings.muteAllSounds) return
         audioPlayer.playSound(uri)
     }
 
