@@ -11,7 +11,7 @@
     <string name="settings_title">Settings</string>
     <string name="settings_subtitle">Customize Your Experience</string>
 
-    <string name="audio_settings_title">Audio Settings</string>
+    <string name="general_settings_title">General Settings</string>
     <string name="mute_all_sounds_title">Mute All Sounds</string>
     <string name="mute_all_sounds_subtitle">Mute all sounds in the app</string>
     <string name="vibration_title">Vibration</string>

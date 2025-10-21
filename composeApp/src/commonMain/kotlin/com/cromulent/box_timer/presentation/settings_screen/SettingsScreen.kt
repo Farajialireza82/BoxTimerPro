@@ -28,7 +28,6 @@ import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.about_and_support_title
 import boxtimerpro.composeapp.generated.resources.app_version_subtitle
 import boxtimerpro.composeapp.generated.resources.app_version_title
-import boxtimerpro.composeapp.generated.resources.audio_settings_title
 import boxtimerpro.composeapp.generated.resources.contact_button_text
 import boxtimerpro.composeapp.generated.resources.countdown_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.countdown_sound_title
@@ -37,6 +36,7 @@ import boxtimerpro.composeapp.generated.resources.end_round_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.end_round_sound_title
 import boxtimerpro.composeapp.generated.resources.feedback_support_subtitle
 import boxtimerpro.composeapp.generated.resources.feedback_support_title
+import boxtimerpro.composeapp.generated.resources.general_settings_title
 import boxtimerpro.composeapp.generated.resources.ic_dark
 import boxtimerpro.composeapp.generated.resources.ic_light
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_subtitle
@@ -156,7 +156,7 @@ private fun SettingsScreen(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
 
-                TitleText(stringResource(Res.string.audio_settings_title))
+                TitleText(stringResource(Res.string.general_settings_title))
 
                 Spacer(Modifier.size(20.dp))
 

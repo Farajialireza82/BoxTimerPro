@@ -38,3 +38,20 @@ fun Builder.addTimerActions(
             FLAG_IMMUTABLE
         )
     )
+
+fun Builder.addRestAction(
+    context: Context,
+): Builder = this
+    .clearActions()
+    .addAction(
+        R.drawable.ic_pause,
+        "Reset",
+        PendingIntent.getService(
+            context,
+            0,
+            Intent(context, TimerService::class.java).also {
+                it.action = TimerService.Actions.RESET.toString()
+            },
+            FLAG_IMMUTABLE
+        )
+    )

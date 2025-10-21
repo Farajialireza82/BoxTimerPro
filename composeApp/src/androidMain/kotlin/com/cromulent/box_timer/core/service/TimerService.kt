@@ -326,12 +326,22 @@ class TimerService : Service() {
         val countdownText = timerState.value.countDownText
         val remainingTimeString = formatTime(remainingTime)
 
+        if(currentStatus == TimerStatus.CountDown){
+            notificationManager.notify(
+                1,
+                notificationBuilder
+                    .setContentTitle(countdownText)
+                    .addRestAction(applicationContext)
+                    .build()
+            )
+            return
+        }
+
         notificationManager.notify(
             1,
             notificationBuilder
                 .setContentTitle(
-                    if(currentStatus == TimerStatus.CountDown) countdownText
-                    else "$currentStatusMessage $middleDot $remainingTimeString remaining"
+                    "$currentStatusMessage $middleDot $remainingTimeString remaining"
                 )
                 .addTimerActions(applicationContext, isPaused = (currentStatus == TimerStatus.Paused))
                 .build()
