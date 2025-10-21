@@ -23,6 +23,11 @@
     <string name="end_round_sound_title">End Round Sound</string>
     <string name="end_round_sound_subtitle">Sound when round ends</string>
 
+    <string name="stop_timer_on_close_title">Stop Timer on Close</string>
+    <string name="stop_timer_on_close_subtitle">Stop timer when app closes</string>
+
+
+
     <string name="display_settings_title">Display Settings</string>
     <string name="keep_screen_on_title">Keep Screen On</string>
     <string name="keep_screen_on_subtitle">Prevent screen from sleeping during workout</string>

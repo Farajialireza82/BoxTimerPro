@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.cromulent.box_timer.core.service.TimerService
 import com.cromulent.box_timer.data.AppContainer
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
@@ -26,6 +27,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Preview
 actual fun App() {
 
+    val navController = rememberNavController()
     BoxTimerProTheme {
 
         Box(
@@ -33,7 +35,6 @@ actual fun App() {
                 .fillMaxSize()
         ) {
 
-            val navController = rememberNavController()
             NavHost(
                 navController = navController,
                 startDestination = Route.TimerGraph
@@ -87,6 +88,9 @@ actual fun App() {
                 }
             }
         }
+    }
+    if(TimerService.isRunning){
+        navController.navigate(Route.TimerScreen)
     }
 
 

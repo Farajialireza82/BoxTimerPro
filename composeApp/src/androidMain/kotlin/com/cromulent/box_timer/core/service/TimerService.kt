@@ -62,7 +62,6 @@ class TimerService : Service() {
             .setShowWhen(true)
             .setSilent(true)
             .setOngoing(true)
-//            .setRequestPromotedOngoing(true)
     }
 
     private val audioPlayer: AudioPlayer by inject()
@@ -93,6 +92,14 @@ class TimerService : Service() {
                     totalRounds = timerSettings.totalRounds
                 )
             }
+        }
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        if(appSettings.stopTimerOnClose) {
+            resetTimer()
+            stopForegroundService()
         }
     }
 
@@ -281,12 +288,14 @@ class TimerService : Service() {
 
     private fun startForegroundService() {
         startForeground(1, notificationBuilder.build())
+        isRunning = true
     }
 
     private fun stopForegroundService() {
         notificationManager.cancel(1)
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
+        isRunning = false
     }
 
     private fun endRoundAlert() {
@@ -311,6 +320,11 @@ class TimerService : Service() {
     private fun playAudio(uri: String?) {
         if (appSettings.muteAllSounds) return
         audioPlayer.playSound(uri)
+    }
+
+    companion object {
+        var isRunning = false
+            private set
     }
 
     enum class Actions {

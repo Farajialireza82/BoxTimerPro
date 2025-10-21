@@ -21,14 +21,12 @@ class SettingsViewModel(
 
     init {
         viewModelScope.launch {
-            settingsRepository.appSettings.collect {
-                it?.let { appSettings ->
+            settingsRepository.appSettings.collect { appSettings ->
                     _state.update {
                         it.copy(
                             appSettings = appSettings
                         )
                     }
-                }
             }
         }
     }
@@ -49,11 +47,22 @@ class SettingsViewModel(
             is SettingsActions.ToggleKeepScreenOn -> toggleKeepScreenOn(action.isEnabled)
             is SettingsActions.ToggleMuteAllSounds -> toggleMuteAllSounds(action.isEnabled)
             is SettingsActions.ToggleVibrationHaptic -> toggleVibrationHaptic(action.isEnabled)
+            is SettingsActions.ToggleStopTimerOnClose -> toggleStopTimerOnClose(action.isEnabled)
             is SettingsActions.PlayAudio -> playAudio(action.uri)
             is SettingsActions.SetColorScheme -> setColorScheme(action.colorSchemeId)
             is SettingsActions.ToggleDarkMode -> toggleDarkMode()
         }
 
+    }
+
+    private fun toggleStopTimerOnClose(isEnabled: Boolean){
+        viewModelScope.launch {
+            settingsRepository.updateAppSettings(
+                _state.value.appSettings.copy(
+                    stopTimerOnClose = isEnabled
+                )
+            )
+        }
     }
 
     private fun toggleDarkMode(){

@@ -47,6 +47,8 @@ import boxtimerpro.composeapp.generated.resources.settings_subtitle
 import boxtimerpro.composeapp.generated.resources.settings_title
 import boxtimerpro.composeapp.generated.resources.start_round_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.start_round_sound_title
+import boxtimerpro.composeapp.generated.resources.stop_timer_on_close_subtitle
+import boxtimerpro.composeapp.generated.resources.stop_timer_on_close_title
 import boxtimerpro.composeapp.generated.resources.vibration_subtitle
 import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
@@ -204,6 +206,17 @@ private fun SettingsScreen(
                     subtitle = stringResource(Res.string.end_round_sound_subtitle),
                     selectedTitle = appSettings.endRoundAudioFile.title,
                     onClick = { endRoundBsVisibility = true }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
+                SettingSwitchCard(
+                    isChecked = appSettings.stopTimerOnClose,
+                    title = stringResource(Res.string.stop_timer_on_close_title),
+                    subtitle = stringResource(Res.string.stop_timer_on_close_subtitle),
+                    onCheckedChange = {
+                        onAction(SettingsActions.ToggleStopTimerOnClose(it))
+                    }
                 )
 
                 Spacer(Modifier.size(30.dp))

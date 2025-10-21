@@ -1,8 +1,10 @@
 package com.cromulent.box_timer.presentation.timer_screen
 
 import android.app.Application
+import android.app.Service.STOP_FOREGROUND_REMOVE
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.ServiceCompat.stopForeground
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cromulent.box_timer.core.service.TimerService

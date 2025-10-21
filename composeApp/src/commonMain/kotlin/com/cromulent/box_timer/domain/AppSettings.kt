@@ -13,5 +13,6 @@ data class AppSettings(
     val keepScreenOnEnabled: Boolean = true,
     val allowRotation: Boolean = true,
     val colorSchemeId: String = "ice",
-    val isDarkMode: Boolean = true
+    val isDarkMode: Boolean = true,
+    val stopTimerOnClose: Boolean = true
 )
