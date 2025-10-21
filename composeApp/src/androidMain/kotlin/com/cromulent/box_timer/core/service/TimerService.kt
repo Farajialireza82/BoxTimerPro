@@ -46,7 +46,7 @@ class TimerService : Service() {
     private val notificationManager by lazy { NotificationManagerCompat.from(this) }
     val notificationBuilder: NotificationCompat.Builder by lazy {
         NotificationCompat.Builder(applicationContext, "timer")
-            .setSmallIcon(R.drawable.splash)
+            .setSmallIcon(R.drawable.ic_avg_pace)
             .setColor(
                 colorSchemes.firstOrNull { it.id == appSettings.colorSchemeId }?.darkColorScheme?.primary?.toArgb()
                     ?: Color.Blue.toArgb()
@@ -108,6 +108,8 @@ class TimerService : Service() {
     override fun onDestroy() {
         job.cancel()
         notificationManager.cancel(1)
+        resetTimer()
+        isRunning = false
         super.onDestroy()
     }
 
@@ -139,6 +141,7 @@ class TimerService : Service() {
             _timerState.update { it.copy(timerStatus = TimerStatus.Paused) }
             pauseStartTime = SystemClock.elapsedRealtime()
         } else {
+            isRunning = true
             // Resume/Start
             if (pauseStartTime != 0L) {
                 totalPauseDuration += SystemClock.elapsedRealtime() - pauseStartTime
@@ -255,6 +258,7 @@ class TimerService : Service() {
         phaseStartTime = 0L
         pauseStartTime = 0L
         totalPauseDuration = 0L
+        isRunning = false
 
         _timerState.update {
             it.copy(

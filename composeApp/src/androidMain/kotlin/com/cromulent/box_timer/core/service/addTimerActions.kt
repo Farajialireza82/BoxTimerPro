@@ -28,7 +28,7 @@ fun Builder.addTimerActions(
     )
     .addAction(
         R.drawable.ic_play,
-        "Exit",
+        "Reset",
         PendingIntent.getService(
             context,
             0,
