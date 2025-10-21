@@ -24,6 +24,6 @@ actual val platformModule: Module = module {
             context = androidApplication()
         )
     }
-    single<AppContainer> { DefaultAppContainer() }
+    single<AppContainer> { DefaultAppContainer(androidContext()) }
 
 }

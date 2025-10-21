@@ -1,17 +1,26 @@
 package com.cromulent.box_timer.core.service
 
+import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.IBinder
 import android.os.SystemClock
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.cromulent.box_timer.R
 import com.cromulent.box_timer.core.util.AudioPlayer
 import com.cromulent.box_timer.core.util.SystemEngine
+import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.data.AppContainer
 import com.cromulent.box_timer.data.repository.TimerRepositoryImpl
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
 import com.cromulent.box_timer.domain.TimerSettings
+import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Running
 import com.cromulent.box_timer.presentation.timer_screen.isInActiveState
@@ -23,14 +32,38 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import kotlin.text.Typography.middleDot
 
 class TimerService : Service() {
 
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
+    private val settingsRepository: SettingsRepository by inject()
+    lateinit var appSettings: AppSettings
+
 
     private val appContainer by inject<AppContainer>()
     private val notificationManager by lazy { NotificationManagerCompat.from(this) }
+    val notificationBuilder: NotificationCompat.Builder by lazy {
+        NotificationCompat.Builder(applicationContext, "timer")
+            .setSmallIcon(R.drawable.splash)
+            .setColor(
+                colorSchemes.firstOrNull { it.id == appSettings.colorSchemeId }?.darkColorScheme?.primary?.toArgb()
+                    ?: Color.Blue.toArgb()
+            )
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    applicationContext,
+                    0,
+                    applicationContext.packageManager.getLaunchIntentForPackage(applicationContext.packageName),
+                    PendingIntent.FLAG_IMMUTABLE
+                )
+            )
+            .setShowWhen(true)
+            .setSilent(true)
+            .setOngoing(true)
+//            .setRequestPromotedOngoing(true)
+    }
 
     private val audioPlayer: AudioPlayer by inject()
     private val systemEngine: SystemEngine by inject()
@@ -38,7 +71,6 @@ class TimerService : Service() {
     private val _timerState by lazy { appContainer.timerState }
     private val timerState by lazy { _timerState.asStateFlow() }
     private val timerRepository = TimerRepositoryImpl()
-    private val settingsRepository: SettingsRepository by inject()
 
     private var phaseStartTime = 0L
     private var pauseStartTime = 0L
@@ -48,11 +80,9 @@ class TimerService : Service() {
     private var countdownTwoAudioPlayed: Boolean = false
     private var countDownOneAudioPlayed: Boolean = false
 
-
     private var statusBeforePause: TimerStatus? = null
 
     lateinit var timerSettings: TimerSettings
-    lateinit var appSettings: AppSettings
 
     init {
         scope.launch {
@@ -76,13 +106,16 @@ class TimerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
-            Actions.TOGGLE.toString() -> toggleTimer()
+            Actions.TOGGLE.toString() -> {
+                startForegroundService()
+                toggleTimer()
+            }
 
             Actions.RESET.toString() -> {
                 if (timerState.value.timerStatus.isInActiveState()) toggleTimer()
                 scope.launch {
                     resetTimer()
-                    stopSelf()
+                    stopForegroundService()
                 }
             }
 
@@ -117,6 +150,7 @@ class TimerService : Service() {
     }
 
     private suspend fun runTimerLoop() {
+        showTimerNotification()
         while (timerState.value.timerStatus.isInActiveState()) {
             val currentStatus = timerState.value.timerStatus
 
@@ -164,6 +198,7 @@ class TimerService : Service() {
                 handlePhaseComplete()
                 if (!timerState.value.timerStatus.isInActiveState()) break
             }
+            showTimerNotification()
 
             delay(10L)
         }
@@ -223,6 +258,35 @@ class TimerService : Service() {
                 timerStatus = TimerStatus.Ready
             )
         }
+    }
+
+    @SuppressLint("MissingPermission") // We check for the permission when pressing the Play button in the UI
+    fun showTimerNotification() {
+
+        val currentStatus = timerState.value.timerStatus
+        val currentStatusMessage = currentStatus.message
+        val remainingTime = timerState.value.remainingTime
+        val remainingTimeString = formatTime(remainingTime)
+
+        notificationManager.notify(
+            1,
+            notificationBuilder
+                .setContentTitle(
+                    "$currentStatusMessage $middleDot $remainingTimeString remaining"
+                )
+                .addTimerActions(applicationContext, isPaused = currentStatus == TimerStatus.Paused)
+                .build()
+        )
+    }
+
+    private fun startForegroundService() {
+        startForeground(1, notificationBuilder.build())
+    }
+
+    private fun stopForegroundService() {
+        notificationManager.cancel(1)
+        stopForeground(STOP_FOREGROUND_REMOVE)
+        stopSelf()
     }
 
     private fun endRoundAlert() {
