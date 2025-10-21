@@ -28,7 +28,6 @@ import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.about_and_support_title
 import boxtimerpro.composeapp.generated.resources.app_version_subtitle
 import boxtimerpro.composeapp.generated.resources.app_version_title
-import boxtimerpro.composeapp.generated.resources.audio_settings_title
 import boxtimerpro.composeapp.generated.resources.contact_button_text
 import boxtimerpro.composeapp.generated.resources.countdown_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.countdown_sound_title
@@ -37,6 +36,7 @@ import boxtimerpro.composeapp.generated.resources.end_round_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.end_round_sound_title
 import boxtimerpro.composeapp.generated.resources.feedback_support_subtitle
 import boxtimerpro.composeapp.generated.resources.feedback_support_title
+import boxtimerpro.composeapp.generated.resources.general_settings_title
 import boxtimerpro.composeapp.generated.resources.ic_dark
 import boxtimerpro.composeapp.generated.resources.ic_light
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_subtitle
@@ -47,12 +47,11 @@ import boxtimerpro.composeapp.generated.resources.settings_subtitle
 import boxtimerpro.composeapp.generated.resources.settings_title
 import boxtimerpro.composeapp.generated.resources.start_round_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.start_round_sound_title
+import boxtimerpro.composeapp.generated.resources.stop_timer_on_close_subtitle
+import boxtimerpro.composeapp.generated.resources.stop_timer_on_close_title
 import boxtimerpro.composeapp.generated.resources.vibration_subtitle
 import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
-import com.cromulent.box_timer.domain.AppSettings
-import com.cromulent.box_timer.presentation.theme.SubtitleColor
-import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
@@ -84,7 +83,7 @@ import com.cromulent.box_timer.presentation.theme.SunsetDarkColorScheme
 import com.cromulent.box_timer.presentation.theme.SunsetLightColorScheme
 import com.cromulent.box_timer.presentation.theme.VenomDarkColorScheme
 import com.cromulent.box_timer.presentation.theme.VenomLightColorScheme
-import com.cromulent.box_timer.presentation.timer_screen.TimerScreenRoot
+import com.cromulent.box_timer.presentation.theme.colorSchemes
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.ArrowRight
@@ -157,7 +156,7 @@ private fun SettingsScreen(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
 
-                TitleText(stringResource(Res.string.audio_settings_title))
+                TitleText(stringResource(Res.string.general_settings_title))
 
                 Spacer(Modifier.size(20.dp))
 
@@ -204,6 +203,17 @@ private fun SettingsScreen(
                     subtitle = stringResource(Res.string.end_round_sound_subtitle),
                     selectedTitle = appSettings.endRoundAudioFile.title,
                     onClick = { endRoundBsVisibility = true }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
+                SettingSwitchCard(
+                    isChecked = appSettings.stopTimerOnClose,
+                    title = stringResource(Res.string.stop_timer_on_close_title),
+                    subtitle = stringResource(Res.string.stop_timer_on_close_subtitle),
+                    onCheckedChange = {
+                        onAction(SettingsActions.ToggleStopTimerOnClose(it))
+                    }
                 )
 
                 Spacer(Modifier.size(30.dp))

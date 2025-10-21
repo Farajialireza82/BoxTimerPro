@@ -5,9 +5,7 @@ import kotlinx.coroutines.flow.Flow
 interface SettingsRepository {
 
     suspend fun updateAppSettings(appSettings: AppSettings)
-    suspend fun updateTimerSettings(timerSettings: TimerSettings)
-    suspend fun getAppSettings(): AppSettings?
-    suspend fun getTimerSettings(): TimerSettings?
+    suspend fun getAppSettings(): AppSettings
 
-    val appSettings: Flow<AppSettings?>
+    val appSettings: Flow<AppSettings>
 }

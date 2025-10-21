@@ -2,7 +2,9 @@ package com.cromulent.box_timer.core.di
 
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cromulent.box_timer.data.repository.SettingsRepositoryImpl
+import com.cromulent.box_timer.data.repository.TimerRepositoryImpl
 import com.cromulent.box_timer.domain.SettingsRepository
+import com.cromulent.box_timer.domain.TimerRepository
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
 import com.cromulent.box_timer.presentation.settings_screen.SettingsViewModel
 import com.cromulent.box_timer.presentation.timer_screen.TimerViewModel
@@ -17,9 +19,9 @@ expect val platformModule: Module
 val sharedModule = module {
 
     singleOf(::SettingsRepositoryImpl).bind<SettingsRepository>()
+    singleOf(::TimerRepositoryImpl).bind<TimerRepository>()
 
     viewModelOf(::ConfigurationViewModel)
-    viewModelOf(::TimerViewModel)
     viewModelOf(::SettingsViewModel)
 
 }

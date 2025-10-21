@@ -11,7 +11,7 @@
     <string name="settings_title">Settings</string>
     <string name="settings_subtitle">Customize Your Experience</string>
 
-    <string name="audio_settings_title">Audio Settings</string>
+    <string name="general_settings_title">General Settings</string>
     <string name="mute_all_sounds_title">Mute All Sounds</string>
     <string name="mute_all_sounds_subtitle">Mute all sounds in the app</string>
     <string name="vibration_title">Vibration</string>
@@ -22,6 +22,11 @@
     <string name="start_round_sound_subtitle">Sound when round begins</string>
     <string name="end_round_sound_title">End Round Sound</string>
     <string name="end_round_sound_subtitle">Sound when round ends</string>
+
+    <string name="stop_timer_on_close_title">Stop Timer on Close</string>
+    <string name="stop_timer_on_close_subtitle">Stop timer when app closes</string>
+
+
 
     <string name="display_settings_title">Display Settings</string>
     <string name="keep_screen_on_title">Keep Screen On</string>
