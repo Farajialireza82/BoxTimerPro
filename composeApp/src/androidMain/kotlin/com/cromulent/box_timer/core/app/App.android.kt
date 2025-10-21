@@ -1,11 +1,13 @@
 package com.cromulent.box_timer.core.app
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -26,6 +28,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 @Preview
 actual fun App() {
+
+    val context = LocalContext.current
 
     val navController = rememberNavController()
     BoxTimerProTheme {
@@ -69,6 +73,7 @@ actual fun App() {
                             state = state,
                             closeTimerScreen = {
                                 navController.popBackStack()
+                                context.stopService(Intent(context, TimerService::class.java))
                             },
                             modifier = Modifier
                         )
