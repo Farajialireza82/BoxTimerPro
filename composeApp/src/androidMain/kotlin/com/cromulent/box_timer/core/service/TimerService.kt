@@ -16,6 +16,7 @@ import com.cromulent.box_timer.core.util.AudioPlayer
 import com.cromulent.box_timer.core.util.SystemEngine
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.data.AppContainer
+import com.cromulent.box_timer.data.repository.SettingsRepositoryImpl
 import com.cromulent.box_timer.data.repository.TimerRepositoryImpl
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
@@ -38,8 +39,8 @@ class TimerService : Service() {
 
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
-    private val settingsRepository: SettingsRepository by inject()
-    lateinit var appSettings: AppSettings
+    private val settingsRepository = SettingsRepositoryImpl()
+    var appSettings: AppSettings? = null
 
 
     private val appContainer by inject<AppContainer>()
@@ -48,7 +49,7 @@ class TimerService : Service() {
         NotificationCompat.Builder(applicationContext, "timer")
             .setSmallIcon(R.drawable.ic_avg_pace)
             .setColor(
-                colorSchemes.firstOrNull { it.id == appSettings.colorSchemeId }?.darkColorScheme?.primary?.toArgb()
+                colorSchemes.firstOrNull { it.id == appSettings?.colorSchemeId }?.darkColorScheme?.primary?.toArgb()
                     ?: Color.Blue.toArgb()
             )
             .setContentIntent(
@@ -98,7 +99,7 @@ class TimerService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
-        if (appSettings.stopTimerOnClose) {
+        if (appSettings?.stopTimerOnClose == true) {
             resetTimer()
             stopForegroundService()
         }
@@ -351,25 +352,25 @@ class TimerService : Service() {
 
     private fun endRoundAlert() {
         vibratePhone(1000L)
-        playAudio(appSettings.endRoundAudioFile.uri)
+        playAudio(appSettings?.endRoundAudioFile?.uri)
     }
 
     private fun startRoundAlert() {
         vibratePhone(700L)
-        playAudio(appSettings.startRoundAudioFile.uri)
+        playAudio(appSettings?.startRoundAudioFile?.uri)
     }
 
     private fun countDownAlert() {
         vibratePhone(500L)
-        playAudio(appSettings.countDownAudioFile.uri)
+        playAudio(appSettings?.countDownAudioFile?.uri)
     }
 
     private fun vibratePhone(duration: Long = 1000L) {
-        if (appSettings.isVibrationEnabled) systemEngine.vibrate(duration)
+        if (appSettings?.isVibrationEnabled == true) systemEngine.vibrate(duration)
     }
 
     private fun playAudio(uri: String?) {
-        if (appSettings.muteAllSounds) return
+        if (appSettings?.muteAllSounds == true) return
         audioPlayer.playSound(uri)
     }
 

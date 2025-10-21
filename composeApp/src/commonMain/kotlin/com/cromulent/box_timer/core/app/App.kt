@@ -9,7 +9,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
-import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
 import com.cromulent.box_timer.presentation.settings_screen.SettingsScreenRoot
 import com.cromulent.box_timer.presentation.settings_screen.SettingsViewModel
