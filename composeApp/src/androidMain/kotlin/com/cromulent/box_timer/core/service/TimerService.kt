@@ -167,12 +167,19 @@ class TimerService : Service() {
                 runTimerLoop()
             }
         }
+        showTimerNotification()
     }
 
+    private var lastNotificationTime = 0L
+
     private suspend fun runTimerLoop() {
-        showTimerNotification()
         while (timerState.value.timerStatus.isInActiveState()) {
             val currentStatus = timerState.value.timerStatus
+
+            // Exit immediately if paused
+            if (currentStatus == TimerStatus.Paused) {
+                break
+            }
 
             // Initialize phase start time on first iteration
             if (phaseStartTime == 0L) {
@@ -218,9 +225,15 @@ class TimerService : Service() {
                 handlePhaseComplete()
                 if (!timerState.value.timerStatus.isInActiveState()) break
             }
-            showTimerNotification()
 
             delay(10L)
+            
+            // Only show notification once per second to avoid race conditions
+            val currentTime = SystemClock.elapsedRealtime()
+            if (currentTime - lastNotificationTime >= 900L) {
+                showTimerNotification()
+                lastNotificationTime = currentTime
+            }
         }
     }
 
@@ -234,6 +247,7 @@ class TimerService : Service() {
                 )
             }
             countDownAlert()
+            showTimerNotification()
             delay(1000L)
         }
         _timerState.update {
@@ -308,15 +322,17 @@ class TimerService : Service() {
         val currentStatus = timerState.value.timerStatus
         val currentStatusMessage = currentStatus.message
         val remainingTime = timerState.value.remainingTime
+        val countdownText = timerState.value.countDownText
         val remainingTimeString = formatTime(remainingTime)
 
         notificationManager.notify(
             1,
             notificationBuilder
                 .setContentTitle(
-                    "$currentStatusMessage $middleDot $remainingTimeString remaining"
+                    if(currentStatus == TimerStatus.CountDown) countdownText
+                    else "$currentStatusMessage $middleDot $remainingTimeString remaining"
                 )
-                .addTimerActions(applicationContext, isPaused = currentStatus == TimerStatus.Paused)
+                .addTimerActions(applicationContext, isPaused = (currentStatus == TimerStatus.Paused))
                 .build()
         )
     }
