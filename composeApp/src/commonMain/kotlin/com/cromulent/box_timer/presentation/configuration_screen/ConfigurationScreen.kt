@@ -92,30 +92,9 @@ import compose.icons.fontawesomeicons.solid.Play
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@Composable
-fun ConfigurationScreenRoot(
-    viewModel: ConfigurationViewModel,
-    modifier: Modifier = Modifier,
-    navigateToTimerScreen: () -> Unit,
-    navigateToSettings: () -> Unit,
-) {
-
-    val timerSettings by viewModel.timerSettings.collectAsState()
-
-    ConfigurationScreen(
-        timerSettings,
-        modifier,
-        onStartWorkout = {
-            viewModel.onAction(ConfigurationActions.SaveTimerSettings(it))
-            navigateToTimerScreen()
-        },
-        navigateToSettings = navigateToSettings
-    )
-
-}
 
 @Composable
-private fun ConfigurationScreen(
+internal fun ConfigurationScreen(
     timerSettings: TimerSettings = TimerSettings(
         roundDuration = 1000L,
         restDuration = 2L,

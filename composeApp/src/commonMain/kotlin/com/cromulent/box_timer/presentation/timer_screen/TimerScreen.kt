@@ -91,6 +91,7 @@ import com.cromulent.box_timer.presentation.theme.SunsetDarkColorScheme
 import com.cromulent.box_timer.presentation.theme.SunsetLightColorScheme
 import com.cromulent.box_timer.presentation.theme.VenomDarkColorScheme
 import com.cromulent.box_timer.presentation.theme.VenomLightColorScheme
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.CountDown
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
@@ -103,24 +104,26 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalComposeUiApi::class)
-
 @Composable
 fun TimerScreenRoot(
     viewModel: TimerViewModel,
+    state: TimerState,
     closeTimerScreen: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier
 ) {
 
     var showExitDialog by remember { mutableStateOf(false) }
-    val state = viewModel.state.collectAsStateWithLifecycle()
-
-
     BackHandler(true) {
-        if (state.value.isTimerRunning || state.value.isPaused) {
+        if (state.timerStatus != TimerStatus.Ready) {
             showExitDialog = true
         } else {
             closeTimerScreen()
         }
+    }
+
+    val onBackButtonClicked = {
+        if (state.timerStatus != TimerStatus.Ready) showExitDialog = true
+        else closeTimerScreen()
     }
 
     BoxWithConstraints {
@@ -128,28 +131,16 @@ fun TimerScreenRoot(
 
         if (isLandscape) {
             TimerScreenLandscape(
-                state = state.value,
+                state = state,
                 onAction = viewModel::onAction,
-                onBackButtonClicked = {
-                    if (state.value.isTimerRunning || state.value.isPaused) {
-                        showExitDialog = true
-                    } else {
-                        closeTimerScreen()
-                    }
-                },
+                onBackButtonClicked = onBackButtonClicked,
                 modifier = modifier
             )
         } else {
             TimerScreenPortrait(
-                state = state.value,
+                state = state,
                 onAction = viewModel::onAction,
-                onBackButtonClicked = {
-                    if (state.value.isTimerRunning || state.value.isPaused) {
-                        showExitDialog = true
-                    } else {
-                        closeTimerScreen()
-                    }
-                },
+                onBackButtonClicked = onBackButtonClicked,
                 modifier = modifier
             )
         }
@@ -162,56 +153,6 @@ fun TimerScreenRoot(
                 onConfirmExit = {
                     showExitDialog = false
                     closeTimerScreen()
-                }
-            )
-        }
-
-    }
-
-
-}
-
-
-@Composable
-private fun TimerScreenRoot() {
-
-    var showExitDialog by remember { mutableStateOf(false) }
-    val state = MutableStateFlow(TimerState(
-        currentRound = 2,
-        remainingTime = 11000,
-        roundDuration = 22000,
-        isTimerRunning = true,
-        isPaused = false,
-        progress = 0.5f,
-        totalRounds = 12,
-        restDuration = 10000,
-        timerMessage = "FIGHT",
-    ))
-
-    BoxWithConstraints {
-        val isLandscape = maxWidth > maxHeight
-
-        if (isLandscape) {
-            TimerScreenLandscape(
-                state = state.value,
-                onAction = {},
-                onBackButtonClicked = {}
-            )
-        } else {
-            TimerScreenPortrait(
-                state = state.value,
-                onAction = {},
-                onBackButtonClicked = {}
-            )
-        }
-
-        if (showExitDialog) {
-            ExitTimerDialog(
-                onDismiss = {
-                    showExitDialog = false
-                },
-                onConfirmExit = {
-                    showExitDialog = false
                 }
             )
         }
@@ -321,7 +262,7 @@ private fun TimerScreenLandscape(
                             shadow = Shadow(
                                 color = MaterialTheme.colorScheme.secondary,
                                 offset = Offset(0f, 4f),
-                                blurRadius = if (state.isTimerRunning) 30f else 0f
+                                blurRadius = if (state.isInActiveState()) 30f else 0f
                             ),
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.W900,
@@ -344,9 +285,11 @@ private fun TimerScreenLandscape(
                             fontWeight = FontWeight.W600,
                             letterSpacing = 6.sp,
                             textAlign = TextAlign.Center,
-                            color = if (state.isTimerRunning) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                            color = if (state.isInActiveState()) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = 0.7f
+                            )
                         ),
-                        text = state.timerMessage.uppercase(), // Assuming timerMessage is dynamic and doesn't need external string res
+                        text = if (state.timerStatus == CountDown) state.countDownText else state.timerStatus.message.uppercase(),
                     )
                 }
 
@@ -369,10 +312,10 @@ private fun TimerScreenLandscape(
 
                 RectangleButton(
                     modifier = Modifier
-                        .weight(if (state.isTimerRunning) 2f else 1f),
-                    isActive = state.isTimerRunning,
+                        .weight(if (state.isInActiveState()) 2f else 1f),
+                    isActive = state.isInActiveState(),
                     onButtonClicked = {
-                        if (state.isTimerRunning) {
+                        if (state.isInActiveState()) {
                             onAction(TimerActions.PauseTimer)
                         } else {
                             onAction(TimerActions.StartTimer)
@@ -381,7 +324,7 @@ private fun TimerScreenLandscape(
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
                     activeTextColor = White,
-                    text = if (state.isTimerRunning) stringResource(Res.string.button_pause) else stringResource(
+                    text = if (state.isInActiveState()) stringResource(Res.string.button_pause) else stringResource(
                         Res.string.button_start
                     ),
                 )
@@ -411,7 +354,7 @@ private fun TimerScreenLandscape(
 }
 
 @Composable
-fun TimerScreenPortrait(
+private fun TimerScreenPortrait(
     state: TimerState = TimerState(),
     onAction: (TimerActions) -> Unit = {},
     onBackButtonClicked: () -> Unit = {},
@@ -481,8 +424,8 @@ fun TimerScreenPortrait(
                     .weight(2f),
                 remainingTime = state.remainingTime,
                 progress = state.progress,
-                isRunning = state.isTimerRunning,
-                message = state.timerMessage, // Assuming timerMessage is dynamic and doesn't need external string res
+                isRunning = state.isInActiveState(),
+                message = if (state.timerStatus == CountDown) state.countDownText else state.timerStatus.message
             )
 
             Column(
@@ -498,10 +441,11 @@ fun TimerScreenPortrait(
 
                 RectangleButton(
                     modifier = Modifier
-                        .weight(if (state.isTimerRunning) 4f else 3f),
-                    isActive = state.isTimerRunning,
+                        .weight(if (state.isInActiveState()) 4f else 3f),
+                    isActive = state.isInActiveState(),
                     onButtonClicked = {
-                        if (state.isTimerRunning) {
+                        if (state.timerStatus == CountDown) return@RectangleButton
+                        if (state.isInActiveState()) {
                             onAction(TimerActions.PauseTimer)
                         } else {
                             onAction(TimerActions.StartTimer)
@@ -509,10 +453,12 @@ fun TimerScreenPortrait(
                     },
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
-                    activeTextColor = White,
+                    activeTextColor = MaterialTheme.colorScheme.onSecondary,
+                    unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
                     text = when {
-                        state.isTimerRunning -> stringResource(Res.string.button_pause)
-                        state.isPaused -> stringResource(Res.string.button_resume)
+                        state.timerStatus == CountDown -> "Counting Down..."
+                        state.isInActiveState() -> stringResource(Res.string.button_pause)
+                        state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
                         else -> stringResource(Res.string.button_start)
                     },
                 )
@@ -532,14 +478,14 @@ fun TimerScreenPortrait(
                 )
 
             }
-
-
         }
+
+
     }
 }
 
 @Composable
-fun ExitTimerDialog(
+private fun ExitTimerDialog(
     onDismiss: () -> Unit,
     onConfirmExit: () -> Unit,
     modifier: Modifier = Modifier

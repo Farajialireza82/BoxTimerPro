@@ -57,7 +57,7 @@ fun TimerCircleIndicator(
             BasicText(
                 text = formatTime(remainingTime),
                 autoSize = TextAutoSize.StepBased(
-                    stepSize = 10.sp,
+                    stepSize = 15.sp,
                     minFontSize = 64.sp,
                 ),
                 style = TextStyle(
@@ -82,7 +82,7 @@ fun TimerCircleIndicator(
                 fontWeight = FontWeight.W600,
                 letterSpacing = 2.sp,
                 textAlign = TextAlign.Center,
-                color = if (isRunning) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                color = if (isRunning) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
             )
         }
 
