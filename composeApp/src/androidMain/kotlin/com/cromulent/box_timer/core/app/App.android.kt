@@ -72,6 +72,10 @@ actual fun App() {
                             state = timerState,
                             closeTimerScreen = {
                                 navController.popBackStack()
+                                Intent(context, TimerService::class.java).also {
+                                    it.action = TimerService.Actions.RESET.toString()
+                                    context.startService(it)
+                                }
                                 context.stopService(Intent(context, TimerService::class.java))
                             },
                             modifier = Modifier
