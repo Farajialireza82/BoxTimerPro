@@ -34,9 +34,13 @@ actual class TimerViewModel(
     private val appContainer = DefaultAppContainer(context)
 
     init {
-        Intent(context, TimerService::class.java).also {
-            it.action = TimerService.Actions.TOGGLE.toString()
-            context.startService(it)
+        // Only start the timer if it's not already running
+        // This prevents toggling when opening the app from notification
+        if (!TimerService.isRunning) {
+            Intent(context, TimerService::class.java).also {
+                it.action = TimerService.Actions.TOGGLE.toString()
+                context.startService(it)
+            }
         }
     }
 
