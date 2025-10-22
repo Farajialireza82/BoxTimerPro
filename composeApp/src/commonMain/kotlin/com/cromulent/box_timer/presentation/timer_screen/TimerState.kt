@@ -11,7 +11,7 @@ data class TimerState(
 )
 
 enum class TimerStatus(val message: String){
-    Ready("Ready"), Running("FIGHT"), Paused("Paused"), Resting("Rest"), CountDown("")
+    Ready("Ready"), Running("FIGHT"), Paused("Paused"), Resting("Rest"), CountDown(""), Completed("Workout Complete!")
 }
 fun TimerStatus.isInActiveState(): Boolean{
     return this == TimerStatus.Running || this == TimerStatus.Resting

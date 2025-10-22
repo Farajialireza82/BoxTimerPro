@@ -59,6 +59,9 @@
     <string name="dialog_timer_running_message">Your workout is still in progress. Are you sure you want to stop and go back?</string>
     <string name="button_continue">Continue</string>
     <string name="button_stop_exit">Stop &amp; Exit</string>
+    <string name="button_got_it">Got it!</string>
+    <string name="dialog_workout_complete_title">Workout Complete!</string>
+    <string name="dialog_workout_complete_message">Congratulations! You have completed all rounds. Great job!</string>
     <string name= "sth">"Get Ready: &amp;</string>
 
     <string name="audio_title_mute">Mute</string>

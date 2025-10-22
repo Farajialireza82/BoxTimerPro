@@ -47,6 +47,7 @@ actual class TimerViewModel(
             TimerActions.StartTimer -> start()
             TimerActions.PauseTimer -> pause()
             TimerActions.ResetTimer -> reset()
+            TimerActions.CompleteWorkout -> reset()
         }
     }
 
@@ -121,7 +122,9 @@ actual class TimerViewModel(
                         )
                     }
                 } else {
-                    reset()
+                    // All rounds completed - show completion status
+                    _state.update { it.copy(timerStatus = TimerStatus.Completed) }
+                    endWorkoutAlert()
                     break
                 }
             }
@@ -168,6 +171,11 @@ actual class TimerViewModel(
 
     private fun endRoundAlert() {
         vibratePhone(1000L)
+        playAudio(appSettings.endRoundAudioFile.uri)
+    }
+
+    private fun endWorkoutAlert() {
+        vibratePhone(2000L)
         playAudio(appSettings.endRoundAudioFile.uri)
     }
 

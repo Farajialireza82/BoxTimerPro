@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -35,7 +36,7 @@ fun BoxTimerProTheme(
 
     val settings by settingsViewModel.settings.collectAsStateWithLifecycle(null)
 
-    var isFirstLoad by rememberSaveable { mutableStateOf(true) }
+    var isFirstLoad by remember { mutableStateOf(true) }
 
     val targetColorSchemeDTO = colorSchemes
         .firstOrNull { it.id == settings?.colorSchemeId } ?: colorSchemes.first()
@@ -118,6 +119,7 @@ fun createDynamicGradient(
                 colorScheme.tertiaryContainer.copy(alpha = 1f + countdownIntensity)
             )
         }
+
         timerState?.timerStatus == TimerStatus.Resting -> {
             // Resting state - calming secondary color tint
             val restIntensity = 0.02f + (timerState.progress * 0.04f) // 2-6% secondary tint
@@ -145,11 +147,41 @@ fun createDynamicGradient(
                 colorScheme.secondaryContainer.copy(alpha = 1f + restIntensity)
             )
         }
+
+        timerState?.timerStatus == TimerStatus.Completed -> {
+            // Completion state - strong primary color celebration
+            val completionIntensity = 0.25f // 25% primary color for strong visibility
+
+            listOf(
+                // Blend background with primary color
+                colorScheme.background.copy(alpha = 1f - completionIntensity).let { bg ->
+                    Color(
+                        red = (bg.red * (1f - completionIntensity) + colorScheme.primary.red * completionIntensity),
+                        green = (bg.green * (1f - completionIntensity) + colorScheme.primary.green * completionIntensity),
+                        blue = (bg.blue * (1f - completionIntensity) + colorScheme.primary.blue * completionIntensity),
+                        alpha = bg.alpha
+                    )
+                },
+                // Blend surface with primary color
+                colorScheme.surface.copy(alpha = 1f - completionIntensity).let { surface ->
+                    Color(
+                        red = (surface.red * (1f - completionIntensity) + colorScheme.primary.red * completionIntensity),
+                        green = (surface.green * (1f - completionIntensity) + colorScheme.primary.green * completionIntensity),
+                        blue = (surface.blue * (1f - completionIntensity) + colorScheme.primary.blue * completionIntensity),
+                        alpha = surface.alpha
+                    )
+                },
+                // Strong primary container
+                colorScheme.primaryContainer.copy(alpha = 1f + completionIntensity)
+            )
+        }
+
         timerState != null && timerState.isInActiveState() && timerState.progress > 0f -> {
             // Running state - primary color enhancement
             val baseIntensity = 0.04f // Base 4% primary color when active
             val progressIntensity = timerState.progress * 0.10f // Additional 10% based on progress
-            val primaryIntensity = (baseIntensity + progressIntensity).coerceAtMost(0.14f) // Max 14% total
+            val primaryIntensity =
+                (baseIntensity + progressIntensity).coerceAtMost(0.14f) // Max 14% total
 
             listOf(
                 // Blend background with primary color
@@ -174,6 +206,7 @@ fun createDynamicGradient(
                 colorScheme.primaryContainer.copy(alpha = 1f + primaryIntensity)
             )
         }
+
         else -> baseColors
     }
 

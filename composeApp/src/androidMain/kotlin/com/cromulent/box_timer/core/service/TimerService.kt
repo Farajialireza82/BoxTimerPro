@@ -279,7 +279,9 @@ class TimerService : Service() {
             Running -> {
                 // End of round - check if it was the last round
                 if (timerState.value.currentRound >= timerSettings.totalRounds) {
-                    resetTimer()
+                    // All rounds completed - show completion dialog
+                    _timerState.update { it.copy(timerStatus = TimerStatus.Completed) }
+                    endWorkoutAlert()
                 } else {
                     // Transition to rest
                     _timerState.update { it.copy(timerStatus = TimerStatus.Resting) }
@@ -337,6 +339,18 @@ class TimerService : Service() {
             return
         }
 
+        if(currentStatus == TimerStatus.Completed){
+            notificationManager.notify(
+                1,
+                notificationBuilder
+                    .setContentTitle("Workout Complete! 🎉")
+                    .setContentText("All rounds finished successfully")
+                    .addRestAction(applicationContext)
+                    .build()
+            )
+            return
+        }
+
         notificationManager.notify(
             1,
             notificationBuilder
@@ -362,6 +376,11 @@ class TimerService : Service() {
 
     private fun endRoundAlert() {
         vibratePhone(1000L)
+        playAudio(appSettings?.endRoundAudioFile?.uri)
+    }
+
+    private fun endWorkoutAlert() {
+        vibratePhone(2000L)
         playAudio(appSettings?.endRoundAudioFile?.uri)
     }
 

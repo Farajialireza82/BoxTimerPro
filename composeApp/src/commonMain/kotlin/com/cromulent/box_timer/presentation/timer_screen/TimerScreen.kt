@@ -56,6 +56,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.back_ic
 import boxtimerpro.composeapp.generated.resources.button_continue
+import boxtimerpro.composeapp.generated.resources.button_got_it
 import boxtimerpro.composeapp.generated.resources.button_pause
 import boxtimerpro.composeapp.generated.resources.button_reset
 import boxtimerpro.composeapp.generated.resources.button_resume
@@ -63,6 +64,8 @@ import boxtimerpro.composeapp.generated.resources.button_start
 import boxtimerpro.composeapp.generated.resources.button_stop_exit
 import boxtimerpro.composeapp.generated.resources.dialog_timer_running_message
 import boxtimerpro.composeapp.generated.resources.dialog_timer_running_title
+import boxtimerpro.composeapp.generated.resources.dialog_workout_complete_message
+import boxtimerpro.composeapp.generated.resources.dialog_workout_complete_title
 import boxtimerpro.composeapp.generated.resources.header_subtitle_ready_to_train
 import boxtimerpro.composeapp.generated.resources.header_title_app
 import com.cromulent.box_timer.core.util.formatTime
@@ -98,6 +101,7 @@ import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleI
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Exclamation
+import compose.icons.fontawesomeicons.solid.CheckCircle
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -153,6 +157,14 @@ fun TimerScreenRoot(
                 onConfirmExit = {
                     showExitDialog = false
                     closeTimerScreen()
+                }
+            )
+        }
+
+        if (state.timerStatus == TimerStatus.Completed) {
+            WorkoutCompleteDialog(
+                onComplete = {
+                    viewModel.onAction(TimerActions.CompleteWorkout)
                 }
             )
         }
@@ -570,6 +582,82 @@ private fun ExitTimerDialog(
                             fontWeight = FontWeight.Bold
                         )
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun WorkoutCompleteDialog(
+    onComplete: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Dialog(
+        onDismissRequest = { /* Prevent dismissing by clicking outside */ },
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false,
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false
+        )
+    ) {
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp, horizontal = 32.dp),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Success Icon
+                Icon(
+                    imageVector = FontAwesomeIcons.Solid.CheckCircle,
+                    contentDescription = null,
+                    modifier = Modifier.size(48.dp),
+                    tint = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = stringResource(Res.string.dialog_workout_complete_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = stringResource(Res.string.dialog_workout_complete_message),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Button(
+                    onClick = onComplete,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Text(
+                        text = stringResource(Res.string.button_got_it),
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
             }
         }
