@@ -25,14 +25,17 @@ import org.koin.compose.viewmodel.koinViewModel
 @Preview
 actual fun App() {
 
-    BoxTimerProTheme {
+    val navController = rememberNavController()
+    val timerViewModel = koinViewModel<TimerViewModel>()
+    val timerState by timerViewModel.state.collectAsStateWithLifecycle()
+
+    BoxTimerProTheme(timerState = timerState) {
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
 
-            val navController = rememberNavController()
             NavHost(
                 navController = navController,
                 startDestination = Route.TimerGraph
@@ -57,11 +60,9 @@ actual fun App() {
                     }
 
                     composable<Route.TimerScreen> {
-                        val viewModel = koinViewModel<TimerViewModel>()
-                        val state by viewModel.state.collectAsStateWithLifecycle()
                         TimerScreenRoot(
-                            viewModel = viewModel,
-                            state = state,
+                            viewModel = timerViewModel,
+                            state = timerState,
                             closeTimerScreen = {
                                 navController.popBackStack()
                             },

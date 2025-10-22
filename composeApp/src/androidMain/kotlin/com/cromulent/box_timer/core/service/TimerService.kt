@@ -63,7 +63,7 @@ class TimerService : Service() {
             .setShowWhen(true)
             .setSilent(true)
             .setOngoing(true)
-    }
+     }
 
     private val audioPlayer: AudioPlayer by inject()
     private val systemEngine: SystemEngine by inject()

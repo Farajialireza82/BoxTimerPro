@@ -30,9 +30,11 @@ import org.koin.compose.viewmodel.koinViewModel
 actual fun App() {
 
     val context = LocalContext.current
+    val appContainer = koinInject<AppContainer>()
+    val timerState by appContainer.timerState.collectAsState()
 
     val navController = rememberNavController()
-    BoxTimerProTheme {
+    BoxTimerProTheme(timerState = timerState) {
 
         Box(
             modifier = Modifier
@@ -63,13 +65,11 @@ actual fun App() {
 
                     composable<Route.TimerScreen> {
 
-                        val appContainer = koinInject<AppContainer>()
                         val viewModel = koinViewModel<TimerViewModel>()
-                        val state by appContainer.timerState.collectAsState()
 
                         TimerScreenRoot(
                             viewModel = viewModel,
-                            state = state,
+                            state = timerState,
                             closeTimerScreen = {
                                 navController.popBackStack()
                                 context.stopService(Intent(context, TimerService::class.java))
@@ -93,7 +93,8 @@ actual fun App() {
             }
         }
     }
-    if(TimerService.isRunning){
+    val currentDestination = navController.currentBackStackEntry?.destination
+    if (TimerService.isRunning && currentDestination?.route != Route.TimerScreen::class.qualifiedName) {
         navController.navigate(Route.TimerScreen)
     }
 

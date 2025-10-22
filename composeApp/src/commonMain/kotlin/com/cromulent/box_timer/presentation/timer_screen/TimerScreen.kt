@@ -315,6 +315,7 @@ private fun TimerScreenLandscape(
                         .weight(if (state.isInActiveState()) 2f else 1f),
                     isActive = state.isInActiveState(),
                     onButtonClicked = {
+                        if (state.timerStatus == CountDown) return@RectangleButton
                         if (state.isInActiveState()) {
                             onAction(TimerActions.PauseTimer)
                         } else {
@@ -323,10 +324,14 @@ private fun TimerScreenLandscape(
                     },
                     unactiveColor = MaterialTheme.colorScheme.tertiary,
                     activeColor = MaterialTheme.colorScheme.secondary,
-                    activeTextColor = White,
-                    text = if (state.isInActiveState()) stringResource(Res.string.button_pause) else stringResource(
-                        Res.string.button_start
-                    ),
+                    activeTextColor = MaterialTheme.colorScheme.onSecondary,
+                    unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
+                    text = when {
+                        state.timerStatus == CountDown -> "Counting Down..."
+                        state.isInActiveState() -> stringResource(Res.string.button_pause)
+                        state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
+                        else -> stringResource(Res.string.button_start)
+                    },
                 )
 
                 Spacer(Modifier.size(18.dp))
