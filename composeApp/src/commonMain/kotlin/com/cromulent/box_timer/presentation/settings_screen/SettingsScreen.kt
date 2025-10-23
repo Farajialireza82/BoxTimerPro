@@ -98,7 +98,6 @@ import compose.icons.fontawesomeicons.solid.ArrowRight
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-
 @Composable
 fun SettingsScreenRoot(
     viewModel: SettingsViewModel,
@@ -219,7 +218,7 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.countdown_sound_title),
                     subtitle = stringResource(Res.string.countdown_sound_subtitle),
-                    selectedTitle = stringResource(appSettings.countDownAudioFile.getTitleRes()),
+                    selectedTitle = appSettings.countDownAudioFile.title,
                     onClick = { countDownBsVisibility = true }
                 )
 
@@ -277,7 +276,7 @@ private fun SettingsScreen(
                 SettingCard(
                     title = stringResource(Res.string.app_version_title),
                     subtitle = stringResource(Res.string.app_version_subtitle),
-                    onClick = { easterVisibility = true}
+                    onClick = { }
                 ) {
                     Text(
                         text = "v${BuildKonfig.APP_VERSION}",
