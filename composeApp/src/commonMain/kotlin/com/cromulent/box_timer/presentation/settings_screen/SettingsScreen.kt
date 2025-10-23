@@ -218,7 +218,7 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.countdown_sound_title),
                     subtitle = stringResource(Res.string.countdown_sound_subtitle),
-                    selectedTitle = appSettings.countDownAudioFile.title,
+                    selectedTitle = stringResource(appSettings.countDownAudioFile.getTitleRes()),
                     onClick = { countDownBsVisibility = true }
                 )
 
@@ -276,7 +276,7 @@ private fun SettingsScreen(
                 SettingCard(
                     title = stringResource(Res.string.app_version_title),
                     subtitle = stringResource(Res.string.app_version_subtitle),
-                    onClick = { }
+                    onClick = { easterVisibility = true }
                 ) {
                     Text(
                         text = "v${BuildKonfig.APP_VERSION}",

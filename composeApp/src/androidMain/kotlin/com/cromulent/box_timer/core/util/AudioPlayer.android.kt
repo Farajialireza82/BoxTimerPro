@@ -11,18 +11,18 @@ actual class AudioPlayer(private val context: Context) {
     @OptIn(ExperimentalResourceApi::class)
     actual fun playSound(uri: String?) {
         if (uri == null) return
-        mediaPlayer = MediaPlayer()
+
         try {
             val assetPath = Res.getUri(uri).removePrefix("file:///android_asset/")
-            val afd = context.assets.openFd(assetPath)
 
-            mediaPlayer.apply {
-                reset()
-                setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-                prepare()
-                start()
+            context.assets.openFd(assetPath).use { afd ->
+                mediaPlayer.apply {
+                    reset()
+                    setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+                    prepare() // Move prepare here, after setDataSource
+                    start()
+                }
             }
-            afd.close()
         } catch (e: Exception) {
             e.printStackTrace()
         }

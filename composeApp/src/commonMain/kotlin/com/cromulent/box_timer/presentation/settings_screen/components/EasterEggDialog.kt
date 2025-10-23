@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.easter_egg
-import boxtimerpro.composeapp.generated.resources.photo_2025_10_23_18_40_49
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
