@@ -23,21 +23,20 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.platform.LocalLayoutDirection
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.ic_mute
 import boxtimerpro.composeapp.generated.resources.ic_play
 import com.cromulent.box_timer.core.util.AudioFile
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 
@@ -103,7 +102,7 @@ fun AudioPickerBottomSheet(
 @Preview
 @Composable
 private fun AudioFileItem(
-    file: AudioFile = AudioFile("Audio File", "null"),
+    file: AudioFile = AudioFile("audio_title_beep", "null"),
     isSelected: Boolean = false,
     playAudio: (AudioFile) -> Unit,
     onItemSelected: (AudioFile) -> Unit,
@@ -146,7 +145,7 @@ private fun AudioFileItem(
                 )
             }
             Text(
-                text = file.title,
+                text = stringResource(file.getTitleRes()),
                 color = if (isSelected) MaterialTheme.colorScheme.secondary else White,
                 fontWeight = FontWeight.W500
             )

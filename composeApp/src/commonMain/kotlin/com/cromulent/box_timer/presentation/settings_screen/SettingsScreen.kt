@@ -95,6 +95,7 @@ import compose.icons.fontawesomeicons.solid.ArrowRight
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+
 @Composable
 fun SettingsScreenRoot(
     viewModel: SettingsViewModel,
@@ -189,7 +190,7 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.countdown_sound_title),
                     subtitle = stringResource(Res.string.countdown_sound_subtitle),
-                    selectedTitle = appSettings.countDownAudioFile.title,
+                    selectedTitle = stringResource(appSettings.countDownAudioFile.getTitleRes()),
                     onClick = { countDownBsVisibility = true }
                 )
 
@@ -198,7 +199,7 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.start_round_sound_title),
                     subtitle = stringResource(Res.string.start_round_sound_subtitle),
-                    selectedTitle = appSettings.startRoundAudioFile.title,
+                    selectedTitle = stringResource(appSettings.startRoundAudioFile.getTitleRes()),
                     onClick = { startRoundBsVisibility = true }
                 )
 
@@ -207,7 +208,7 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.end_round_sound_title),
                     subtitle = stringResource(Res.string.end_round_sound_subtitle),
-                    selectedTitle = appSettings.endRoundAudioFile.title,
+                    selectedTitle = stringResource(appSettings.endRoundAudioFile.getTitleRes()),
                     onClick = { endRoundBsVisibility = true }
                 )
 
