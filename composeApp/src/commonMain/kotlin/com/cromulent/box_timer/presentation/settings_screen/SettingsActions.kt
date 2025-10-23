@@ -2,6 +2,7 @@ package com.cromulent.box_timer.presentation.settings_screen
 
 import androidx.compose.material3.ColorScheme
 import com.cromulent.box_timer.core.util.AudioFile
+import com.cromulent.box_timer.domain.AppLanguage
 
 sealed interface SettingsActions {
 
@@ -15,6 +16,7 @@ sealed interface SettingsActions {
     data class ToggleStopTimerOnClose(val isEnabled: Boolean): SettingsActions
     data class PlayAudio(val uri: String?): SettingsActions
     data class SetColorScheme(val colorSchemeId: String): SettingsActions
+    data class SetLanguage(val language: AppLanguage): SettingsActions
 
     object OnAppVersionClick: SettingsActions
     object OnFeedbackClick: SettingsActions

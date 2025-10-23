@@ -1,0 +1,124 @@
+<resources>
+    <string name="start_workout">شروع تمرین</string>
+    <string name="configure_your_workout">تنظیم تمرین خود</string>
+    <string name="presets">پیش‌تنظیمات</string>
+    <string name="round_settings">تنظیمات دور</string>
+    <string name="round_number">تعداد دورها</string>
+    <string name="round_duration">مدت زمان دور</string>
+    <string name="ten_seconds">۱۰ ثانیه</string>
+    <string name="rest_duration">مدت زمان استراحت</string>
+
+    <string name="settings_title">تنظیمات</string>
+    <string name="settings_subtitle">تجربه خود را سفارشی کنید</string>
+
+    <string name="general_settings_title">تنظیمات عمومی</string>
+    <string name="mute_all_sounds_title">بی‌صدا کردن همه صداها</string>
+    <string name="mute_all_sounds_subtitle">بی‌صدا کردن همه صداهای برنامه</string>
+    <string name="vibration_title">لرزش</string>
+    <string name="vibration_subtitle">بازخورد لمسی برای رویدادهای تایمر</string>
+    <string name="countdown_sound_title">صدای شمارش معکوس</string>
+    <string name="countdown_sound_subtitle">صدا قبل از شروع دور</string>
+    <string name="start_round_sound_title">صدای شروع دور</string>
+    <string name="start_round_sound_subtitle">صدا هنگام شروع دور</string>
+    <string name="end_round_sound_title">صدای پایان دور</string>
+    <string name="end_round_sound_subtitle">صدا هنگام پایان دور</string>
+
+    <string name="stop_timer_on_close_title">توقف تایمر هنگام بستن</string>
+    <string name="stop_timer_on_close_subtitle">توقف تایمر هنگام بستن برنامه</string>
+
+
+
+    <string name="display_settings_title">تنظیمات نمایش</string>
+    <string name="keep_screen_on_title">روشن نگه داشتن صفحه</string>
+    <string name="keep_screen_on_subtitle">جلوگیری از خاموش شدن صفحه در حین تمرین</string>
+
+    <string name="about_and_support_title">درباره و پشتیبانی</string>
+    <string name="app_version_title">نسخه برنامه</string>
+    <string name="app_version_subtitle">اطلاعات نسخه فعلی</string>
+    <string name="feedback_support_title">بازخورد و پشتیبانی</string>
+    <string name="feedback_support_subtitle">دریافت کمک یا ارسال بازخورد</string>
+    <string name="contact_button_text">تماس</string>
+
+    <string name="header_title_app">تایمر بوکس حرفه‌ای</string>
+    <string name="header_subtitle_ready_to_train">آماده برای تمرین</string>
+
+    <string name="chip_round_number">دور &amp;</string>
+    <string name="chip_total_rounds">از &amp;</string>
+
+    <string name="button_start">شروع</string>
+    <string name="button_pause">توقف</string>
+    <string name="button_resume">ادامه</string>
+    <string name="button_reset">بازنشانی</string>
+
+    <string name="title_ready">بازنشانی</string>
+    <string name="title_paused">متوقف شده</string>
+    <string name="title_fight">بازنشانی</string>
+    <string name="title_rest">بازنشانی</string>
+
+    <string name="dialog_timer_running_title">تایمر در حال اجرا است</string>
+    <string name="dialog_timer_running_message">تمرین شما هنوز در حال انجام است. آیا مطمئن هستید که می‌خواهید متوقف کرده و برگردید؟</string>
+    <string name="button_continue">ادامه</string>
+    <string name="button_stop_exit">توقف و خروج</string>
+    <string name="button_got_it">متوجه شدم!</string>
+    <string name="dialog_workout_complete_title">تمرین تکمیل شد!</string>
+    <string name="dialog_workout_complete_message">تبریک! شما تمام دورها را تکمیل کرده‌اید. کار عالی!</string>
+    <string name= "sth">"آماده شوید: &amp;</string>
+
+    <string name="audio_title_mute">بی‌صدا</string>
+    <string name="audio_title_beep">بوق</string>
+    <string name="audio_title_single_bell">زنگ تکی</string>
+    <string name="audio_title_bell_single">زنگ تکی</string>
+    <string name="audio_title_bell_three_times">زنگ سه بار</string>
+
+    <string name="audio_title_whistle">سوت</string>
+    <string name="audio_title_air_horn_long">بوق هوا طولانی</string>
+    <string name="audio_title_air_horn_short">بوق هوا کوتاه</string>
+    <string name="audio_title_buzzer_long">بازر طولانی</string>
+    <string name="audio_title_buzzer_short">بازر کوتاه</string>
+    <string name="audio_title_gun_shot">تیر تفنگ</string>
+    <string name="audio_title_pistol_shot">تیر تپانچه</string>
+
+    <string name="audio_title_barcode">بارکد</string>
+    <string name="audio_title_car_horn">بوق ماشین</string>
+    <string name="audio_title_clock_beep">بوق ساعت</string>
+    <string name="audio_title_electric_beep">بوق برقی</string>
+    <string name="audio_title_drop">قطره</string>
+    <string name="audio_title_modern_drop">قطره مدرن</string>
+
+
+
+    <!-- Workout Mode Titles -->
+    <string name="workout_mode_mma">ام‌ام‌ای</string>
+    <string name="workout_mode_boxing">بوکس</string>
+    <string name="workout_mode_strength">قدرت</string>
+    <string name="workout_mode_cardio">قلبی</string>
+    <string name="workout_mode_hiit">هیت</string>
+    <string name="workout_mode_tabata">تاباتا</string>
+    <string name="workout_mode_custom">سفارشی</string>
+
+    <!-- Workout Mode Descriptions -->
+    <string name="workout_mode_mma_desc">هنرهای رزمی ترکیبی</string>
+    <string name="workout_mode_boxing_desc">دورهای بوکس سنتی</string>
+    <string name="workout_mode_strength_desc">مدارهای تمرین قدرتی</string>
+    <string name="workout_mode_cardio_desc">فاصله‌های قلبی</string>
+    <string name="workout_mode_hiit_desc">تمرین فاصله‌ای با شدت بالا</string>
+    <string name="workout_mode_tabata_desc">پروتکل ۴ دقیقه‌ای تاباتا</string>
+    <string name="workout_mode_custom_desc">تمرین خود را بسازید</string>
+
+    <!-- Workout Mode Emojis -->
+    <string name="workout_mode_mma_emoji">🦅</string>
+    <string name="workout_mode_boxing_emoji">🥊</string>
+    <string name="workout_mode_strength_emoji">💪</string>
+    <string name="workout_mode_cardio_emoji">🏃</string>
+    <string name="workout_mode_hiit_emoji">🔥</string>
+    <string name="workout_mode_tabata_emoji">⚡</string>
+    <string name="workout_mode_custom_emoji">⚙️</string>
+
+    <!-- Language Settings -->
+    <string name="language_settings_title">زبان</string>
+    <string name="language_settings_subtitle">زبان مورد نظر خود را انتخاب کنید</string>
+    <string name="language_english">انگلیسی</string>
+    <string name="language_persian">فارسی</string>
+    <string name="language_system">پیروی از تنظیمات سیستم</string>
+
+</resources>

@@ -56,6 +56,7 @@ import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
 import com.cromulent.box_timer.presentation.settings_screen.components.ColorSchemePicker
+import com.cromulent.box_timer.presentation.settings_screen.components.LanguagePicker
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingSwitchCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingsStringPickerCard
@@ -213,6 +214,15 @@ private fun SettingsScreen(
                     subtitle = stringResource(Res.string.stop_timer_on_close_subtitle),
                     onCheckedChange = {
                         onAction(SettingsActions.ToggleStopTimerOnClose(it))
+                    }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
+                LanguagePicker(
+                    selectedLanguage = appSettings.selectedLanguage,
+                    onLanguageSelected = { language ->
+                        onAction(SettingsActions.SetLanguage(language))
                     }
                 )
 

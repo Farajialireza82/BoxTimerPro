@@ -114,4 +114,11 @@
     <string name="workout_mode_tabata_emoji">⚡</string>
     <string name="workout_mode_custom_emoji">⚙️</string>
 
+    <!-- Language Settings -->
+    <string name="language_settings_title">Language</string>
+    <string name="language_settings_subtitle">Choose your preferred language</string>
+    <string name="language_english">English</string>
+    <string name="language_persian">فارسی</string>
+    <string name="language_system">Follow System Settings</string>
+
 </resources>

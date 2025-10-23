@@ -14,5 +14,6 @@ data class AppSettings(
     val allowRotation: Boolean = true,
     val colorSchemeId: String = "ice",
     val isDarkMode: Boolean = true,
-    val stopTimerOnClose: Boolean = true
+    val stopTimerOnClose: Boolean = true,
+    val selectedLanguage: AppLanguage = AppLanguage.SYSTEM
 )
