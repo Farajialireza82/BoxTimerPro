@@ -30,11 +30,9 @@ import org.koin.compose.viewmodel.koinViewModel
 actual fun App() {
 
     val context = LocalContext.current
-    val appContainer = koinInject<AppContainer>()
-    val timerState by appContainer.timerState.collectAsState()
 
     val navController = rememberNavController()
-    BoxTimerProTheme(timerState = timerState) {
+    BoxTimerProTheme {
 
         Box(
             modifier = Modifier
@@ -66,6 +64,8 @@ actual fun App() {
                     composable<Route.TimerScreen> {
 
                         val viewModel = koinViewModel<TimerViewModel>()
+                        val appContainer = koinInject<AppContainer>()
+                        val timerState by appContainer.timerState.collectAsState()
 
                         TimerScreenRoot(
                             viewModel = viewModel,

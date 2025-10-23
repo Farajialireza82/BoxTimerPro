@@ -104,6 +104,8 @@ class SettingsViewModel(
                     countDownAudioFile = audioFile
                 )
             )
+            // Preload the new sound for instant playback
+            audioPlayer.preloadSound(audioFile.uri)
         }
     }
 
@@ -114,6 +116,8 @@ class SettingsViewModel(
                     endRoundAudioFile = audioFile
                 )
             )
+            // Preload the new sound for instant playback
+            audioPlayer.preloadSound(audioFile.uri)
         }
     }
 
@@ -124,6 +128,8 @@ class SettingsViewModel(
                     startRoundAudioFile = audioFile
                 )
             )
+            // Preload the new sound for instant playback
+            audioPlayer.preloadSound(audioFile.uri)
         }
     }
 

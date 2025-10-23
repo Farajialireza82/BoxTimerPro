@@ -19,6 +19,11 @@ actual class AudioPlayer {
         avAudioPlayer?.play()
     }
 
+    actual fun preloadSound(uri: String?) {
+        // iOS doesn't need preloading as AVAudioPlayer handles it efficiently
+        // This is a no-op for iOS
+    }
+
     actual fun release() {
         avAudioPlayer?.stop()
         avAudioPlayer = null
