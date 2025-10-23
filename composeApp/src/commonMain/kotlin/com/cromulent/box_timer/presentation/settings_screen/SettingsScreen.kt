@@ -56,15 +56,15 @@ import boxtimerpro.composeapp.generated.resources.vibration_subtitle
 import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
 import com.cromulent.box_timer.domain.AppLanguage
+import com.cromulent.box_timer.domain.getDisplayNameResForLanguage
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
 import com.cromulent.box_timer.presentation.settings_screen.components.ColorSchemePicker
-import com.cromulent.box_timer.presentation.settings_screen.components.LanguagePicker
+import com.cromulent.box_timer.presentation.settings_screen.components.LanguagePickerBottomSheet
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingSwitchCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingsStringPickerCard
-import com.cromulent.box_timer.presentation.settings_screen.components.StringPickerBottomSheet
 import com.cromulent.box_timer.presentation.settings_screen.components.TitleText
 import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
 import com.cromulent.box_timer.presentation.theme.FireDarkColorScheme
@@ -182,7 +182,7 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.language_settings_title),
                     subtitle = stringResource(Res.string.language_settings_subtitle),
-                    selectedTitle = appSettings.selectedLanguage.displayName,
+                    selectedTitle = stringResource(appSettings.selectedLanguage.getDisplayNameResForLanguage()),
                     onClick = { languagePickerVisibility = true }
                 )
 
@@ -354,18 +354,14 @@ private fun SettingsScreen(
     }
 
     if (languagePickerVisibility) {
-        StringPickerBottomSheet(
+        LanguagePickerBottomSheet(
             onDismissRequest = { languagePickerVisibility = false },
             onItemSelected = {
-                val selectedLanguage =
-                    AppLanguage.entries.find { language -> language.displayName == it }
-                selectedLanguage?.let {
                     onAction(SettingsActions.SetLanguage(it))
-                }
             },
             title = stringResource(Res.string.language_settings_title),
-            selectedString = appSettings.selectedLanguage.displayName,
-            items = AppLanguage.entries.map { it.displayName }
+            selectedLanguage = appSettings.selectedLanguage,
+            items = AppLanguage.entries
         )
     }
 }

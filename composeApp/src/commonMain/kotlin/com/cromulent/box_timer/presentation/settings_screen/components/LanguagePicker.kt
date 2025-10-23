@@ -35,7 +35,7 @@ import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.language_settings_subtitle
 import boxtimerpro.composeapp.generated.resources.language_settings_title
 import com.cromulent.box_timer.domain.AppLanguage
-import com.cromulent.box_timer.domain.getDisplayNameForLanguage
+import com.cromulent.box_timer.domain.getDisplayNameResForLanguage
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.ChevronDown
@@ -92,7 +92,7 @@ fun LanguagePicker(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = selectedLanguage.getDisplayNameForLanguage(selectedLanguage),
+                        text = stringResource(selectedLanguage.getDisplayNameResForLanguage()),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -118,7 +118,7 @@ fun LanguagePicker(
                         DropdownMenuItem(
                             text = {
                                 Text(
-                                    text = language.getDisplayNameForLanguage(selectedLanguage),
+                                    text = stringResource(language.getDisplayNameResForLanguage()),
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             },

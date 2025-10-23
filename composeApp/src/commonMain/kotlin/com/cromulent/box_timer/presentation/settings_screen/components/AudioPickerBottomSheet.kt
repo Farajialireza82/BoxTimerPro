@@ -140,13 +140,13 @@ private fun AudioFileItem(
             ) {
                 Icon(
                     painter = iconRes,
-                    tint = if (isSelected) MaterialTheme.colorScheme.secondary else White,
+                    tint = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
                     contentDescription = null
                 )
             }
             Text(
                 text = stringResource(file.getTitleRes()),
-                color = if (isSelected) MaterialTheme.colorScheme.secondary else White,
+                color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.W500
             )
         }

@@ -7,6 +7,8 @@
     <string name="round_duration">Round Duration</string>
     <string name="ten_seconds">10 Seconds</string>
     <string name="rest_duration">Rest Duration</string>
+    <string name="title_round">Rounds</string>
+
 
     <string name="settings_title">Settings</string>
     <string name="settings_subtitle">Customize Your Experience</string>
@@ -23,6 +25,10 @@
     <string name="start_round_sound_subtitle">Sound when round begins</string>
     <string name="end_round_sound_title">End Round Sound</string>
     <string name="end_round_sound_subtitle">Sound when round ends</string>
+
+    <string name="theme_title">Theme</string>
+    <string name="theme_description">Choose your color theme</string>
+
 
     <string name="stop_timer_on_close_title">Stop Timer on Close</string>
     <string name="stop_timer_on_close_subtitle">Stop timer when app closes</string>
@@ -43,18 +49,21 @@
     <string name="header_title_app">BoxTimer Pro</string>
     <string name="header_subtitle_ready_to_train">Ready to train</string>
 
-    <string name="chip_round_number">Round &amp;</string>
-    <string name="chip_total_rounds">of &amp;</string>
+    <string name="chip_round_number">Round </string>
+    <string name="chip_total_rounds">of </string>
 
     <string name="button_start">Start</string>
     <string name="button_pause">Pause</string>
     <string name="button_resume">Resume</string>
     <string name="button_reset">Reset</string>
 
-    <string name="title_ready">Reset</string>
+    <string name="title_ready">Ready</string>
     <string name="title_paused">Paused</string>
-    <string name="title_fight">Reset</string>
-    <string name="title_rest">Reset</string>
+    <string name="title_fight">FIGHT</string>
+    <string name="title_rest">Rest</string>
+    <string name="title_counting_down">Counting Down...</string>
+    <string name="title_workout_complete">Workout Complete!</string>
+    <string name="countdown_get_ready">Get Ready: </string>
 
     <string name="dialog_timer_running_title">Timer is Running</string>
     <string name="dialog_timer_running_message">Your workout is still in progress. Are you sure you want to stop and go back?</string>
@@ -63,7 +72,6 @@
     <string name="button_got_it">Got it!</string>
     <string name="dialog_workout_complete_title">Workout Complete!</string>
     <string name="dialog_workout_complete_message">Congratulations! You have completed all rounds. Great job!</string>
-    <string name= "sth">"Get Ready: &amp;</string>
 
     <string name="audio_title_mute">Mute</string>
     <string name="audio_title_beep">Beep</string>
@@ -119,6 +127,7 @@
     <!-- Language Settings -->
     <string name="language_settings_title">Language</string>
     <string name="language_settings_subtitle">Choose your preferred language</string>
+
     <string name="language_english">English</string>
     <string name="language_persian">فارسی</string>
     <string name="language_system">Follow System Settings</string>

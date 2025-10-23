@@ -1,6 +1,6 @@
 <resources>
     <string name="start_workout">شروع تمرین</string>
-    <string name="configure_your_workout">تنظیم تمرین خود</string>
+    <string name="configure_your_workout">تنظیم تمرین</string>
     <string name="presets">انتخاب سریع</string>
     <string name="round_settings">تنظیمات دور</string>
     <string name="round_number">تعداد دورها</string>
@@ -8,8 +8,10 @@
     <string name="ten_seconds">10 ثانیه</string>
     <string name="rest_duration">مدت زمان استراحت</string>
 
+    <string name="title_round">دور</string>
+
     <string name="settings_title">تنظیمات</string>
-    <string name="settings_subtitle">تجربه خود را سفارشی کنید</string>
+    <string name="settings_subtitle">تنظیمات برنامه</string>
 
     <string name="general_settings_title">تنظیمات عمومی</string>
     <string name="audio_settings_title">تنظیمات صدا</string>
@@ -23,6 +25,9 @@
     <string name="start_round_sound_subtitle">صدا هنگام شروع دور</string>
     <string name="end_round_sound_title">صدای پایان دور</string>
     <string name="end_round_sound_subtitle">صدا هنگام پایان دور</string>
+
+    <string name="theme_title">تم</string>
+    <string name="theme_description">تم مورد نظر خود را انتخاب کنید</string>
 
     <string name="stop_timer_on_close_title">توقف تایمر هنگام بستن</string>
     <string name="stop_timer_on_close_subtitle">توقف تایمر هنگام بستن برنامه</string>
@@ -43,18 +48,21 @@
     <string name="header_title_app">تایمر بوکس حرفه‌ای</string>
     <string name="header_subtitle_ready_to_train">آماده برای تمرین</string>
 
-    <string name="chip_round_number">دور &amp;</string>
-    <string name="chip_total_rounds">از &amp;</string>
+    <string name="chip_round_number">دور </string>
+    <string name="chip_total_rounds">از </string>
 
     <string name="button_start">شروع</string>
     <string name="button_pause">توقف</string>
     <string name="button_resume">ادامه</string>
     <string name="button_reset">بازنشانی</string>
 
-    <string name="title_ready">بازنشانی</string>
+    <string name="title_ready">آماده</string>
     <string name="title_paused">متوقف شده</string>
-    <string name="title_fight">بازنشانی</string>
-    <string name="title_rest">بازنشانی</string>
+    <string name="title_fight">مبارزه</string>
+    <string name="title_rest">استراحت</string>
+    <string name="title_counting_down">شمارش معکوس...</string>
+    <string name="title_workout_complete">تمرین تکمیل شد!</string>
+    <string name="countdown_get_ready">آماده شوید: </string>
 
     <string name="dialog_timer_running_title">تایمر در حال اجرا است</string>
     <string name="dialog_timer_running_message">تمرین شما هنوز در حال انجام است. آیا مطمئن هستید که می‌خواهید متوقف کرده و برگردید؟</string>

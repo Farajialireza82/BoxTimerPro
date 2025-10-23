@@ -1,6 +1,5 @@
 package com.cromulent.box_timer.presentation.timer_screen
 
-
 data class TimerState(
     val timerStatus: TimerStatus = TimerStatus.Ready,
     val remainingTime: Long = 0L,
@@ -10,8 +9,13 @@ data class TimerState(
     val countDownText: String = "",
 )
 
-enum class TimerStatus(val message: String){
-    Ready("Ready"), Running("FIGHT"), Paused("Paused"), Resting("Rest"), CountDown(""), Completed("Workout Complete!")
+enum class TimerStatus(val messageKey: String){
+    Ready("title_ready"), 
+    Running("title_fight"), 
+    Paused("title_paused"), 
+    Resting("title_rest"), 
+    CountDown("title_counting_down"), 
+    Completed("title_workout_complete")
 }
 fun TimerStatus.isInActiveState(): Boolean{
     return this == TimerStatus.Running || this == TimerStatus.Resting
