@@ -98,7 +98,7 @@ fun BoxTimerProTheme(
 
     MaterialTheme(
         colorScheme = animatedColorScheme,
-        typography = typography
+        typography = typography,
     ) {
         Box(
             modifier = Modifier

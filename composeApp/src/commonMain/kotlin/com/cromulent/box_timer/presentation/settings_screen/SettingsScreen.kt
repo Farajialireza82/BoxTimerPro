@@ -41,6 +41,8 @@ import boxtimerpro.composeapp.generated.resources.ic_dark
 import boxtimerpro.composeapp.generated.resources.ic_light
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_subtitle
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_title
+import boxtimerpro.composeapp.generated.resources.language_settings_subtitle
+import boxtimerpro.composeapp.generated.resources.language_settings_title
 import boxtimerpro.composeapp.generated.resources.mute_all_sounds_subtitle
 import boxtimerpro.composeapp.generated.resources.mute_all_sounds_title
 import boxtimerpro.composeapp.generated.resources.settings_subtitle
@@ -52,6 +54,7 @@ import boxtimerpro.composeapp.generated.resources.stop_timer_on_close_title
 import boxtimerpro.composeapp.generated.resources.vibration_subtitle
 import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
+import com.cromulent.box_timer.domain.AppLanguage
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
@@ -60,6 +63,7 @@ import com.cromulent.box_timer.presentation.settings_screen.components.LanguageP
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingSwitchCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingsStringPickerCard
+import com.cromulent.box_timer.presentation.settings_screen.components.StringPickerBottomSheet
 import com.cromulent.box_timer.presentation.settings_screen.components.TitleText
 import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
 import com.cromulent.box_timer.presentation.theme.FireDarkColorScheme
@@ -123,6 +127,7 @@ private fun SettingsScreen(
     var countDownBsVisibility by remember { mutableStateOf(false) }
     var startRoundBsVisibility by remember { mutableStateOf(false) }
     var endRoundBsVisibility by remember { mutableStateOf(false) }
+    var languagePickerVisibility by remember { mutableStateOf(false) }
 
 
     Scaffold(
@@ -219,11 +224,11 @@ private fun SettingsScreen(
 
                 Spacer(Modifier.size(10.dp))
 
-                LanguagePicker(
-                    selectedLanguage = appSettings.selectedLanguage,
-                    onLanguageSelected = { language ->
-                        onAction(SettingsActions.SetLanguage(language))
-                    }
+                SettingsStringPickerCard(
+                    title = stringResource(Res.string.language_settings_title),
+                    subtitle = stringResource(Res.string.language_settings_subtitle),
+                    selectedTitle = appSettings.selectedLanguage.displayName,
+                    onClick = { languagePickerVisibility = true }
                 )
 
                 Spacer(Modifier.size(30.dp))
@@ -339,6 +344,22 @@ private fun SettingsScreen(
             selectedAudioFile = appSettings.countDownAudioFile,
             playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
             items = state.countDownAudioFiles
+        )
+    }
+
+    if (languagePickerVisibility) {
+        StringPickerBottomSheet(
+            onDismissRequest = { languagePickerVisibility = false },
+            onItemSelected = {
+                val selectedLanguage =
+                    AppLanguage.entries.find { language -> language.displayName == it }
+                selectedLanguage?.let {
+                    onAction(SettingsActions.SetLanguage(it))
+                }
+            },
+            title = stringResource(Res.string.language_settings_title),
+            selectedString = appSettings.selectedLanguage.displayName,
+            items = AppLanguage.entries.map { it.displayName }
         )
     }
 }

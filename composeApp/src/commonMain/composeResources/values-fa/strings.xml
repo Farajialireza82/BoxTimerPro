@@ -1,11 +1,11 @@
 <resources>
     <string name="start_workout">شروع تمرین</string>
     <string name="configure_your_workout">تنظیم تمرین خود</string>
-    <string name="presets">پیش‌تنظیمات</string>
+    <string name="presets">انتخاب سریع</string>
     <string name="round_settings">تنظیمات دور</string>
     <string name="round_number">تعداد دورها</string>
     <string name="round_duration">مدت زمان دور</string>
-    <string name="ten_seconds">۱۰ ثانیه</string>
+    <string name="ten_seconds">10 ثانیه</string>
     <string name="rest_duration">مدت زمان استراحت</string>
 
     <string name="settings_title">تنظیمات</string>
@@ -88,13 +88,13 @@
 
 
     <!-- Workout Mode Titles -->
-    <string name="workout_mode_mma">ام‌ام‌ای</string>
+    <string name="workout_mode_mma">MMA</string>
     <string name="workout_mode_boxing">بوکس</string>
     <string name="workout_mode_strength">قدرت</string>
-    <string name="workout_mode_cardio">قلبی</string>
-    <string name="workout_mode_hiit">هیت</string>
+    <string name="workout_mode_cardio">هوازی</string>
+    <string name="workout_mode_hiit">چربی‌سوز</string>
     <string name="workout_mode_tabata">تاباتا</string>
-    <string name="workout_mode_custom">سفارشی</string>
+    <string name="workout_mode_custom">شخصی</string>
 
     <!-- Workout Mode Descriptions -->
     <string name="workout_mode_mma_desc">هنرهای رزمی ترکیبی</string>
@@ -102,7 +102,7 @@
     <string name="workout_mode_strength_desc">مدارهای تمرین قدرتی</string>
     <string name="workout_mode_cardio_desc">فاصله‌های قلبی</string>
     <string name="workout_mode_hiit_desc">تمرین فاصله‌ای با شدت بالا</string>
-    <string name="workout_mode_tabata_desc">پروتکل ۴ دقیقه‌ای تاباتا</string>
+    <string name="workout_mode_tabata_desc">پروتکل 4 دقیقه‌ای تاباتا</string>
     <string name="workout_mode_custom_desc">تمرین خود را بسازید</string>
 
     <!-- Workout Mode Emojis -->

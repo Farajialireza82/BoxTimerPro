@@ -65,9 +65,9 @@ fun Header(
 
             Text(
                 text = title,
-                fontSize = 38.sp,
-                fontWeight = FontWeight.W800,
-                style = TextStyle(
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    fontSize = 38.sp,
+                    fontWeight = FontWeight.W800,
                     brush = titleGradientBrush
                 ),
                 textAlign = TextAlign.Center,
