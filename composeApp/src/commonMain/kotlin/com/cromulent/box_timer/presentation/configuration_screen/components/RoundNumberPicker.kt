@@ -26,10 +26,13 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.round_settings
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Minus
 import compose.icons.fontawesomeicons.solid.Plus
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun RoundNumberPicker(
@@ -114,7 +117,7 @@ fun RoundNumberPicker(
                 Spacer(modifier = Modifier.width(20.dp))
 
                 Text(
-                    text = "rounds",
+                    text = stringResource(Res.string.round_settings),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                     textAlign = TextAlign.Center

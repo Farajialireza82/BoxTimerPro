@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.back_ic
+import boxtimerpro.composeapp.generated.resources.ic_back
 import boxtimerpro.composeapp.generated.resources.settings_ic
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -64,9 +65,9 @@ fun Header(
 
             Text(
                 text = title,
-                fontSize = 38.sp,
-                fontWeight = FontWeight.W800,
-                style = TextStyle(
+                style = MaterialTheme.typography.headlineLarge.copy(
+                    fontSize = 38.sp,
+                    fontWeight = FontWeight.W800,
                     brush = titleGradientBrush
                 ),
                 textAlign = TextAlign.Center,
@@ -97,7 +98,7 @@ fun Header(
             ) {
                 Icon(
                     tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                    painter = painterResource(Res.drawable.back_ic),
+                    painter = painterResource(Res.drawable.ic_back),
                     contentDescription = null
                 )
             }

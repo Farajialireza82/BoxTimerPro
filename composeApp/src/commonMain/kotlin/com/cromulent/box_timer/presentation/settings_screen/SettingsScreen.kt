@@ -28,6 +28,7 @@ import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.about_and_support_title
 import boxtimerpro.composeapp.generated.resources.app_version_subtitle
 import boxtimerpro.composeapp.generated.resources.app_version_title
+import boxtimerpro.composeapp.generated.resources.audio_settings_title
 import boxtimerpro.composeapp.generated.resources.contact_button_text
 import boxtimerpro.composeapp.generated.resources.countdown_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.countdown_sound_title
@@ -41,6 +42,8 @@ import boxtimerpro.composeapp.generated.resources.ic_dark
 import boxtimerpro.composeapp.generated.resources.ic_light
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_subtitle
 import boxtimerpro.composeapp.generated.resources.keep_screen_on_title
+import boxtimerpro.composeapp.generated.resources.language_settings_subtitle
+import boxtimerpro.composeapp.generated.resources.language_settings_title
 import boxtimerpro.composeapp.generated.resources.mute_all_sounds_subtitle
 import boxtimerpro.composeapp.generated.resources.mute_all_sounds_title
 import boxtimerpro.composeapp.generated.resources.settings_subtitle
@@ -52,10 +55,13 @@ import boxtimerpro.composeapp.generated.resources.stop_timer_on_close_title
 import boxtimerpro.composeapp.generated.resources.vibration_subtitle
 import boxtimerpro.composeapp.generated.resources.vibration_title
 import com.cromulent.box_timer.BuildKonfig
+import com.cromulent.box_timer.domain.AppLanguage
+import com.cromulent.box_timer.domain.getDisplayNameResForLanguage
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
 import com.cromulent.box_timer.presentation.settings_screen.components.ColorSchemePicker
+import com.cromulent.box_timer.presentation.settings_screen.components.LanguagePickerBottomSheet
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingSwitchCard
 import com.cromulent.box_timer.presentation.settings_screen.components.SettingsStringPickerCard
@@ -90,6 +96,7 @@ import compose.icons.fontawesomeicons.solid.ArrowRight
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+
 @Composable
 fun SettingsScreenRoot(
     viewModel: SettingsViewModel,
@@ -122,6 +129,7 @@ private fun SettingsScreen(
     var countDownBsVisibility by remember { mutableStateOf(false) }
     var startRoundBsVisibility by remember { mutableStateOf(false) }
     var endRoundBsVisibility by remember { mutableStateOf(false) }
+    var languagePickerVisibility by remember { mutableStateOf(false) }
 
 
     Scaffold(
@@ -161,6 +169,30 @@ private fun SettingsScreen(
                 Spacer(Modifier.size(20.dp))
 
                 SettingSwitchCard(
+                    isChecked = appSettings.stopTimerOnClose,
+                    title = stringResource(Res.string.stop_timer_on_close_title),
+                    subtitle = stringResource(Res.string.stop_timer_on_close_subtitle),
+                    onCheckedChange = {
+                        onAction(SettingsActions.ToggleStopTimerOnClose(it))
+                    }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
+                SettingsStringPickerCard(
+                    title = stringResource(Res.string.language_settings_title),
+                    subtitle = stringResource(Res.string.language_settings_subtitle),
+                    selectedTitle = stringResource(appSettings.selectedLanguage.getDisplayNameResForLanguage()),
+                    onClick = { languagePickerVisibility = true }
+                )
+
+                Spacer(Modifier.size(30.dp))
+
+                TitleText(stringResource(Res.string.audio_settings_title))
+
+                Spacer(Modifier.size(20.dp))
+
+                SettingSwitchCard(
                     isChecked = appSettings.muteAllSounds,
                     title = stringResource(Res.string.mute_all_sounds_title),
                     subtitle = stringResource(Res.string.mute_all_sounds_subtitle),
@@ -183,7 +215,7 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.countdown_sound_title),
                     subtitle = stringResource(Res.string.countdown_sound_subtitle),
-                    selectedTitle = appSettings.countDownAudioFile.title,
+                    selectedTitle = stringResource(appSettings.countDownAudioFile.getTitleRes()),
                     onClick = { countDownBsVisibility = true }
                 )
 
@@ -192,7 +224,7 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.start_round_sound_title),
                     subtitle = stringResource(Res.string.start_round_sound_subtitle),
-                    selectedTitle = appSettings.startRoundAudioFile.title,
+                    selectedTitle = stringResource(appSettings.startRoundAudioFile.getTitleRes()),
                     onClick = { startRoundBsVisibility = true }
                 )
 
@@ -201,19 +233,8 @@ private fun SettingsScreen(
                 SettingsStringPickerCard(
                     title = stringResource(Res.string.end_round_sound_title),
                     subtitle = stringResource(Res.string.end_round_sound_subtitle),
-                    selectedTitle = appSettings.endRoundAudioFile.title,
+                    selectedTitle = stringResource(appSettings.endRoundAudioFile.getTitleRes()),
                     onClick = { endRoundBsVisibility = true }
-                )
-
-                Spacer(Modifier.size(10.dp))
-
-                SettingSwitchCard(
-                    isChecked = appSettings.stopTimerOnClose,
-                    title = stringResource(Res.string.stop_timer_on_close_title),
-                    subtitle = stringResource(Res.string.stop_timer_on_close_subtitle),
-                    onCheckedChange = {
-                        onAction(SettingsActions.ToggleStopTimerOnClose(it))
-                    }
                 )
 
                 Spacer(Modifier.size(30.dp))
@@ -329,6 +350,18 @@ private fun SettingsScreen(
             selectedAudioFile = appSettings.countDownAudioFile,
             playAudio = { onAction(SettingsActions.PlayAudio(it.uri)) },
             items = state.countDownAudioFiles
+        )
+    }
+
+    if (languagePickerVisibility) {
+        LanguagePickerBottomSheet(
+            onDismissRequest = { languagePickerVisibility = false },
+            onItemSelected = {
+                    onAction(SettingsActions.SetLanguage(it))
+            },
+            title = stringResource(Res.string.language_settings_title),
+            selectedLanguage = appSettings.selectedLanguage,
+            items = AppLanguage.entries
         )
     }
 }

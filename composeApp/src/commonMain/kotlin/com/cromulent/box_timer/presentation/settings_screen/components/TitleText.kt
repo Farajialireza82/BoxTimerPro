@@ -17,7 +17,7 @@ fun TitleText(
     Text(
         text.uppercase(),
         modifier = modifier,
-        style = TextStyle(
+        style = MaterialTheme.typography.titleLarge.copy(
             fontSize = 20.sp,
             fontWeight = FontWeight.W800,
             color = MaterialTheme.colorScheme.secondary,

@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cromulent.box_timer.core.util.AudioFile
 import com.cromulent.box_timer.core.util.AudioPlayer
+import com.cromulent.box_timer.core.util.LanguageManager
 import com.cromulent.box_timer.core.util.SystemEngine
+import com.cromulent.box_timer.domain.AppLanguage
 import com.cromulent.box_timer.domain.SettingsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,6 +17,7 @@ class SettingsViewModel(
     val settingsRepository: SettingsRepository,
     val audioPlayer: AudioPlayer,
     val systemEngine: SystemEngine,
+    val languageManager: LanguageManager,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(SettingsState())
@@ -51,6 +54,7 @@ class SettingsViewModel(
             is SettingsActions.PlayAudio -> playAudio(action.uri)
             is SettingsActions.SetColorScheme -> setColorScheme(action.colorSchemeId)
             is SettingsActions.ToggleDarkMode -> toggleDarkMode()
+            is SettingsActions.SetLanguage -> setLanguage(action.language)
         }
 
     }
@@ -158,6 +162,20 @@ class SettingsViewModel(
             settingsRepository.updateAppSettings(
                 _state.value.appSettings.copy(
                     isVibrationEnabled = isEnabled
+                )
+            )
+        }
+    }
+
+    private fun setLanguage(language: AppLanguage) {
+        viewModelScope.launch {
+            // Update the language manager first to apply the change immediately
+            languageManager.setLanguage(language)
+            
+            // Then update the settings to persist the change
+            settingsRepository.updateAppSettings(
+                _state.value.appSettings.copy(
+                    selectedLanguage = language
                 )
             )
         }

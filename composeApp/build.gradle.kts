@@ -84,6 +84,10 @@ android {
         versionCode = 3
         versionName = "${project.findProperty("PROJECT_VERSION")}"
     }
+    
+    androidResources {
+        localeFilters += listOf("en", "fa")
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
