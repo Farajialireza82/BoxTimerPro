@@ -28,9 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
 import com.cromulent.box_timer.core.util.formatTime
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TimerCircleIndicator(
@@ -57,7 +55,7 @@ fun TimerCircleIndicator(
             BasicText(
                 text = formatTime(remainingTime),
                 autoSize = TextAutoSize.StepBased(
-                    stepSize = 15.sp,
+                    stepSize = 24.sp,
                     minFontSize = 64.sp,
                 ),
                 style = TextStyle(
@@ -69,7 +67,7 @@ fun TimerCircleIndicator(
                 modifier = Modifier
                     .fillMaxWidth()
                     .animateContentSize()
-                    .padding(vertical = 4.dp, horizontal = 64.dp),
+                    .padding(vertical = 4.dp, horizontal = 24.dp),
             )
 
 
@@ -88,18 +86,6 @@ fun TimerCircleIndicator(
 
     }
 }
-
-@Preview
-@Composable
-private fun Prev() {
-    TimerCircleIndicator(
-        remainingTime = 3600,
-        progress = 0.5f,
-        isRunning = true,
-        message = "FIGHT", // This is just for preview
-    )
-}
-
 @Composable
 private fun MyProgressIndicator(
     progress: Float = 0.1f,

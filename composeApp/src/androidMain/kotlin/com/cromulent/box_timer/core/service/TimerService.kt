@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import android.os.SystemClock
 import androidx.compose.ui.graphics.Color
@@ -19,7 +18,6 @@ import com.cromulent.box_timer.data.AppContainer
 import com.cromulent.box_timer.data.repository.SettingsRepositoryImpl
 import com.cromulent.box_timer.data.repository.TimerRepositoryImpl
 import com.cromulent.box_timer.domain.AppSettings
-import com.cromulent.box_timer.domain.SettingsRepository
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus
@@ -139,11 +137,13 @@ class TimerService : Service() {
 
         if (currentStatus.isInActiveState()) {
             // Pause - save what we were doing before pausing
+            dontKeepScreenOn()
             statusBeforePause = currentStatus
             _timerState.update { it.copy(timerStatus = TimerStatus.Paused) }
             pauseStartTime = SystemClock.elapsedRealtime()
         } else {
             isRunning = true
+            keepScreenOn()
             // Resume/Start
             if (pauseStartTime != 0L) {
                 totalPauseDuration += SystemClock.elapsedRealtime() - pauseStartTime
@@ -307,6 +307,7 @@ class TimerService : Service() {
         pauseStartTime = 0L
         totalPauseDuration = 0L
         isRunning = false
+        dontKeepScreenOn()
 
         _timerState.update {
             it.copy(
@@ -401,6 +402,16 @@ class TimerService : Service() {
     private fun playAudio(uri: String?) {
         if (appSettings?.muteAllSounds == true) return
         audioPlayer.playSound(uri)
+    }
+
+    private fun keepScreenOn() {
+        if (appSettings?.keepScreenOnEnabled == true) {
+            systemEngine.keepScreenOn(true)
+        }
+    }
+
+    private fun dontKeepScreenOn() {
+            systemEngine.keepScreenOn(false)
     }
 
     companion object {
