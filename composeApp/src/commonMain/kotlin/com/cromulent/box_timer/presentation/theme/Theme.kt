@@ -122,7 +122,7 @@ fun createDynamicGradient(
 
         timerState?.timerStatus == TimerStatus.Resting -> {
             // Resting state - calming secondary color tint
-            val restIntensity = 0.02f + (timerState.progress * 0.04f) // 2-6% secondary tint
+            val restIntensity = 0.005f + (timerState.progress * 0.04f) // 2-6% secondary tint
 
             listOf(
                 // Blend background with secondary color
