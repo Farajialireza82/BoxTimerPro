@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">تایمر بوکس حرفه‌ای</string>
+
+    <string name="title_ready">آماده</string>
+    <string name="title_paused">متوقف شده</string>
+    <string name="title_fight">مبارزه</string>
+    <string name="title_rest">استراحت</string>
+    <string name="title_counting_down">شمارش معکوس...</string>
+    <string name="title_workout_complete">تمرین تکمیل شد!</string>
+    <string name="countdown_get_ready">آماده شوید: </string>
+
+    <string name="notification_workout_complete_title">پایان تمرین! 🎉</string>
+    <string name="notification_workout_complete_text">All rounds finished successfully</string>
+    <string name="notification_remaining_time">باقی مانده</string>
+
 </resources>

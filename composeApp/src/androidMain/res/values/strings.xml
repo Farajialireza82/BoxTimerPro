@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">BoxTimerPro</string>
+    <string name="title_ready">Ready</string>
+    <string name="title_paused">Paused</string>
+    <string name="title_fight">FIGHT</string>
+    <string name="title_rest">Rest</string>
+    <string name="title_counting_down">Counting Down...</string>
+    <string name="title_workout_complete">Workout Complete!</string>
+    <string name="countdown_get_ready">Get Ready: </string>
+
+    <string name="notification_workout_complete_title">Workout Complete! 🎉</string>
+    <string name="notification_workout_complete_text">All rounds finished successfully</string>
+    <string name="notification_remaining_time">remaining</string>
+
 </resources>

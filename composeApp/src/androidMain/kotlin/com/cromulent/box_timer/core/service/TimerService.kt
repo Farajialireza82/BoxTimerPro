@@ -21,7 +21,7 @@ import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus
-import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Running
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.*
 import com.cromulent.box_timer.presentation.timer_screen.isInActiveState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -139,7 +139,7 @@ class TimerService : Service() {
             // Pause - save what we were doing before pausing
             dontKeepScreenOn()
             statusBeforePause = currentStatus
-            _timerState.update { it.copy(timerStatus = TimerStatus.Paused) }
+            _timerState.update { it.copy(timerStatus = Paused) }
             pauseStartTime = SystemClock.elapsedRealtime()
         } else {
             isRunning = true
@@ -150,8 +150,8 @@ class TimerService : Service() {
             }
 
             val nextStatus = when {
-                currentStatus == TimerStatus.Ready -> Running
-                currentStatus == TimerStatus.Paused && statusBeforePause != null -> statusBeforePause!!
+                currentStatus == Ready -> Running
+                currentStatus == Paused && statusBeforePause != null -> statusBeforePause!!
                 else -> Running // Fallback
             }
 
@@ -178,7 +178,7 @@ class TimerService : Service() {
             val currentStatus = timerState.value.timerStatus
 
             // Exit immediately if paused
-            if (currentStatus == TimerStatus.Paused) {
+            if (currentStatus == Paused) {
                 break
             }
 
@@ -191,7 +191,7 @@ class TimerService : Service() {
 
             val phaseDuration = when (currentStatus) {
                 Running -> timerSettings.roundDuration
-                TimerStatus.Resting -> timerSettings.restDuration
+                Resting -> timerSettings.restDuration
                 else -> 0
             }
 
@@ -243,8 +243,8 @@ class TimerService : Service() {
         for (i in 1..3) {
             _timerState.update {
                 it.copy(
-                    timerStatus = TimerStatus.CountDown,
-                    countDownText = "Get Ready: ${4 - i}", // TODO: This should use string resources but we're in a service context
+                    timerStatus = CountDown,
+                    countDownText = getString(R.string.countdown_get_ready) + " ${4 - i}",
                 )
             }
             countDownAlert()
@@ -280,15 +280,15 @@ class TimerService : Service() {
                 // End of round - check if it was the last round
                 if (timerState.value.currentRound >= timerSettings.totalRounds) {
                     // All rounds completed - show completion dialog
-                    _timerState.update { it.copy(timerStatus = TimerStatus.Completed) }
+                    _timerState.update { it.copy(timerStatus = Completed) }
                     endWorkoutAlert()
                 } else {
                     // Transition to rest
-                    _timerState.update { it.copy(timerStatus = TimerStatus.Resting) }
+                    _timerState.update { it.copy(timerStatus = Resting) }
                 }
             }
 
-            TimerStatus.Resting -> {
+            Resting -> {
                 // End of rest - start next round
                 _timerState.update {
                     it.copy(
@@ -315,7 +315,7 @@ class TimerService : Service() {
                 progress = 0f,
                 currentRound = 1,
                 totalRounds = timerSettings.totalRounds,
-                timerStatus = TimerStatus.Ready
+                timerStatus = Ready
             )
         }
     }
@@ -324,12 +324,12 @@ class TimerService : Service() {
     fun showTimerNotification() {
 
         val currentStatus = timerState.value.timerStatus
-        val currentStatusMessage = currentStatus.messageKey
+        val currentStatusMessage = currentStatus.getMessageString()
         val remainingTime = timerState.value.remainingTime
         val countdownText = timerState.value.countDownText
         val remainingTimeString = formatTime(remainingTime)
 
-        if(currentStatus == TimerStatus.CountDown){
+        if(currentStatus == CountDown){
             notificationManager.notify(
                 1,
                 notificationBuilder
@@ -340,12 +340,12 @@ class TimerService : Service() {
             return
         }
 
-        if(currentStatus == TimerStatus.Completed){
+        if(currentStatus == Completed){
             notificationManager.notify(
                 1,
                 notificationBuilder
-                    .setContentTitle("Workout Complete! 🎉")
-                    .setContentText("All rounds finished successfully")
+                    .setContentTitle(getString(R.string.notification_workout_complete_title))
+                    .setContentText(getString(R.string.notification_workout_complete_text))
                     .addRestAction(applicationContext)
                     .build()
             )
@@ -356,9 +356,9 @@ class TimerService : Service() {
             1,
             notificationBuilder
                 .setContentTitle(
-                    "$currentStatusMessage $middleDot $remainingTimeString remaining"
+                    "$currentStatusMessage $middleDot $remainingTimeString"
                 )
-                .addTimerActions(applicationContext, isPaused = (currentStatus == TimerStatus.Paused))
+                .addTimerActions(applicationContext, isPaused = (currentStatus == Paused))
                 .build()
         )
     }
@@ -421,5 +421,17 @@ class TimerService : Service() {
 
     enum class Actions {
         TOGGLE, RESET
+    }
+
+    fun TimerStatus.getMessageString(): String{
+        val messageRes = when(this){
+            Ready -> R.string.title_ready
+            Running -> R.string.title_fight
+            Paused -> R.string.title_paused
+            Resting -> R.string.title_rest
+            CountDown -> R.string.title_counting_down
+            Completed -> R.string.title_workout_complete
+        }
+         return applicationContext.getString(messageRes)
     }
 }
