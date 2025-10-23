@@ -12,6 +12,7 @@
     <string name="settings_subtitle">تجربه خود را سفارشی کنید</string>
 
     <string name="general_settings_title">تنظیمات عمومی</string>
+    <string name="audio_settings_title">تنظیمات صدا</string>
     <string name="mute_all_sounds_title">بی‌صدا کردن همه صداها</string>
     <string name="mute_all_sounds_subtitle">بی‌صدا کردن همه صداهای برنامه</string>
     <string name="vibration_title">لرزش</string>

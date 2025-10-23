@@ -28,6 +28,7 @@ import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.about_and_support_title
 import boxtimerpro.composeapp.generated.resources.app_version_subtitle
 import boxtimerpro.composeapp.generated.resources.app_version_title
+import boxtimerpro.composeapp.generated.resources.audio_settings_title
 import boxtimerpro.composeapp.generated.resources.contact_button_text
 import boxtimerpro.composeapp.generated.resources.countdown_sound_subtitle
 import boxtimerpro.composeapp.generated.resources.countdown_sound_title
@@ -168,6 +169,30 @@ private fun SettingsScreen(
                 Spacer(Modifier.size(20.dp))
 
                 SettingSwitchCard(
+                    isChecked = appSettings.stopTimerOnClose,
+                    title = stringResource(Res.string.stop_timer_on_close_title),
+                    subtitle = stringResource(Res.string.stop_timer_on_close_subtitle),
+                    onCheckedChange = {
+                        onAction(SettingsActions.ToggleStopTimerOnClose(it))
+                    }
+                )
+
+                Spacer(Modifier.size(10.dp))
+
+                SettingsStringPickerCard(
+                    title = stringResource(Res.string.language_settings_title),
+                    subtitle = stringResource(Res.string.language_settings_subtitle),
+                    selectedTitle = appSettings.selectedLanguage.displayName,
+                    onClick = { languagePickerVisibility = true }
+                )
+
+                Spacer(Modifier.size(30.dp))
+
+                TitleText(stringResource(Res.string.audio_settings_title))
+
+                Spacer(Modifier.size(20.dp))
+
+                SettingSwitchCard(
                     isChecked = appSettings.muteAllSounds,
                     title = stringResource(Res.string.mute_all_sounds_title),
                     subtitle = stringResource(Res.string.mute_all_sounds_subtitle),
@@ -210,26 +235,6 @@ private fun SettingsScreen(
                     subtitle = stringResource(Res.string.end_round_sound_subtitle),
                     selectedTitle = stringResource(appSettings.endRoundAudioFile.getTitleRes()),
                     onClick = { endRoundBsVisibility = true }
-                )
-
-                Spacer(Modifier.size(10.dp))
-
-                SettingSwitchCard(
-                    isChecked = appSettings.stopTimerOnClose,
-                    title = stringResource(Res.string.stop_timer_on_close_title),
-                    subtitle = stringResource(Res.string.stop_timer_on_close_subtitle),
-                    onCheckedChange = {
-                        onAction(SettingsActions.ToggleStopTimerOnClose(it))
-                    }
-                )
-
-                Spacer(Modifier.size(10.dp))
-
-                SettingsStringPickerCard(
-                    title = stringResource(Res.string.language_settings_title),
-                    subtitle = stringResource(Res.string.language_settings_subtitle),
-                    selectedTitle = appSettings.selectedLanguage.displayName,
-                    onClick = { languagePickerVisibility = true }
                 )
 
                 Spacer(Modifier.size(30.dp))
