@@ -1,6 +1,7 @@
 package com.cromulent.box_timer.core.di
 
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cromulent.box_timer.core.util.LanguageManager
 import com.cromulent.box_timer.data.repository.SettingsRepositoryImpl
 import com.cromulent.box_timer.data.repository.TimerRepositoryImpl
 import com.cromulent.box_timer.domain.SettingsRepository

@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,6 +25,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.cromulent.box_timer.core.util.FontManager
+import com.cromulent.box_timer.domain.AppLanguage
 import com.cromulent.box_timer.presentation.settings_screen.SettingsViewModel
 import com.cromulent.box_timer.presentation.timer_screen.TimerState
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus
@@ -61,8 +67,38 @@ fun BoxTimerProTheme(
         isFirstLoad = isFirstLoad
     )
 
+    // Get the current language for font selection
+    val currentLanguage = settings?.selectedLanguage ?: AppLanguage.SYSTEM
+    val fontManager = remember { FontManager() }
+    val customFontFamily = remember(currentLanguage) {
+        fontManager.getFontFamily(currentLanguage)
+    }
+    
+    val typography = if (customFontFamily != null) {
+        Typography().copy(
+            displayLarge = Typography().displayLarge.copy(fontFamily = customFontFamily),
+            displayMedium = Typography().displayMedium.copy(fontFamily = customFontFamily),
+            displaySmall = Typography().displaySmall.copy(fontFamily = customFontFamily),
+            headlineLarge = Typography().headlineLarge.copy(fontFamily = customFontFamily),
+            headlineMedium = Typography().headlineMedium.copy(fontFamily = customFontFamily),
+            headlineSmall = Typography().headlineSmall.copy(fontFamily = customFontFamily),
+            titleLarge = Typography().titleLarge.copy(fontFamily = customFontFamily),
+            titleMedium = Typography().titleMedium.copy(fontFamily = customFontFamily),
+            titleSmall = Typography().titleSmall.copy(fontFamily = customFontFamily),
+            bodyLarge = Typography().bodyLarge.copy(fontFamily = customFontFamily),
+            bodyMedium = Typography().bodyMedium.copy(fontFamily = customFontFamily),
+            bodySmall = Typography().bodySmall.copy(fontFamily = customFontFamily),
+            labelLarge = Typography().labelLarge.copy(fontFamily = customFontFamily),
+            labelMedium = Typography().labelMedium.copy(fontFamily = customFontFamily),
+            labelSmall = Typography().labelSmall.copy(fontFamily = customFontFamily)
+        )
+    } else {
+        Typography()
+    }
+
     MaterialTheme(
-        colorScheme = animatedColorScheme
+        colorScheme = animatedColorScheme,
+        typography = typography,
     ) {
         Box(
             modifier = Modifier

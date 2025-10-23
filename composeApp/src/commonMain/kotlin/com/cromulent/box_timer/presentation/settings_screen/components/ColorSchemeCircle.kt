@@ -30,7 +30,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.theme_description
+import boxtimerpro.composeapp.generated.resources.theme_title
 import com.cromulent.box_timer.data.ColorSchemeDTO
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -129,14 +133,14 @@ fun ColorSchemePicker(
                 Text(
                     modifier = Modifier
                         .padding(bottom = 4.dp),
-                    text = "Theme",
+                    text = stringResource(Res.string.theme_title),
                     textAlign = TextAlign.Start,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W500,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = "Choose your color theme",
+                    text = stringResource(Res.string.theme_description),
                     textAlign = TextAlign.Start,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )

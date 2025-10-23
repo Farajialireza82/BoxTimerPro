@@ -22,6 +22,9 @@ import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.ic_back
+import boxtimerpro.composeapp.generated.resources.ic_forward
 import com.cromulent.box_timer.core.util.formatTime
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
@@ -29,6 +32,7 @@ import compose.icons.fontawesomeicons.solid.AngleLeft
 import compose.icons.fontawesomeicons.solid.AngleRight
 import compose.icons.fontawesomeicons.solid.Minus
 import compose.icons.fontawesomeicons.solid.Plus
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -89,7 +93,7 @@ fun TimerSetter(
             ) {
 
                 TimerControlButton(
-                    icon = FontAwesomeIcons.Solid.AngleLeft,
+                    icon = painterResource(Res.drawable.ic_back),
                     onClick = onDoubleMinusClicked,
                     enabled = isDoubleMinusEnabled
                 )
@@ -123,7 +127,7 @@ fun TimerSetter(
                 Spacer(modifier = Modifier.width(12.dp))
 
                 TimerControlButton(
-                    icon = FontAwesomeIcons.Solid.AngleRight,
+                    icon = painterResource(Res.drawable.ic_forward),
                     onClick = onDoublePlusClicked,
                     enabled = isDoublePlusEnabled
                 )

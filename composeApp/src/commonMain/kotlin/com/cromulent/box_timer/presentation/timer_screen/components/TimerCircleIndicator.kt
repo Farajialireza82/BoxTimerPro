@@ -96,7 +96,7 @@ private fun Prev() {
         remainingTime = 3600,
         progress = 0.5f,
         isRunning = true,
-        message = "FIGHT",
+        message = "FIGHT", // This is just for preview
     )
 }
 

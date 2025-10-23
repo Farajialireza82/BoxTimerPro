@@ -55,6 +55,15 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.title_ready
+import boxtimerpro.composeapp.generated.resources.title_fight
+import boxtimerpro.composeapp.generated.resources.title_paused
+import boxtimerpro.composeapp.generated.resources.title_rest
+import boxtimerpro.composeapp.generated.resources.title_counting_down
+import boxtimerpro.composeapp.generated.resources.title_workout_complete
+import boxtimerpro.composeapp.generated.resources.chip_round_number
+import boxtimerpro.composeapp.generated.resources.chip_total_rounds
+import boxtimerpro.composeapp.generated.resources.countdown_get_ready
 import boxtimerpro.composeapp.generated.resources.back_ic
 import boxtimerpro.composeapp.generated.resources.button_continue
 import boxtimerpro.composeapp.generated.resources.button_got_it
@@ -107,6 +116,29 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+
+@Composable
+private fun getStringResource(key: String): String {
+    return when (key) {
+        "title_ready" -> stringResource(Res.string.title_ready)
+        "title_fight" -> stringResource(Res.string.title_fight)
+        "title_paused" -> stringResource(Res.string.title_paused)
+        "title_rest" -> stringResource(Res.string.title_rest)
+        "title_counting_down" -> stringResource(Res.string.title_counting_down)
+        "title_workout_complete" -> stringResource(Res.string.title_workout_complete)
+        else -> key
+    }
+}
+
+@Composable
+private fun translateCountdownText(countdownText: String): String {
+    return if (countdownText.startsWith("Get Ready: ")) {
+        val number = countdownText.substringAfter("Get Ready: ").toIntOrNull() ?: 0
+        stringResource(Res.string.countdown_get_ready) + number
+    } else {
+        countdownText
+    }
+}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -239,7 +271,7 @@ private fun TimerScreenLandscape(
                             vertical = 4.dp,
                             horizontal = 8.dp
                         ),
-                        text = "Round ${state.currentRound}",
+                        text = stringResource(Res.string.chip_round_number) + state.currentRound,
                         onSizeChanged = {
                             chipTextSize = it
                         }
@@ -253,7 +285,7 @@ private fun TimerScreenLandscape(
                             vertical = 4.dp,
                             horizontal = 8.dp
                         ),
-                        text = "Of ${state.totalRounds}",
+                        text = stringResource(Res.string.chip_total_rounds) + state.totalRounds,
                         textSize = chipTextSize
                     )
 
@@ -302,7 +334,7 @@ private fun TimerScreenLandscape(
                                 alpha = 0.7f
                             )
                         ),
-                        text = if (state.timerStatus == CountDown) state.countDownText else state.timerStatus.message.uppercase(),
+                        text = if (state.timerStatus == CountDown) translateCountdownText(state.countDownText) else getStringResource(state.timerStatus.messageKey).uppercase(),
                     )
                 }
 
@@ -340,7 +372,7 @@ private fun TimerScreenLandscape(
                     activeTextColor = MaterialTheme.colorScheme.onSecondary,
                     unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
                     text = when {
-                        state.timerStatus == CountDown -> "Counting Down..."
+                        state.timerStatus == CountDown -> stringResource(Res.string.title_counting_down)
                         state.isInActiveState() -> stringResource(Res.string.button_pause)
                         state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
                         else -> stringResource(Res.string.button_start)
@@ -419,7 +451,7 @@ private fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = "Round ${state.currentRound}",
+                    text = stringResource(Res.string.chip_round_number) + state.currentRound,
                     onSizeChanged = {
                         chipTextSize = it
                     }
@@ -430,7 +462,7 @@ private fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = "Of ${state.totalRounds}",
+                    text = stringResource(Res.string.chip_total_rounds) + state.totalRounds,
                     textSize = chipTextSize
                 )
 
@@ -443,7 +475,7 @@ private fun TimerScreenPortrait(
                 remainingTime = state.remainingTime,
                 progress = state.progress,
                 isRunning = state.isInActiveState(),
-                message = if (state.timerStatus == CountDown) state.countDownText else state.timerStatus.message
+                message = if (state.timerStatus == CountDown) translateCountdownText(state.countDownText) else getStringResource(state.timerStatus.messageKey)
             )
 
             Column(
@@ -474,7 +506,7 @@ private fun TimerScreenPortrait(
                     activeTextColor = MaterialTheme.colorScheme.onSecondary,
                     unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
                     text = when {
-                        state.timerStatus == CountDown -> "Counting Down..."
+                        state.timerStatus == CountDown -> stringResource(Res.string.title_counting_down)
                         state.isInActiveState() -> stringResource(Res.string.button_pause)
                         state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
                         else -> stringResource(Res.string.button_start)

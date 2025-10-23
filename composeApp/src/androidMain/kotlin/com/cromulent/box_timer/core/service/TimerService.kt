@@ -244,7 +244,7 @@ class TimerService : Service() {
             _timerState.update {
                 it.copy(
                     timerStatus = TimerStatus.CountDown,
-                    countDownText = "Get Ready: ${4 - i}",
+                    countDownText = "Get Ready: ${4 - i}", // TODO: This should use string resources but we're in a service context
                 )
             }
             countDownAlert()
@@ -323,7 +323,7 @@ class TimerService : Service() {
     fun showTimerNotification() {
 
         val currentStatus = timerState.value.timerStatus
-        val currentStatusMessage = currentStatus.message
+        val currentStatusMessage = currentStatus.messageKey
         val remainingTime = timerState.value.remainingTime
         val countdownText = timerState.value.countDownText
         val remainingTimeString = formatTime(remainingTime)

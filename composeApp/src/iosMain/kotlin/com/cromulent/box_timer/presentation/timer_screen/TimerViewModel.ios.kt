@@ -208,7 +208,7 @@ actual class TimerViewModel(
             _state.update {
                 it.copy(
                     timerStatus = TimerStatus.CountDown,
-                    countDownText = "Get Ready: ${4 - i}",
+                    countDownText = "Get Ready: ${4 - i}", // TODO: This should use string resources but we're in a service context
                 )
             }
             countDownAlert()
