@@ -58,18 +58,36 @@ actual class LanguageManager {
     
     private fun applyLanguageToSystem(language: AppLanguage) {
         val locale = when (language) {
-            AppLanguage.SYSTEM -> getSystemLanguage().toLocale()
+            AppLanguage.SYSTEM -> {
+                // Get the actual system language and apply it
+                val systemLang = getSystemLanguage()
+                println("DEBUG: System language detected as: ${systemLang}")
+                systemLang.toLocale()
+            }
             AppLanguage.ENGLISH -> Locale.ENGLISH
             AppLanguage.PERSIAN -> Locale("fa")
         }
         
+        println("DEBUG: Applying locale: ${locale}")
         Locale.setDefault(locale)
         
         // Apply locale to the current activity's configuration
         activity?.let { act ->
             val config = Configuration(act.resources.configuration)
             config.setLocale(locale)
+            
+            // Apply the configuration to the activity's resources
+            @Suppress("DEPRECATION")
             act.resources.updateConfiguration(config, act.resources.displayMetrics)
+            
+            // Also update the application context
+            val appContext = act.applicationContext
+            val appConfig = Configuration(appContext.resources.configuration)
+            appConfig.setLocale(locale)
+            @Suppress("DEPRECATION")
+            appContext.resources.updateConfiguration(appConfig, appContext.resources.displayMetrics)
+            
+            println("DEBUG: Language applied successfully")
         }
     }
     
@@ -97,11 +115,26 @@ fun ProvideLanguageManager(
 }
 
 fun getSystemLanguage(): AppLanguage {
-    val systemLocale = Locale.getDefault()
+    // Get the actual system language using a more reliable method
+    val systemLocale = try {
+        // Use Resources.getSystem() to get the system resources
+        val systemResources = android.content.res.Resources.getSystem()
+        val systemConfig = systemResources.configuration
+        val detectedLocale = systemConfig.locales[0] ?: Locale.getDefault()
+        println("DEBUG: System locale detected: ${detectedLocale.language}")
+        detectedLocale
+    } catch (e: Exception) {
+        println("DEBUG: Exception getting system locale: ${e.message}")
+        // Fallback to Locale.getDefault()
+        Locale.getDefault()
+    }
     
-    return when (systemLocale.language) {
+    val result = when (systemLocale.language) {
         "fa" -> AppLanguage.PERSIAN
         "en" -> AppLanguage.ENGLISH
         else -> AppLanguage.ENGLISH // Default to English for unsupported languages
     }
+    
+    println("DEBUG: System language result: ${result}")
+    return result
 }
