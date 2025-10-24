@@ -281,7 +281,7 @@ class TimerService : Service() {
                 if (timerState.value.currentRound >= timerSettings.totalRounds) {
                     // All rounds completed - show completion dialog
                     _timerState.update { it.copy(timerStatus = Completed) }
-                    endWorkoutAlert()
+//                    endWorkoutAlert()
                 } else {
                     // Transition to rest
                     _timerState.update { it.copy(timerStatus = Resting) }
@@ -381,8 +381,8 @@ class TimerService : Service() {
     }
 
     private fun endWorkoutAlert() {
-        vibratePhone(2000L)
-        playAudio(appSettings?.endRoundAudioFile?.uri)
+//        vibratePhone(2000L)
+//        playAudio(appSettings?.endRoundAudioFile?.uri)
     }
 
     private fun startRoundAlert() {
