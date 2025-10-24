@@ -11,6 +11,11 @@ actual class AudioPlayer(private val context: Context) {
     private val preloadedPlayers = ConcurrentHashMap<String, MediaPlayer>()
     private val assetFileDescriptors =
         ConcurrentHashMap<String, android.content.res.AssetFileDescriptor>()
+    
+    // Track currently playing audio to prevent overlaps
+    private var currentPlayingSound: String? = null
+    private var mIsPlaying = false
+    private var fallbackPlayer: MediaPlayer? = null
 
     init {
         // Preload common audio files for instant playback
@@ -49,8 +54,10 @@ actual class AudioPlayer(private val context: Context) {
                         setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
                         prepare()
                         setOnCompletionListener {
-                            // Reset position for next play
+                            // Reset position for next play and mark as not playing
                             seekTo(0)
+                            mIsPlaying = false
+                            currentPlayingSound = null
                         }
                     }
                     preloadedPlayers[soundName] = player
@@ -68,12 +75,24 @@ actual class AudioPlayer(private val context: Context) {
         if (uri == null) return
 
         try {
-            // Check if this is a preloaded sound
             val soundName = uri.substringAfterLast("/")
+            
+            // If the same sound is already playing, don't interrupt it
+            if (mIsPlaying && currentPlayingSound == soundName) {
+                return
+            }
+            
+            // Stop current audio if different sound is requested
+            if (mIsPlaying && currentPlayingSound != soundName) {
+                stopCurrentAudio()
+            }
+
             val preloadedPlayer = preloadedPlayers[soundName]
 
             if (preloadedPlayer != null) {
                 // Use preloaded player for instant playback
+                currentPlayingSound = soundName
+                mIsPlaying = true
                 preloadedPlayer.start()
             } else {
                 // Fallback for non-preloaded sounds
@@ -88,15 +107,29 @@ actual class AudioPlayer(private val context: Context) {
     private fun playSoundFallback(uri: String) {
         try {
             val assetPath = Res.getUri(uri).removePrefix("file:///android_asset/")
+            val soundName = uri.substringAfterLast("/")
+
+            // Stop any existing fallback player
+            fallbackPlayer?.let { player ->
+                if (player.isPlaying) {
+                    player.stop()
+                }
+                player.release()
+            }
 
             context.assets.openFd(assetPath).use { afd ->
-                MediaPlayer().apply {
+                fallbackPlayer = MediaPlayer().apply {
                     setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
                     setOnPreparedListener {
+                        currentPlayingSound = soundName
+                        mIsPlaying = true
                         start()
                     }
                     setOnCompletionListener {
+                        mIsPlaying = false
+                        currentPlayingSound = null
                         release()
+                        fallbackPlayer = null
                     }
                     prepareAsync() // Use async prepare for better performance
                 }
@@ -104,6 +137,64 @@ actual class AudioPlayer(private val context: Context) {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+    
+    private fun stopCurrentAudio() {
+        currentPlayingSound?.let { soundName ->
+            preloadedPlayers[soundName]?.let { player ->
+                if (player.isPlaying) {
+                    player.pause()
+                    player.seekTo(0)
+                }
+            }
+        }
+        mIsPlaying = false
+        currentPlayingSound = null
+    }
+    
+    actual fun stopEveryAudio() {
+        println("AudioPlayer: stopEveryAudio called, currentPlayingSound: $currentPlayingSound, mIsPlaying: $mIsPlaying")
+        
+        // Stop all preloaded players more aggressively
+        preloadedPlayers.values.forEach { player ->
+            try {
+                if (player.isPlaying) {
+                    println("AudioPlayer: Stopping preloaded player that is currently playing")
+                    player.stop() // Use stop() instead of pause() for immediate stopping
+                    player.prepare() // Re-prepare after stopping
+                    player.seekTo(0)
+                }
+            } catch (e: Exception) {
+                // Handle any exceptions when stopping
+                println("AudioPlayer: Exception while stopping preloaded player: ${e.message}")
+                e.printStackTrace()
+            }
+        }
+        
+        // Stop fallback player if it exists
+        fallbackPlayer?.let { player ->
+            try {
+                if (player.isPlaying) {
+                    println("AudioPlayer: Stopping fallback player that is currently playing")
+                    player.stop()
+                }
+                player.release()
+                fallbackPlayer = null
+            } catch (e: Exception) {
+                println("AudioPlayer: Exception while stopping fallback player: ${e.message}")
+                e.printStackTrace()
+            }
+        }
+        
+        mIsPlaying = false
+        currentPlayingSound = null
+        println("AudioPlayer: stopEveryAudio completed")
+    }
+    
+    actual fun isAudioPlaying(): Boolean {
+        val preloadedPlaying = preloadedPlayers.values.any { it.isPlaying }
+        val fallbackPlaying = fallbackPlayer?.isPlaying ?: false
+        return mIsPlaying && (preloadedPlaying || fallbackPlaying)
     }
 
     /**
@@ -127,6 +218,8 @@ actual class AudioPlayer(private val context: Context) {
                 prepare()
                 setOnCompletionListener {
                     seekTo(0)
+                    mIsPlaying = false
+                    currentPlayingSound = null
                 }
             }
             preloadedPlayers[soundName] = player
@@ -136,6 +229,18 @@ actual class AudioPlayer(private val context: Context) {
     }
 
     actual fun release() {
+        // Stop current audio
+        stopCurrentAudio()
+        
+        // Release fallback player
+        fallbackPlayer?.let { player ->
+            if (player.isPlaying) {
+                player.stop()
+            }
+            player.release()
+            fallbackPlayer = null
+        }
+        
         // Release all preloaded players
         preloadedPlayers.values.forEach { it.release() }
         preloadedPlayers.clear()
