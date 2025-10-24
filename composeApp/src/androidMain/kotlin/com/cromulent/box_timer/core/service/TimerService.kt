@@ -79,6 +79,10 @@ class TimerService : Service() {
     private var countDownOneAudioPlayed: Boolean = false
 
     private var statusBeforePause: TimerStatus? = null
+    
+    // Audio timing control - only for countdown audio to prevent rapid calls
+    private var lastCountdownAudioTime = 0L
+    private val minCountdownAudioInterval = 800L // Minimum 800ms between countdown audio calls
 
     lateinit var timerSettings: TimerSettings
 
@@ -137,6 +141,9 @@ class TimerService : Service() {
 
         if (currentStatus.isInActiveState()) {
             // Pause - save what we were doing before pausing
+            println("TimerService: Pausing timer, stopping audio...")
+            audioPlayer.stopEveryAudio()
+            println("TimerService: Audio stopped, isPlaying: ${audioPlayer.isAudioPlaying()}")
             dontKeepScreenOn()
             statusBeforePause = currentStatus
             _timerState.update { it.copy(timerStatus = Paused) }
@@ -227,7 +234,7 @@ class TimerService : Service() {
                 if (!timerState.value.timerStatus.isInActiveState()) break
             }
 
-            delay(10L)
+            delay(10L) // Keep fast updates for smooth progress indicator
             
             // Only show notification once per second to avoid race conditions
             val currentTime = SystemClock.elapsedRealtime()
@@ -270,6 +277,9 @@ class TimerService : Service() {
         countDownOneAudioPlayed = false
         countdownTwoAudioPlayed = false
         countdownThreeAudioPlayed = false
+        
+        // Reset audio timing for new phase
+        lastCountdownAudioTime = 0L
 
         //round ended - play start round audio
         if (currentStatus == Running) endRoundAlert()
@@ -308,6 +318,12 @@ class TimerService : Service() {
         totalPauseDuration = 0L
         isRunning = false
         dontKeepScreenOn()
+        
+        // Reset audio timing and flags
+        lastCountdownAudioTime = 0L
+        countDownOneAudioPlayed = false
+        countdownTwoAudioPlayed = false
+        countdownThreeAudioPlayed = false
 
         _timerState.update {
             it.copy(
@@ -392,7 +408,7 @@ class TimerService : Service() {
 
     private fun countDownAlert() {
         vibratePhone(500L)
-        playAudio(appSettings?.countDownAudioFile?.uri)
+        playCountdownAudio(appSettings?.countDownAudioFile?.uri)
     }
 
     private fun vibratePhone(duration: Long = 1000L) {
@@ -401,6 +417,18 @@ class TimerService : Service() {
 
     private fun playAudio(uri: String?) {
         if (appSettings?.muteAllSounds == true) return
+        audioPlayer.playSound(uri)
+    }
+    
+    private fun playCountdownAudio(uri: String?) {
+        if (appSettings?.muteAllSounds == true) return
+        
+        val currentTime = SystemClock.elapsedRealtime()
+        if (currentTime - lastCountdownAudioTime < minCountdownAudioInterval) {
+            return // Skip if too soon since last countdown audio
+        }
+        
+        lastCountdownAudioTime = currentTime
         audioPlayer.playSound(uri)
     }
 

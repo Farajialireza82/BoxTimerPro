@@ -24,6 +24,14 @@ actual class AudioPlayer {
         // This is a no-op for iOS
     }
 
+    actual fun stopEveryAudio() {
+        avAudioPlayer?.stop()
+    }
+
+    actual fun isAudioPlaying(): Boolean {
+        return avAudioPlayer?.playing ?: false
+    }
+
     actual fun release() {
         avAudioPlayer?.stop()
         avAudioPlayer = null
