@@ -89,6 +89,7 @@ import compose.icons.fontawesomeicons.solid.CheckCircle
 import compose.icons.fontawesomeicons.solid.Exclamation
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 private fun getStringResource(key: String): String {
@@ -300,6 +301,7 @@ private fun TimerScreenLandscape(
                             .align(Alignment.Center),
                         autoSize = TextAutoSize.StepBased(minFontSize = 48.sp),
                         style = TextStyle(
+                            fontFamily = MaterialTheme.typography.bodyMedium.fontFamily,
                             fontWeight = FontWeight.W600,
                             letterSpacing = 6.sp,
                             textAlign = TextAlign.Center,

@@ -65,6 +65,7 @@ fun Chip(
             ),
             maxLines = 1,
             style = TextStyle(
+                fontFamily = MaterialTheme.typography.bodyMedium.fontFamily,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.W800,
                 color = MaterialTheme.colorScheme.secondary
@@ -109,6 +110,7 @@ fun Chip(
             fontSize = textSize,
             maxLines = 1,
             style = TextStyle(
+                fontFamily = MaterialTheme.typography.bodyMedium.fontFamily,
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.W800,
                 color = MaterialTheme.colorScheme.secondary
