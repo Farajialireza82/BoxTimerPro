@@ -55,7 +55,16 @@ Stunning themes to match your training vibe such as:
 - **Platform-Specific APIs** - Native audio, haptics, notifications, and background processing
 
 ## 📸 Screenshots
-- Screenshots will be added soon
+
+<div align="center">
+  
+### Portrait Mode
+<img src="screenshots/screenshot1.png" width="200"/> <img src="screenshots/screenshot5.png" width="200"/> <img src="screenshots/screenshot3.png" width="200"/> <img src="screenshots/screenshot2.png" width="200"/> <img src="screenshots/screenshot4.png" width="200"/>
+
+### Landscape Mode
+<img src="screenshots/screenshot6.png" width="600"/>
+
+</div>
 
 ## 🚀 Getting Started
 
