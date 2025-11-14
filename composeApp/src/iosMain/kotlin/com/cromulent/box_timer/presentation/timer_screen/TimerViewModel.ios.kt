@@ -47,8 +47,13 @@ actual class TimerViewModel(
             TimerActions.StartTimer -> start()
             TimerActions.PauseTimer -> pause()
             TimerActions.ResetTimer -> reset()
+            TimerActions.SkipTimer -> skip()
             TimerActions.CompleteWorkout -> reset()
         }
+    }
+
+    private fun skip(){
+
     }
 
     private fun start() {

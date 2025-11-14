@@ -70,6 +70,7 @@ import boxtimerpro.composeapp.generated.resources.dialog_workout_complete_messag
 import boxtimerpro.composeapp.generated.resources.dialog_workout_complete_title
 import boxtimerpro.composeapp.generated.resources.header_subtitle_ready_to_train
 import boxtimerpro.composeapp.generated.resources.header_title_app
+import boxtimerpro.composeapp.generated.resources.skip_next_24px
 import boxtimerpro.composeapp.generated.resources.title_counting_down
 import boxtimerpro.composeapp.generated.resources.title_fight
 import boxtimerpro.composeapp.generated.resources.title_paused
@@ -78,15 +79,21 @@ import boxtimerpro.composeapp.generated.resources.title_rest
 import boxtimerpro.composeapp.generated.resources.title_workout_complete
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.presentation.components.Header
+import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
 import com.cromulent.box_timer.presentation.theme.SecondarySubtitleColor
+import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.CountDown
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Ready
 import com.cromulent.box_timer.presentation.timer_screen.components.Chip
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
 import compose.icons.FontAwesomeIcons
+import compose.icons.fontawesomeicons.Regular
 import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.Bong
 import compose.icons.fontawesomeicons.solid.CheckCircle
 import compose.icons.fontawesomeicons.solid.Exclamation
+import compose.icons.fontawesomeicons.solid.Helicopter
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -125,7 +132,7 @@ fun TimerScreenRoot(
 
     var showExitDialog by remember { mutableStateOf(false) }
     BackHandler(true) {
-        if (state.timerStatus != TimerStatus.Ready) {
+        if (state.timerStatus != Ready) {
             showExitDialog = true
         } else {
             closeTimerScreen()
@@ -133,7 +140,7 @@ fun TimerScreenRoot(
     }
 
     val onBackButtonClicked = {
-        if (state.timerStatus != TimerStatus.Ready) showExitDialog = true
+        if (state.timerStatus != Ready) showExitDialog = true
         else closeTimerScreen()
     }
 
@@ -182,6 +189,7 @@ fun TimerScreenRoot(
 }
 
 
+@Preview(widthDp = 600, heightDp = 280)
 @Composable
 private fun TimerScreenLandscape(
     state: TimerState = TimerState(),
@@ -309,7 +317,9 @@ private fun TimerScreenLandscape(
                                 alpha = 0.7f
                             )
                         ),
-                        text = if (state.timerStatus == CountDown) translateCountdownText(state.countDownText) else getStringResource(state.timerStatus.messageKey).uppercase(),
+                        text = if (state.timerStatus == CountDown) translateCountdownText(state.countDownText) else getStringResource(
+                            state.timerStatus.messageKey
+                        ).uppercase(),
                     )
                 }
 
@@ -330,29 +340,55 @@ private fun TimerScreenLandscape(
                     .padding(vertical = 8.dp, horizontal = 12.dp)
             ) {
 
-                RectangleButton(
+                Row(
                     modifier = Modifier
-                        .weight(if (state.isInActiveState()) 2f else 1f),
-                    isActive = state.isInActiveState(),
-                    onButtonClicked = {
-                        if (state.timerStatus == CountDown) return@RectangleButton
-                        if (state.isInActiveState()) {
-                            onAction(TimerActions.PauseTimer)
-                        } else {
-                            onAction(TimerActions.StartTimer)
-                        }
-                    },
-                    unactiveColor = MaterialTheme.colorScheme.tertiary,
-                    activeColor = MaterialTheme.colorScheme.secondary,
-                    activeTextColor = MaterialTheme.colorScheme.onSecondary,
-                    unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
-                    text = when {
-                        state.timerStatus == CountDown -> stringResource(Res.string.title_counting_down)
-                        state.isInActiveState() -> stringResource(Res.string.button_pause)
-                        state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
-                        else -> stringResource(Res.string.button_start)
-                    },
-                )
+                        .weight(if (state.isInActiveState()) 2f else 1f)
+                ) {
+
+                    RectangleButton(
+                        modifier = Modifier
+                            .weight(3f),
+                        isActive = state.isInActiveState(),
+                        onButtonClicked = {
+                            if (state.timerStatus == CountDown) return@RectangleButton
+                            if (state.isInActiveState()) {
+                                onAction(TimerActions.PauseTimer)
+                            } else {
+                                onAction(TimerActions.StartTimer)
+                            }
+                        },
+                        unactiveColor = MaterialTheme.colorScheme.tertiary,
+                        activeColor = MaterialTheme.colorScheme.secondary,
+                        activeTextColor = MaterialTheme.colorScheme.onSecondary,
+                        unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
+                        text = when {
+                            state.timerStatus == CountDown -> stringResource(Res.string.title_counting_down)
+                            state.isInActiveState() -> stringResource(Res.string.button_pause)
+                            state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
+                            else -> stringResource(Res.string.button_start)
+                        },
+                    )
+
+                    Spacer(Modifier.size(4.dp))
+
+
+
+                    RectangleButton(
+                        modifier = Modifier
+                            .weight(1f),
+                        isActive = state.isInActiveState(),
+                        onButtonClicked = {
+//                                onAction(TimerActions.SkipTimer)
+                        },
+                        unactiveColor = MaterialTheme.colorScheme.tertiary,
+                        activeColor = MaterialTheme.colorScheme.onError,
+                        activeTextColor = MaterialTheme.colorScheme.onSecondary,
+                        unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
+                        text = "Skip",
+                    )
+
+
+                }
 
                 Spacer(Modifier.size(18.dp))
 
@@ -450,7 +486,9 @@ private fun TimerScreenPortrait(
                 remainingTime = state.remainingTime,
                 progress = state.progress,
                 isRunning = state.isInActiveState(),
-                message = if (state.timerStatus == CountDown) translateCountdownText(state.countDownText) else getStringResource(state.timerStatus.messageKey)
+                message = if (state.timerStatus == CountDown) translateCountdownText(state.countDownText) else getStringResource(
+                    state.timerStatus.messageKey
+                )
             )
 
             Column(
@@ -464,29 +502,61 @@ private fun TimerScreenPortrait(
             ) {
 
 
-                RectangleButton(
+                Row(
                     modifier = Modifier
-                        .weight(if (state.isInActiveState()) 4f else 3f),
-                    isActive = state.isInActiveState(),
-                    onButtonClicked = {
-                        if (state.timerStatus == CountDown) return@RectangleButton
-                        if (state.isInActiveState()) {
-                            onAction(TimerActions.PauseTimer)
-                        } else {
-                            onAction(TimerActions.StartTimer)
-                        }
-                    },
-                    unactiveColor = MaterialTheme.colorScheme.tertiary,
-                    activeColor = MaterialTheme.colorScheme.secondary,
-                    activeTextColor = MaterialTheme.colorScheme.onSecondary,
-                    unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
-                    text = when {
-                        state.timerStatus == CountDown -> stringResource(Res.string.title_counting_down)
-                        state.isInActiveState() -> stringResource(Res.string.button_pause)
-                        state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
-                        else -> stringResource(Res.string.button_start)
-                    },
-                )
+                        .weight(if (state.isInActiveState()) 3f else 2f)
+                        .animateContentSize()
+                ) {
+
+
+                    //Start/Pause button
+                    RectangleButton(
+                        modifier = Modifier
+                            .weight(5f)
+                            .fillMaxHeight(),
+                        isActive = state.isInActiveState(),
+                        onButtonClicked = {
+                            if (state.timerStatus == CountDown) return@RectangleButton
+                            if (state.isInActiveState()) {
+                                onAction(TimerActions.PauseTimer)
+                            } else {
+                                onAction(TimerActions.StartTimer)
+                            }
+                        },
+                        unactiveColor = MaterialTheme.colorScheme.tertiary,
+                        activeColor = MaterialTheme.colorScheme.secondary,
+                        activeTextColor = MaterialTheme.colorScheme.onSecondary,
+                        unactiveTextColor = MaterialTheme.colorScheme.onTertiary,
+                        text = when {
+                            state.timerStatus == CountDown -> stringResource(Res.string.title_counting_down)
+                            state.isInActiveState() -> stringResource(Res.string.button_pause)
+                            state.timerStatus == TimerStatus.Paused -> stringResource(Res.string.button_resume)
+                            else -> stringResource(Res.string.button_start)
+                        },
+                    )
+
+                    if (state.timerStatus != Ready && state.timerStatus != CountDown) {
+
+                        Spacer(Modifier.size(8.dp))
+
+                        RectangleButton(
+                            modifier = Modifier
+                                .weight(3f)
+                                .fillMaxHeight(),
+                            isActive = state.isInActiveState(),
+                            onButtonClicked = {
+                                onAction(TimerActions.SkipTimer)
+                            },
+                            unactiveColor = Color(0xFFf59f0a),
+                            activeColor = Color(0xFFf59f0a),
+                            activeTextColor = MaterialTheme.colorScheme.onSecondary,
+                            unactiveTextColor = MaterialTheme.colorScheme.onSecondary,
+                            icon = painterResource(Res.drawable.skip_next_24px),
+                        )
+                    }
+
+
+                }
 
                 Spacer(Modifier.size(18.dp))
 
@@ -501,7 +571,6 @@ private fun TimerScreenPortrait(
                         onAction(TimerActions.ResetTimer)
                     }
                 )
-
             }
         }
 
@@ -670,4 +739,17 @@ private fun WorkoutCompleteDialog(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun Prev() {
+
+    BoxTimerProThemePrv(
+        colorScheme = colorSchemes[0].lightColorScheme
+    ) {
+
+        TimerScreenPortrait()
+    }
+
 }
