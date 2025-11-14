@@ -7,6 +7,8 @@ import android.content.Intent
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationCompat.*
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.skip_next_24px
 import com.cromulent.box_timer.R
 
 fun Builder.addTimerActions(
@@ -34,6 +36,18 @@ fun Builder.addTimerActions(
             0,
             Intent(context, TimerService::class.java).also {
                 it.action = TimerService.Actions.RESET.toString()
+            },
+            FLAG_IMMUTABLE
+        )
+    )
+    .addAction(
+        R.drawable.skip_next_24px,
+        "Skip",
+        PendingIntent.getService(
+            context,
+            0,
+            Intent(context, TimerService::class.java).also {
+                it.action = TimerService.Actions.SKIP.toString()
             },
             FLAG_IMMUTABLE
         )

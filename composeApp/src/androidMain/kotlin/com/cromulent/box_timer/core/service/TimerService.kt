@@ -61,7 +61,7 @@ class TimerService : Service() {
             .setShowWhen(true)
             .setSilent(true)
             .setOngoing(true)
-     }
+    }
 
     private val audioPlayer: AudioPlayer by inject()
     private val systemEngine: SystemEngine by inject()
@@ -133,8 +133,21 @@ class TimerService : Service() {
                 }
             }
 
+            Actions.SKIP.toString() -> {
+                skipTimer()
+            }
+
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun skipTimer() {
+        scope.launch {
+            if(timerState.value.timerStatus == Paused){
+                toggleTimer()
+            }
+            handlePhaseComplete()
+        }
     }
 
     private fun toggleTimer() {
@@ -169,7 +182,7 @@ class TimerService : Service() {
 
             scope.launch {
                 timerState.value.let {
-                    if(it.currentRound == 1 && it.remainingTime == timerSettings.roundDuration){
+                    if (it.currentRound == 1 && it.remainingTime == timerSettings.roundDuration) {
                         runCountDown()
                     }
                 }
@@ -236,7 +249,7 @@ class TimerService : Service() {
             }
 
             delay(10L) // Keep fast updates for smooth progress indicator
-            
+
             // Only show notification once per second to avoid race conditions
             val currentTime = SystemClock.elapsedRealtime()
             if (currentTime - lastNotificationTime >= 900L) {
@@ -278,7 +291,7 @@ class TimerService : Service() {
         countDownOneAudioPlayed = false
         countdownTwoAudioPlayed = false
         countdownThreeAudioPlayed = false
-        
+
         // Reset audio timing for new phase
         lastCountdownAudioTime = 0L
         lastCountdownAudioType = -1
@@ -320,7 +333,7 @@ class TimerService : Service() {
         totalPauseDuration = 0L
         isRunning = false
         dontKeepScreenOn()
-        
+
         // Reset audio timing and flags
         lastCountdownAudioTime = 0L
         lastCountdownAudioType = -1
@@ -348,7 +361,7 @@ class TimerService : Service() {
         val countdownText = timerState.value.countDownText
         val remainingTimeString = formatTime(remainingTime)
 
-        if(currentStatus == CountDown){
+        if (currentStatus == CountDown) {
             notificationManager.notify(
                 1,
                 notificationBuilder
@@ -359,7 +372,7 @@ class TimerService : Service() {
             return
         }
 
-        if(currentStatus == Completed){
+        if (currentStatus == Completed) {
             notificationManager.notify(
                 1,
                 notificationBuilder
@@ -422,24 +435,24 @@ class TimerService : Service() {
         if (appSettings?.muteAllSounds == true) return
         audioPlayer.playSound(uri)
     }
-    
+
     private fun playCountdownAudio(uri: String?, countdownType: Int) {
         if (appSettings?.muteAllSounds == true) return
-        
+
         val currentTime = SystemClock.elapsedRealtime()
-        
+
         // Allow countdown audio if:
         // 1. No audio is currently playing, OR
         // 2. It's been more than 800ms since last countdown audio, OR  
         // 3. This is a different countdown type (3s, 2s, 1s)
-        val canPlayAudio = !audioPlayer.isAudioPlaying() || 
-                          (currentTime - lastCountdownAudioTime >= minCountdownAudioInterval) ||
-                          (lastCountdownAudioType != countdownType)
-        
+        val canPlayAudio = !audioPlayer.isAudioPlaying() ||
+                (currentTime - lastCountdownAudioTime >= minCountdownAudioInterval) ||
+                (lastCountdownAudioType != countdownType)
+
         if (!canPlayAudio) {
             return // Skip if conditions not met
         }
-        
+
         lastCountdownAudioTime = currentTime
         lastCountdownAudioType = countdownType
         audioPlayer.playSound(uri)
@@ -452,7 +465,7 @@ class TimerService : Service() {
     }
 
     private fun dontKeepScreenOn() {
-            systemEngine.keepScreenOn(false)
+        systemEngine.keepScreenOn(false)
     }
 
     companion object {
@@ -461,11 +474,11 @@ class TimerService : Service() {
     }
 
     enum class Actions {
-        TOGGLE, RESET
+        TOGGLE, RESET, SKIP
     }
 
-    fun TimerStatus.getMessageString(): String{
-        val messageRes = when(this){
+    fun TimerStatus.getMessageString(): String {
+        val messageRes = when (this) {
             Ready -> R.string.title_ready
             Running -> R.string.title_fight
             Paused -> R.string.title_paused
@@ -473,6 +486,6 @@ class TimerService : Service() {
             CountDown -> R.string.title_counting_down
             Completed -> R.string.title_workout_complete
         }
-         return applicationContext.getString(messageRes)
+        return applicationContext.getString(messageRes)
     }
 }
