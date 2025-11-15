@@ -287,7 +287,7 @@ private fun TimerScreenLandscape(
                             vertical = 4.dp,
                             horizontal = 8.dp
                         ),
-                        text = stringResource(Res.string.chip_total_rounds) + state.totalRounds,
+                        text = if (state.totalRounds == 1000) "∞" else stringResource(Res.string.chip_total_rounds) + state.totalRounds,
                         textSize = chipTextSize
                     )
 
@@ -541,7 +541,7 @@ private fun TimerScreenPortrait(
                         .aspectRatio(1.9f)
                         .padding(horizontal = 18.dp, vertical = 6.dp)
                         .weight(1f),
-                    text = stringResource(Res.string.chip_total_rounds) + state.totalRounds,
+                    text = if (state.totalRounds == 1000) "∞" else stringResource(Res.string.chip_total_rounds) + state.totalRounds,
                     textSize = chipTextSize
                 )
 

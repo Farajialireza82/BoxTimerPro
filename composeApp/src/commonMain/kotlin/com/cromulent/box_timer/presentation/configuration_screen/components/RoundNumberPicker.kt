@@ -33,6 +33,7 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.solid.Minus
 import compose.icons.fontawesomeicons.solid.Plus
 import org.jetbrains.compose.resources.stringResource
+import kotlin.math.round
 
 @Composable
 fun RoundNumberPicker(
@@ -73,7 +74,7 @@ fun RoundNumberPicker(
                 )
 
                 Text(
-                    text = rounds.toString(),
+                    text = if(rounds == 1000) "∞" else rounds.toString(),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.secondary
@@ -86,7 +87,7 @@ fun RoundNumberPicker(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                val commonRounds = listOf(3, 6, 10, 12, 15)
+                val commonRounds = listOf(3, 6, 10, 12, 1000)
 
                 commonRounds.forEach { preset ->
                     RoundPresetButton(
@@ -108,7 +109,8 @@ fun RoundNumberPicker(
                 TimerControlButton(
                     icon = FontAwesomeIcons.Solid.Minus,
                     onClick = {
-                        val newRounds = (rounds - 1).coerceAtLeast(minRounds)
+                        var newRounds = (rounds - 1).coerceAtLeast(minRounds)
+                        if (rounds == 1000) newRounds = 13
                         onRoundsChanged(newRounds)
                     },
                     enabled = rounds > minRounds
@@ -131,7 +133,7 @@ fun RoundNumberPicker(
                         val newRounds = (rounds + 1).coerceAtMost(maxRounds)
                         onRoundsChanged(newRounds)
                     },
-                    enabled = rounds < maxRounds
+                    enabled = rounds < maxRounds && rounds != 1000
                 )
             }
         }
@@ -160,7 +162,7 @@ private fun RoundPresetButton(
         )
     ) {
         Text(
-            text = rounds.toString(),
+            text = if(rounds == 1000) "∞" else rounds.toString(),
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
             color = if (isSelected) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface,
