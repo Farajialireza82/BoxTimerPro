@@ -7,7 +7,8 @@
     <string name="round_duration">Round Duration</string>
     <string name="ten_seconds">10 Seconds</string>
     <string name="rest_duration">Rest Duration</string>
-    <string name="title_round">Rounds</string>
+    <string name="title_rounds">Rounds</string>
+    <string name="title_round">Round</string>
 
 
     <string name="settings_title">Settings</string>

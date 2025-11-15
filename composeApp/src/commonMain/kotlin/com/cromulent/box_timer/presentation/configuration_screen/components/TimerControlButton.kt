@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.cromulent.box_timer.presentation.theme.SubtitleColor
 
 @Composable
 fun TimerControlButton(

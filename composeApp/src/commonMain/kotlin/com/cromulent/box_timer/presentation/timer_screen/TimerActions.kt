@@ -5,5 +5,6 @@ sealed interface TimerActions {
     object PauseTimer : TimerActions
     object ResetTimer : TimerActions
     object SkipTimer : TimerActions
+    object LapTimer : TimerActions
     object CompleteWorkout : TimerActions
 }

@@ -49,6 +49,7 @@ actual class TimerViewModel(
             TimerActions.ResetTimer -> reset()
             TimerActions.SkipTimer -> skip()
             TimerActions.CompleteWorkout -> reset()
+            TimerActions.LapTimer -> {}
         }
     }
 

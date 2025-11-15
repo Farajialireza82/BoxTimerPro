@@ -1,5 +1,7 @@
 package com.cromulent.box_timer.presentation.timer_screen
 
+import com.cromulent.box_timer.domain.timer.Lap
+
 data class TimerState(
     val timerStatus: TimerStatus = TimerStatus.Ready,
     val remainingTime: Long = 0L,
@@ -7,6 +9,8 @@ data class TimerState(
     val currentRound: Int = 1,
     val totalRounds: Int = 9,
     val countDownText: String = "",
+    val laps: List<Lap> = emptyList(),
+    val roundDuration: Long = 0L
 )
 
 enum class TimerStatus(val messageKey: String){

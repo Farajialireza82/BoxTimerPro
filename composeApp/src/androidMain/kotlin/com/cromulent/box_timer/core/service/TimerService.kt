@@ -19,6 +19,7 @@ import com.cromulent.box_timer.data.repository.SettingsRepositoryImpl
 import com.cromulent.box_timer.data.repository.TimerRepositoryImpl
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.TimerSettings
+import com.cromulent.box_timer.domain.timer.Lap
 import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.*
@@ -94,7 +95,8 @@ class TimerService : Service() {
             _timerState.update {
                 it.copy(
                     totalRounds = timerSettings.totalRounds,
-                    remainingTime = timerSettings.roundDuration
+                    remainingTime = timerSettings.roundDuration,
+                    roundDuration = timerSettings.roundDuration
                 )
             }
         }
@@ -136,9 +138,26 @@ class TimerService : Service() {
             Actions.SKIP.toString() -> {
                 skipTimer()
             }
+            Actions.LAP.toString() -> {
+                addLap()
+            }
 
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun addLap(){
+
+        val lap = Lap(
+            roundNumber = _timerState.value.currentRound,
+            createTime = _timerState.value.remainingTime
+        )
+
+        _timerState.update {
+            it.copy(
+                laps = listOf(lap) + it.laps
+            )
+        }
     }
 
     private fun skipTimer() {
@@ -347,7 +366,8 @@ class TimerService : Service() {
                 progress = 0f,
                 currentRound = 1,
                 totalRounds = timerSettings.totalRounds,
-                timerStatus = Ready
+                timerStatus = Ready,
+                laps = emptyList()
             )
         }
     }
@@ -474,7 +494,7 @@ class TimerService : Service() {
     }
 
     enum class Actions {
-        TOGGLE, RESET, SKIP
+        TOGGLE, RESET, SKIP, LAP
     }
 
     fun TimerStatus.getMessageString(): String {

@@ -71,6 +71,12 @@ actual class TimerViewModel(
                     context.startService(it)
                 }
             }
+            TimerActions.LapTimer -> {
+                Intent(context, TimerService::class.java).also {
+                    it.action = TimerService.Actions.LAP.toString()
+                    context.startService(it)
+                }
+            }
             TimerActions.CompleteWorkout -> {
                 Intent(context, TimerService::class.java).also {
                     it.action = TimerService.Actions.RESET.toString()

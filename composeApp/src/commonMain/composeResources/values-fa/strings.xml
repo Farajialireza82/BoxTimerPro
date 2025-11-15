@@ -8,7 +8,9 @@
     <string name="ten_seconds">10 ثانیه</string>
     <string name="rest_duration">مدت زمان استراحت</string>
 
+    <string name="title_rounds">دور</string>
     <string name="title_round">دور</string>
+
 
     <string name="settings_title">تنظیمات</string>
     <string name="settings_subtitle">تنظیمات برنامه</string>

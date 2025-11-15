@@ -5,19 +5,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 import com.cromulent.box_timer.data.ColorSchemeDTO
 
-val NightSkyBlack = Color(0xFF0a0a0a)
-val StormCloudGray = Color(0xFF1a1a1a)
-val AutumnBark = Color(0xFF2a1810)
-val SootyGray = Color(0xFF0f0f0f)
-val CoffeeBeanBrown = Color(0xFF2d1b10)
-val AmberGlow = Color(0xFFF7931E)
-val GoldenSun = Color(0xFFFFD700)
-val SubtitleColor = Color(0xFFBABABA)
-val SecondarySubtitleColor = Color(0xFF353130)
-val CoralMist = Color(0xFF2b1d18)
-val CoralHaze = Color(0xFFff6b35)
-val FruitOrange = Color(0xFFFC5600)
-
 // ICE THEME
 val IceDarkColorScheme = darkColorScheme(
     primary = Color(0xFF4ECDC4),
@@ -96,74 +83,74 @@ val IceLightColorScheme = lightColorScheme(
 
 // FIRE THEME
 val FireDarkColorScheme = darkColorScheme(
-    primary = AmberGlow,
-    onPrimary = NightSkyBlack,
-    primaryContainer = CoffeeBeanBrown,
-    onPrimaryContainer = GoldenSun,
+    primary = Color(0xFFF7931E),
+    onPrimary = Color(0xFF0a0a0a),
+    primaryContainer = Color(0xFF2d1b10),
+    onPrimaryContainer = Color(0xFFFFD700),
 
-    secondary = CoralHaze,
-    onSecondary = NightSkyBlack,
-    secondaryContainer = SecondarySubtitleColor,
-    onSecondaryContainer = SubtitleColor,
+    secondary = Color(0xFFff6b35),
+    onSecondary = Color(0xFF0a0a0a),
+    secondaryContainer = Color(0xFFBABABA),
+    onSecondaryContainer = Color(0xFFBABABA),
 
-    tertiary = FruitOrange,
-    onTertiary = NightSkyBlack,
-    tertiaryContainer = AutumnBark,
-    onTertiaryContainer = GoldenSun,
+    tertiary = Color(0xFFFC5600),
+    onTertiary = Color(0xFF0a0a0a),
+    tertiaryContainer = Color(0xFF2a1810),
+    onTertiaryContainer = Color(0xFFFFD700),
 
-    background = SootyGray,
-    onBackground = GoldenSun,
+    background = Color(0xFF0f0f0f),
+    onBackground = Color(0xFFFFD700),
 
-    surface = StormCloudGray,
+    surface = Color(0xFF1a1a1a),
     onSurface = Color(0xFFE0F7FA),
-    surfaceVariant = CoralMist,
-    onSurfaceVariant = SecondarySubtitleColor,
+    surfaceVariant = Color(0xFF2b1d18),
+    onSurfaceVariant = Color(0xFFBABABA),
 
     error = Color(0xFFFF6B6B),
-    onError = NightSkyBlack,
+    onError = Color(0xFF0a0a0a),
     errorContainer = Color(0xFF93000A),
     onErrorContainer = Color(0xFFFFDAD6),
 
-    outline = AmberGlow,
-    outlineVariant = SecondarySubtitleColor,
+    outline = Color(0xFFF7931E),
+    outlineVariant = Color(0xFFBABABA),
     scrim = Color(0xFF000000),
 
-    surfaceTint = AmberGlow,
+    surfaceTint = Color(0xFFF7931E),
 )
 val FireLightColorScheme = lightColorScheme(
-    primary = AmberGlow, // Retains primary color
-    onPrimary = GoldenSun, // Original onSurface/onBackground
+    primary = Color(0xFFF7931E), // Retains primary color
+    onPrimary = Color(0xFFFFD700), // Original onSurface/onBackground
     primaryContainer = Color(0xFFFFB74D), // Lighter, more pastel version of primary
-    onPrimaryContainer = NightSkyBlack, // Original onPrimary
+    onPrimaryContainer = Color(0xFF0a0a0a), // Original onPrimary
 
-    secondary = CoralHaze,
-    onSecondary = GoldenSun,
+    secondary = Color(0xFFff6b35),
+    onSecondary = Color(0xFFFFD700),
     secondaryContainer = Color(0xFFFFD1A8), // Lighter secondary container
-    onSecondaryContainer = NightSkyBlack,
+    onSecondaryContainer = Color(0xFF0a0a0a),
 
-    tertiary = FruitOrange,
-    onTertiary = GoldenSun,
+    tertiary = Color(0xFFFC5600),
+    onTertiary = Color(0xFFFFD700),
     tertiaryContainer = Color(0xFFFFCC80), // Lighter tertiary container
-    onTertiaryContainer = NightSkyBlack,
+    onTertiaryContainer = Color(0xFF0a0a0a),
 
     background = Color(0xFFFFFFFF), // White background
-    onBackground = NightSkyBlack, // Original onPrimary (dark text)
+    onBackground = Color(0xFF0a0a0a), // Original onPrimary (dark text)
 
     surface = Color(0xFFFFFFFF), // White surface
-    onSurface = NightSkyBlack, // Original onPrimary (dark text)
+    onSurface = Color(0xFF0a0a0a), // Original onPrimary (dark text)
     surfaceVariant = Color(0xFFF0F0F0), // Light gray
-    onSurfaceVariant = SecondarySubtitleColor,
+    onSurfaceVariant = Color(0xFFBABABA),
 
     error = Color(0xFFB00020),
     onError = Color(0xFFFFFFFF),
     errorContainer = Color(0xFFFFDAD6),
     onErrorContainer = Color(0xFF410002),
 
-    outline = AmberGlow,
+    outline = Color(0xFFF7931E),
     outlineVariant = Color(0xFFC5B8B0),
     scrim = Color(0xFF000000),
 
-    surfaceTint = AmberGlow,
+    surfaceTint = Color(0xFFF7931E),
 )
 
 
