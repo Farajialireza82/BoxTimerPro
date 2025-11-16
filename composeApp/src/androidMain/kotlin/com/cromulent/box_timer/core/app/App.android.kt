@@ -1,9 +1,12 @@
 package com.cromulent.box_timer.core.app
 
 import android.content.Intent
+import android.view.WindowManager
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,6 +17,8 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.cromulent.box_timer.core.service.TimerService
 import com.cromulent.box_timer.data.AppContainer
+import com.cromulent.box_timer.domain.AppSettings
+import com.cromulent.box_timer.domain.SettingsRepository
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
 import com.cromulent.box_timer.presentation.settings_screen.SettingsScreenRoot
@@ -65,7 +70,18 @@ actual fun App() {
 
                         val viewModel = koinViewModel<TimerViewModel>()
                         val appContainer = koinInject<AppContainer>()
+                        val settingsRepo = koinInject<SettingsRepository>()
+                        val settings by settingsRepo.appSettings.collectAsState(null)
                         val timerState by appContainer.timerState.collectAsState()
+
+                        val activity = LocalActivity.current
+                        DisposableEffect(settings) {
+                            val window = activity?.window
+                            if(settings?.keepScreenOnEnabled == true) window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                            onDispose {
+                                window?.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                            }
+                        }
 
                         TimerScreenRoot(
                             viewModel = viewModel,

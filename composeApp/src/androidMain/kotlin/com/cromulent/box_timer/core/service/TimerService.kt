@@ -177,13 +177,11 @@ class TimerService : Service() {
             println("TimerService: Pausing timer, stopping audio...")
             audioPlayer.stopEveryAudio()
             println("TimerService: Audio stopped, isPlaying: ${audioPlayer.isAudioPlaying()}")
-            dontKeepScreenOn()
             statusBeforePause = currentStatus
             _timerState.update { it.copy(timerStatus = Paused) }
             pauseStartTime = SystemClock.elapsedRealtime()
         } else {
             isRunning = true
-            keepScreenOn()
             // Resume/Start
             if (pauseStartTime != 0L) {
                 totalPauseDuration += SystemClock.elapsedRealtime() - pauseStartTime
@@ -351,7 +349,6 @@ class TimerService : Service() {
         pauseStartTime = 0L
         totalPauseDuration = 0L
         isRunning = false
-        dontKeepScreenOn()
 
         // Reset audio timing and flags
         lastCountdownAudioTime = 0L
@@ -476,16 +473,6 @@ class TimerService : Service() {
         lastCountdownAudioTime = currentTime
         lastCountdownAudioType = countdownType
         audioPlayer.playSound(uri)
-    }
-
-    private fun keepScreenOn() {
-        if (appSettings?.keepScreenOnEnabled == true) {
-            systemEngine.keepScreenOn(true)
-        }
-    }
-
-    private fun dontKeepScreenOn() {
-        systemEngine.keepScreenOn(false)
     }
 
     companion object {

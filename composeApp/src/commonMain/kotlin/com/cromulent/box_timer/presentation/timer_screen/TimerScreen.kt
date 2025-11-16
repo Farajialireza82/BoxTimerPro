@@ -20,13 +20,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -40,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,7 +54,6 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.W500
-import androidx.compose.ui.text.font.FontWeight.Companion.W800
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
@@ -89,11 +86,9 @@ import boxtimerpro.composeapp.generated.resources.title_paused
 import boxtimerpro.composeapp.generated.resources.title_ready
 import boxtimerpro.composeapp.generated.resources.title_rest
 import boxtimerpro.composeapp.generated.resources.title_round
-import boxtimerpro.composeapp.generated.resources.title_rounds
 import boxtimerpro.composeapp.generated.resources.title_workout_complete
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.core.util.formatTimeWithMillis
-import com.cromulent.box_timer.core.util.timeFormat
 import com.cromulent.box_timer.domain.timer.Lap
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv

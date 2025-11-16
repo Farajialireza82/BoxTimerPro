@@ -86,13 +86,8 @@ actual class TimerViewModel(
         }
     }
 
-    private fun toggleKeepScreenOn(enabled: Boolean) {
-        systemEngine.keepScreenOn(enabled)
-    }
-
     override fun onCleared() {
         audioPlayer.release()
-        toggleKeepScreenOn(false)
         super.onCleared()
     }
 

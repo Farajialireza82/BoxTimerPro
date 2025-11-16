@@ -35,19 +35,6 @@ actual class SystemEngine(val activity: Activity) {
         }
     }
 
-    actual fun keepScreenOn(keepScreenOn: Boolean) {
-        try {
-
-            if (keepScreenOn) {
-                activity.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            } else {
-                activity.window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            }
-        }catch (e: Exception){
-            e.printStackTrace()
-        }
-    }
-
     actual fun openEmail() {
         val intent = Intent(Intent.ACTION_SENDTO)
             .setData("mailto:farajialireza001@gmail.com".toUri())

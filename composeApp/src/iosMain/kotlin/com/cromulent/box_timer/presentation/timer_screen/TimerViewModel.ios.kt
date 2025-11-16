@@ -69,8 +69,6 @@ actual class TimerViewModel(
             }
         }
         _state.update { it.copy(timerStatus = TimerStatus.Running) }
-        toggleKeepScreenOn(appSettings.keepScreenOnEnabled)
-
 
         timerJob = viewModelScope.launch {
 
@@ -140,14 +138,12 @@ actual class TimerViewModel(
     }
 
     private fun pause() {
-        toggleKeepScreenOn(false)
         timerJob?.cancel()
         timerJob = null
         _state.update { it.copy(timerStatus = TimerStatus.Paused) }
     }
 
     private fun reset() {
-        toggleKeepScreenOn(false)
         timerJob?.cancel()
         timerJob = null
         _state.update {
@@ -204,9 +200,6 @@ actual class TimerViewModel(
         audioPlayer.playSound(uri)
     }
 
-    private fun toggleKeepScreenOn(enabled: Boolean) {
-        systemEngine.keepScreenOn(enabled)
-    }
 
     private suspend fun runCountDown() {
         val beforeStatus = state.value.timerStatus
@@ -231,7 +224,6 @@ actual class TimerViewModel(
     override fun onCleared() {
         timerJob?.cancel()
         audioPlayer.release()
-        toggleKeepScreenOn(false)
         super.onCleared()
     }
 }
