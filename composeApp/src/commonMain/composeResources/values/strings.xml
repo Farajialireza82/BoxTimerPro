@@ -40,6 +40,9 @@
     <string name="keep_screen_on_title">Keep Screen On</string>
     <string name="keep_screen_on_subtitle">Prevent screen from sleeping during workout</string>
 
+    <string name="battery_optimization_settings_title">Battery Optimization Enabled</string>
+    <string name="battery_optimization_settings_subtitle">Timer may not work reliably in background. Tap to disable</string>
+
     <string name="about_and_support_title">About &amp; Support</string>
     <string name="app_version_title">App Version</string>
     <string name="app_version_subtitle">Current version information</string>

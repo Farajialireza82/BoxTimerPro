@@ -21,9 +21,9 @@ actual class SystemEngine {
 
     }
 
-    actual fun keepScreenOn(keepScreenOn: Boolean) {
-        UIApplication.sharedApplication.idleTimerDisabled = keepScreenOn
-    }
+    actual fun isBatteryOptimizationEnabled() = false
+
+    actual fun openOptimizationSettings(){ }
 
     actual fun openEmail(){
         val urlString = "mailto:farajialireza001@gmail.com"
