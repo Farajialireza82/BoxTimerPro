@@ -11,11 +11,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.cromulent.box_timer.core.service.TimerService
+import com.cromulent.box_timer.core.util.popBackStackSafely
 import com.cromulent.box_timer.data.AppContainer
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
@@ -87,7 +89,7 @@ actual fun App() {
                             viewModel = viewModel,
                             state = timerState,
                             closeTimerScreen = {
-                                navController.popBackStack()
+                                navController.popBackStackSafely()
                                 Intent(context, TimerService::class.java).also {
                                     it.action = TimerService.Actions.RESET.toString()
                                     context.startService(it)
@@ -104,7 +106,7 @@ actual fun App() {
                         SettingsScreenRoot(
                             viewModel = viewModel,
                             onBackButtonClicked = {
-                                navController.popBackStack()
+                                navController.popBackStackSafely()
                             })
                     }
 
