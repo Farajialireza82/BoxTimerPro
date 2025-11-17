@@ -24,6 +24,7 @@ import compose.icons.fontawesomeicons.Solid
 import compose.icons.fontawesomeicons.regular.Image
 import compose.icons.fontawesomeicons.solid.ArrowRight
 import compose.icons.fontawesomeicons.solid.Exclamation
+import compose.icons.fontawesomeicons.solid.ExclamationTriangle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -54,7 +55,7 @@ fun BatteryOptimizationWarningCard(
         ) {
             // Warning Icon
             Icon(
-                imageVector = FontAwesomeIcons.Solid.Exclamation,
+                imageVector = FontAwesomeIcons.Solid.ExclamationTriangle,
                 contentDescription = "Warning",
                 tint = warningColor,
                 modifier = Modifier.size(28.dp)

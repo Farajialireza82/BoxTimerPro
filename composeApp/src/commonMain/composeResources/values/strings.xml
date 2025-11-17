@@ -43,6 +43,11 @@
     <string name="battery_optimization_settings_title">Battery Optimization Enabled</string>
     <string name="battery_optimization_settings_subtitle">Timer may not work reliably in background. Tap to disable</string>
 
+    <string name="battery_optimization_dialog_title">Battery Optimization Active</string>
+    <string name="battery_optimization_dialog_subtitle">Your timer may not work reliably in the background. We recommend disabling battery optimization for this app to ensure accurate timing.</string>
+    <string name="fix_now">Fix Now</string>
+    <string name="later">Later</string>
+
     <string name="about_and_support_title">About &amp; Support</string>
     <string name="app_version_title">App Version</string>
     <string name="app_version_subtitle">Current version information</string>

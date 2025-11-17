@@ -18,14 +18,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
@@ -46,8 +48,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.battery_optimization_dialog_subtitle
+import boxtimerpro.composeapp.generated.resources.battery_optimization_dialog_title
 import boxtimerpro.composeapp.generated.resources.configure_your_workout
+import boxtimerpro.composeapp.generated.resources.fix_now
+import boxtimerpro.composeapp.generated.resources.later
 import boxtimerpro.composeapp.generated.resources.presets
 import boxtimerpro.composeapp.generated.resources.rest_duration
 import boxtimerpro.composeapp.generated.resources.round_duration
@@ -56,13 +64,13 @@ import boxtimerpro.composeapp.generated.resources.round_settings
 import boxtimerpro.composeapp.generated.resources.settings_ic
 import boxtimerpro.composeapp.generated.resources.start_workout
 import boxtimerpro.composeapp.generated.resources.ten_seconds
-import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 import com.cromulent.box_timer.core.util.toWorkoutMode
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.configuration_screen.components.ModeCard
 import com.cromulent.box_timer.presentation.configuration_screen.components.RoundNumberPicker
 import com.cromulent.box_timer.presentation.configuration_screen.components.TimerSetter
+import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
 import com.cromulent.box_timer.presentation.theme.FireDarkColorScheme
 import com.cromulent.box_timer.presentation.theme.FireLightColorScheme
@@ -88,6 +96,7 @@ import com.cromulent.box_timer.presentation.theme.VenomDarkColorScheme
 import com.cromulent.box_timer.presentation.theme.VenomLightColorScheme
 import compose.icons.FontAwesomeIcons
 import compose.icons.fontawesomeicons.Solid
+import compose.icons.fontawesomeicons.solid.ExclamationTriangle
 import compose.icons.fontawesomeicons.solid.Play
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -100,6 +109,9 @@ internal fun ConfigurationScreen(
         restDuration = 2L,
         totalRounds = 2
     ),
+    shouldShowBatteryDialog: Boolean = false,
+    dismissBatteryOptimizationDialog: () -> Unit = {},
+    openOptimizationSettings: () -> Unit = {},
     modifier: Modifier = Modifier,
     onStartWorkout: (TimerSettings) -> Unit,
     navigateToSettings: () -> Unit,
@@ -350,6 +362,108 @@ internal fun ConfigurationScreen(
         }
     }
 
+    if (shouldShowBatteryDialog) {
+        BatteryOptimizationDialog(
+            onDismiss = {
+                dismissBatteryOptimizationDialog()
+            },
+            onOpenSettings = {
+                openOptimizationSettings()
+                dismissBatteryOptimizationDialog()
+            }
+        )
+    }
+
+}
+
+
+@Composable
+fun BatteryOptimizationDialog(
+    onDismiss: () -> Unit,
+    onOpenSettings: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false,
+        )
+    ) {
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp, horizontal = 32.dp),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Warning Icon with orange tint
+                Icon(
+                    imageVector = FontAwesomeIcons.Solid.ExclamationTriangle,
+                    contentDescription = null,
+                    modifier = Modifier.size(48.dp),
+                    tint = Color(0xFFFF9800) // Orange warning color
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = stringResource(Res.string.battery_optimization_dialog_title),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = stringResource(Res.string.battery_optimization_dialog_subtitle),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                    textAlign = TextAlign.Center,
+                    lineHeight = MaterialTheme.typography.bodyMedium.lineHeight.times(1.3f)
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    OutlinedButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.later),
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    Button(
+                        onClick = onOpenSettings,
+                        modifier = Modifier.weight(1f),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFF9800) // Orange to match warning theme
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.fix_now),
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -462,6 +576,7 @@ private fun VenomDarkColorScheme() {
     }
 
 }
+
 @Preview
 @Composable
 private fun VenomLightColorScheme() {
@@ -680,7 +795,7 @@ private fun MidnightLightColorScheme() {
 @Composable
 private fun PrincessPinkDarkColorScheme() {
 
-    BoxTimerProThemePrv (colorScheme = PrincessPinkDarkColorScheme) {
+    BoxTimerProThemePrv(colorScheme = PrincessPinkDarkColorScheme) {
         ConfigurationScreen(
             onStartWorkout = {},
             navigateToSettings = {}
@@ -694,7 +809,7 @@ private fun PrincessPinkDarkColorScheme() {
 @Composable
 private fun PrincessPinkLightColorScheme() {
 
-    BoxTimerProThemePrv (colorScheme = PrincessPinkLightColorScheme) {
+    BoxTimerProThemePrv(colorScheme = PrincessPinkLightColorScheme) {
         ConfigurationScreen(
             onStartWorkout = {},
             navigateToSettings = {}

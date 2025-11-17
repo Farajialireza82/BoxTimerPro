@@ -16,8 +16,9 @@ fun ConfigurationScreenRoot(
     val timerSettings = viewModel.timerSettings.collectAsState().value
 
     ConfigurationScreen(
-        timerSettings,
-        modifier,
+        timerSettings = timerSettings,
+        shouldShowBatteryDialog = false,
+        modifier = modifier,
         onStartWorkout = {
             viewModel.onAction(ConfigurationActions.SaveTimerSettings(it))
             navigateToTimerScreen()
