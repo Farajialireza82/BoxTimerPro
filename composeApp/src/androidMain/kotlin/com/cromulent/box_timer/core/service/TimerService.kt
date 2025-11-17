@@ -359,12 +359,20 @@ class TimerService : Service() {
 
         _timerState.update {
             it.copy(
+                currentRound = 1,
+                totalRounds = timerSettings.totalRounds,
+                timerStatus = Ready,
+                laps = emptyList()
+            )
+        }
+
+        _timerState.update {
+            it.copy(
                 remainingTime = timerSettings.roundDuration,
                 progress = 0f,
                 currentRound = 1,
                 totalRounds = timerSettings.totalRounds,
                 timerStatus = Ready,
-                laps = emptyList()
             )
         }
     }

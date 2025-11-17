@@ -200,27 +200,18 @@ fun TimerScreenRoot(
 
 @Composable
 private fun TimerScreenLandscape(
-    state: TimerState = TimerState(
-        timerStatus = Running,
-        laps = listOf(
-            Lap(1, 1200),
-            Lap(2, 2200),
-            Lap(3, 5200),
-        )
-    ),
+    state: TimerState = TimerState(timerStatus = Running),
     onAction: (TimerActions) -> Unit,
     onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    var chipTextSize by remember { mutableStateOf(16.sp) }
 
     Box(
         modifier = modifier
             .background(Color.Transparent)
             .statusBarsPadding()
             .fillMaxSize()
-            .padding(vertical = 24.dp, horizontal = 16.dp)
+            .padding(top = 8.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
     ) {
         IconButton(
             onClick = onBackButtonClicked,
@@ -247,52 +238,18 @@ private fun TimerScreenLandscape(
                 verticalArrangement = Arrangement.Center
             ) {
 
-                Row(
+                RoundsRow(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(2f)
-                        .padding(bottom = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement
-                        .spacedBy(
-                            space = 24.dp,
-                            alignment = Alignment.CenterHorizontally
-                        )
-                ) {
-
-                    Chip(
-                        modifier = Modifier
-                            .width(140.dp)
-                            .height(68.dp),
-                        paddingValues = PaddingValues(
-                            vertical = 4.dp,
-                            horizontal = 8.dp
-                        ),
-                        text = stringResource(Res.string.chip_round_number) + state.currentRound,
-                        onSizeChanged = {
-                            chipTextSize = it
-                        }
-                    )
-
-                    Chip(
-                        modifier = Modifier
-                            .width(140.dp)
-                            .height(68.dp),
-                        paddingValues = PaddingValues(
-                            vertical = 4.dp,
-                            horizontal = 8.dp
-                        ),
-                        text = if (state.totalRounds == 1000) "∞" else stringResource(Res.string.chip_total_rounds) + state.totalRounds,
-                        textSize = chipTextSize
-                    )
-
-                }
+                        .weight(1.5f)
+                        .padding(12.dp),
+                    state = state
+                )
 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .weight(3f),
+                        .weight(3.5f),
                     contentAlignment = Alignment.Center
                 ) {
                     BasicText(
@@ -315,7 +272,7 @@ private fun TimerScreenLandscape(
 
                 Box(
                     Modifier
-                        .weight(1.3f)
+                        .weight(0.9f)
                         .animateContentSize()
                 ) {
                     BasicText(
@@ -338,16 +295,13 @@ private fun TimerScreenLandscape(
                     )
                 }
 
-                AnimatedVisibility(
-                    visible = state.laps.isNotEmpty(),
-                    modifier = Modifier
-                        .weight(2f)
-                        .padding(8.dp)
-                ) {
+                if (state.laps.isNotEmpty()) {
 
                     LapList(
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .weight(2f)
+                            .padding(8.dp),
                         laps = state.laps,
                         roundDuration = state.roundDuration
                     )
@@ -369,7 +323,7 @@ private fun TimerScreenLandscape(
 
                 Column(
                     modifier = Modifier
-                        .weight(1.2f)
+                        .weight(1f)
                         .animateContentSize()
                         .padding(vertical = 8.dp, horizontal = 12.dp)
                 ) {
@@ -413,10 +367,6 @@ private fun TimerScreenLandscape(
                             onAction(TimerActions.ResetTimer)
                         }
                     )
-
-
-
-
 
                     Spacer(Modifier.size(8.dp))
 
@@ -476,6 +426,43 @@ private fun TimerScreenLandscape(
 }
 
 @Composable
+private fun RoundsRow(modifier: Modifier = Modifier, state: TimerState) {
+
+    var chipTextSize by remember { mutableStateOf(16.sp) }
+
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement
+            .spacedBy(
+                space = 24.dp,
+                alignment = Alignment.CenterHorizontally
+            )
+    ) {
+
+        Chip(
+            modifier = Modifier
+                .aspectRatio(1.9f),
+            paddingValues = PaddingValues(8.dp),
+            text = stringResource(Res.string.chip_round_number) + state.currentRound,
+            onSizeChanged = {
+                chipTextSize = it
+            }
+        )
+
+        Chip(
+            modifier = Modifier
+                .aspectRatio(1.9f),
+            paddingValues = PaddingValues(8.dp),
+            text = if (state.totalRounds == 1000) "∞" else stringResource(Res.string.chip_total_rounds) + state.totalRounds,
+            textSize = chipTextSize
+        )
+
+    }
+}
+
+@Composable
 private fun TimerScreenPortrait(
     state: TimerState = TimerState(
         timerStatus = Running
@@ -484,8 +471,6 @@ private fun TimerScreenPortrait(
     onBackButtonClicked: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-
-    var chipTextSize by remember { mutableStateOf(16.sp) }
 
     Scaffold(
         modifier = Modifier,
@@ -512,35 +497,11 @@ private fun TimerScreenPortrait(
             verticalArrangement = Arrangement.Top
         ) {
 
-            Row(
+            RoundsRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 12.dp, bottom = 12.dp)
-                    .weight(0.3f),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-
-                Chip(
-                    modifier = Modifier
-                        .aspectRatio(1.9f)
-                        .padding(horizontal = 18.dp, vertical = 6.dp)
-                        .weight(1f),
-                    text = stringResource(Res.string.chip_round_number) + state.currentRound,
-                    onSizeChanged = {
-                        chipTextSize = it
-                    }
-                )
-
-                Chip(
-                    modifier = Modifier
-                        .aspectRatio(1.9f)
-                        .padding(horizontal = 18.dp, vertical = 6.dp)
-                        .weight(1f),
-                    text = if (state.totalRounds == 1000) "∞" else stringResource(Res.string.chip_total_rounds) + state.totalRounds,
-                    textSize = chipTextSize
-                )
-
-            }
+                    .weight(0.35f),
+                state = state)
 
             Spacer(Modifier.size(12.dp))
 
@@ -556,18 +517,15 @@ private fun TimerScreenPortrait(
                 )
             )
 
-            AnimatedVisibility(
-                visible = state.laps.isNotEmpty(),
-                modifier = Modifier
-                    .weight(0.5f)
-            ) {
-
+            if (state.laps.isNotEmpty()) {
                 LapList(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .weight(0.5f),
                     laps = state.laps,
                     roundDuration = state.roundDuration
                 )
+
             }
 
             Spacer(Modifier.size(8.dp))
@@ -899,6 +857,9 @@ fun LapList(modifier: Modifier = Modifier, laps: List<Lap>, roundDuration: Long)
 
 
 // Portrait Previews - Light Mode
+
+/*
+
 @Preview
 @Composable
 private fun PrevScheme0Light() {
@@ -906,7 +867,6 @@ private fun PrevScheme0Light() {
         TimerScreenPortrait()
     }
 }
-/*
 
 @Preview
 @Composable
@@ -1279,7 +1239,7 @@ private fun LandscapeScheme10Dark() {
     }
 }*/
 
-@Preview(widthDp = 600, heightDp = 280)
+@Preview(widthDp = 800, heightDp = 340)
 @Composable
 private fun LandscapeScheme11Dark() {
     BoxTimerProThemePrv(colorScheme = colorSchemes[11].darkColorScheme) {
