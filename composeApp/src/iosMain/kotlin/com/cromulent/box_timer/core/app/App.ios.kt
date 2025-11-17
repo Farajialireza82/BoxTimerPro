@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.cromulent.box_timer.core.util.popBackStackSafely
 import com.cromulent.box_timer.domain.SettingsRepository
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
@@ -82,7 +83,7 @@ actual fun App() {
                             viewModel = timerViewModel,
                             state = timerState,
                             closeTimerScreen = {
-                                navController.popBackStack()
+                                navController.popBackStackSafely()
                             },
                             modifier = Modifier)
 
@@ -93,7 +94,7 @@ actual fun App() {
                         SettingsScreenRoot(
                             viewModel = viewModel,
                             onBackButtonClicked = {
-                                navController.popBackStack()
+                                navController.popBackStackSafely()
                             })
                     }
 

@@ -1,19 +1,28 @@
 package com.cromulent.box_timer.presentation.settings_screen
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,10 +30,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.about_and_support_title
 import boxtimerpro.composeapp.generated.resources.app_version_subtitle
@@ -61,6 +76,7 @@ import com.cromulent.box_timer.domain.getDisplayNameResForLanguage
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.settings_screen.SettingsActions.ToggleMuteAllSounds
 import com.cromulent.box_timer.presentation.settings_screen.components.AudioPickerBottomSheet
+import com.cromulent.box_timer.presentation.settings_screen.components.BatteryOptimizationWarningCard
 import com.cromulent.box_timer.presentation.settings_screen.components.ColorSchemePicker
 import com.cromulent.box_timer.presentation.settings_screen.components.EasterEggDialog
 import com.cromulent.box_timer.presentation.settings_screen.components.LanguagePickerBottomSheet
@@ -106,6 +122,20 @@ fun SettingsScreenRoot(
 ) {
 
     val state by viewModel.state.collectAsState()
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.onResume()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
 
     SettingsScreen(
         state = state,
@@ -170,6 +200,16 @@ private fun SettingsScreen(
                 TitleText(stringResource(Res.string.general_settings_title))
 
                 Spacer(Modifier.size(20.dp))
+
+                if(state.isBatteryOptimizationEnabled) {
+
+                    BatteryOptimizationWarningCard {
+                        onAction(SettingsActions.OpenOptimizationSettings)
+                    }
+                }
+
+                Spacer(Modifier.size(10.dp))
+
 
                 SettingSwitchCard(
                     isChecked = appSettings.stopTimerOnClose,

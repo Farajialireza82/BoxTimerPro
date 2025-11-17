@@ -32,6 +32,7 @@ class SettingsViewModel(
                     }
             }
         }
+        checkBatteryOptimization()
     }
 
     val state = _state.asStateFlow()
@@ -55,6 +56,8 @@ class SettingsViewModel(
             is SettingsActions.SetColorScheme -> setColorScheme(action.colorSchemeId)
             is SettingsActions.ToggleDarkMode -> toggleDarkMode()
             is SettingsActions.SetLanguage -> setLanguage(action.language)
+            is SettingsActions.CheckBatteryOptimization -> checkBatteryOptimization()
+            is SettingsActions.OpenOptimizationSettings -> systemEngine.openOptimizationSettings()
         }
 
     }
@@ -67,6 +70,18 @@ class SettingsViewModel(
                 )
             )
         }
+    }
+
+    private fun checkBatteryOptimization() {
+        _state.update {
+            it.copy(
+                isBatteryOptimizationEnabled = systemEngine.isBatteryOptimizationEnabled()
+            )
+        }
+    }
+
+    fun onResume(){
+        checkBatteryOptimization()
     }
 
     private fun toggleDarkMode(){
@@ -177,7 +192,7 @@ class SettingsViewModel(
         viewModelScope.launch {
             // Update the language manager first to apply the change immediately
             languageManager.setLanguage(language)
-            
+
             // Then update the settings to persist the change
             settingsRepository.updateAppSettings(
                 _state.value.appSettings.copy(
@@ -186,5 +201,6 @@ class SettingsViewModel(
             )
         }
     }
+
 
 }

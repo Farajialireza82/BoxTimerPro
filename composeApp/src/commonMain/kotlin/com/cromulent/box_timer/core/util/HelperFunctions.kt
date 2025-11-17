@@ -1,5 +1,6 @@
 package com.cromulent.box_timer.core.util
 
+import androidx.navigation.NavController
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
 
@@ -81,4 +82,10 @@ fun TimerSettings.toWorkoutMode(): WorkoutMode {
                     it.restDuration == restDuration
         }
         ?: WorkoutMode.CUSTOM
+}
+
+fun NavController.popBackStackSafely() {
+    if (previousBackStackEntry != null) {
+        popBackStack()
+    }
 }
