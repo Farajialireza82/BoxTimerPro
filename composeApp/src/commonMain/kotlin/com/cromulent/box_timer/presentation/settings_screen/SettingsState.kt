@@ -38,5 +38,6 @@ data class SettingsState(
         AudioFile("audio_title_electric_beep",                     "files/Electric-Beep.mp3"),
         AudioFile("audio_title_drop",                     "files/Drop.mp3"),
         AudioFile("audio_title_modern_drop",                     "files/Modern-Drop.mp3"),
-    )
+    ),
+    val isBatteryOptimizationEnabled: Boolean = false
 )

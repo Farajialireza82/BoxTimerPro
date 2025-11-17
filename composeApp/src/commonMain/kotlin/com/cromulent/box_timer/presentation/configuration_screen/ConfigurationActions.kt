@@ -6,5 +6,8 @@ sealed interface ConfigurationActions {
 
 
     data class SaveTimerSettings(val timerSettings: TimerSettings): ConfigurationActions
+    data object DismissBatteryOptimizationDialog: ConfigurationActions
+    object OpenOptimizationSettings: ConfigurationActions
+
 
 }

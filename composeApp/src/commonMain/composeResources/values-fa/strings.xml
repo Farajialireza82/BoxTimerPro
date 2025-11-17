@@ -15,6 +15,15 @@
     <string name="settings_title">تنظیمات</string>
     <string name="settings_subtitle">تنظیمات برنامه</string>
 
+    <string name="battery_optimization_settings_title">بهینه‌سازی باتری فعال است</string>
+    <string name="battery_optimization_settings_subtitle">ممکن است تایمر در پس‌زمینه به‌درستی عمل نکند. برای غیرفعال‌سازی ضربه بزنید</string>
+
+    <string name="battery_optimization_dialog_title">بهینه‌سازی باتری فعال است</string>
+    <string name="battery_optimization_dialog_subtitle">ممکن است تایمر در پس‌زمینه دقیق کار نکند. برای عملکرد بهتر، پیشنهاد می‌کنیم بهینه‌سازی باتری را برای این اپ غیرفعال کنید.</string>
+    <string name="fix_now">رفع مشکل</string>
+    <string name="later">بعداً</string>
+
+
     <string name="general_settings_title">تنظیمات عمومی</string>
     <string name="audio_settings_title">تنظیمات صدا</string>
     <string name="mute_all_sounds_title">بی‌صدا کردن همه صداها</string>
