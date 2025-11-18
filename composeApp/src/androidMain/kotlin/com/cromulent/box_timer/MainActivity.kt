@@ -64,16 +64,16 @@ class MainActivity : ComponentActivity() {
         // Apply saved language setting immediately before UI is rendered
         val settingsRepository by inject<SettingsRepository>()
         val languageManager by inject<LanguageManager>()
-        languageManager.setActivity(this@MainActivity)
 
         // Get the saved language setting synchronously
         val savedSettings = runBlocking { settingsRepository.getAppSettings() }
-        savedSettings.selectedLanguage?.let { language ->
+        savedSettings.selectedLanguage.let { language ->
             languageManager.setLanguage(language)
         }
 
         setContent {
             val setting by settingsRepository.appSettings.collectAsState(null)
+            val currentLanguage = languageManager.currentLanguage.collectAsState().value
 
             BoxTimerProTheme {
                 val view = LocalView.current
