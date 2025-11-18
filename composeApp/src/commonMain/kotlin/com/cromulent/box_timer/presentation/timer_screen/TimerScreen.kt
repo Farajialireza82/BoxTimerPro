@@ -1,6 +1,5 @@
 package com.cromulent.box_timer.presentation.timer_screen
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -10,34 +9,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.TextAutoSize
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,87 +34,45 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import boxtimerpro.composeapp.generated.resources.Res
 import boxtimerpro.composeapp.generated.resources.back_ic
-import boxtimerpro.composeapp.generated.resources.button_continue
-import boxtimerpro.composeapp.generated.resources.button_got_it
 import boxtimerpro.composeapp.generated.resources.button_pause
 import boxtimerpro.composeapp.generated.resources.button_reset
 import boxtimerpro.composeapp.generated.resources.button_resume
 import boxtimerpro.composeapp.generated.resources.button_start
-import boxtimerpro.composeapp.generated.resources.button_stop_exit
-import boxtimerpro.composeapp.generated.resources.chip_round_number
-import boxtimerpro.composeapp.generated.resources.chip_total_rounds
-import boxtimerpro.composeapp.generated.resources.countdown_get_ready
-import boxtimerpro.composeapp.generated.resources.dialog_timer_running_message
-import boxtimerpro.composeapp.generated.resources.dialog_timer_running_title
-import boxtimerpro.composeapp.generated.resources.dialog_workout_complete_message
-import boxtimerpro.composeapp.generated.resources.dialog_workout_complete_title
 import boxtimerpro.composeapp.generated.resources.header_subtitle_ready_to_train
 import boxtimerpro.composeapp.generated.resources.header_title_app
 import boxtimerpro.composeapp.generated.resources.ic_flag
 import boxtimerpro.composeapp.generated.resources.skip_next_24px
 import boxtimerpro.composeapp.generated.resources.title_counting_down
-import boxtimerpro.composeapp.generated.resources.title_fight
-import boxtimerpro.composeapp.generated.resources.title_paused
-import boxtimerpro.composeapp.generated.resources.title_ready
-import boxtimerpro.composeapp.generated.resources.title_rest
-import boxtimerpro.composeapp.generated.resources.title_round
-import boxtimerpro.composeapp.generated.resources.title_workout_complete
 import com.cromulent.box_timer.core.util.formatTime
-import com.cromulent.box_timer.core.util.formatTimeWithMillis
-import com.cromulent.box_timer.domain.timer.Lap
+import com.cromulent.box_timer.core.util.getStringResource
+import com.cromulent.box_timer.core.util.translateCountdownText
 import com.cromulent.box_timer.presentation.components.Header
 import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
 import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.CountDown
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Ready
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Running
-import com.cromulent.box_timer.presentation.timer_screen.components.Chip
 import com.cromulent.box_timer.presentation.timer_screen.components.RectangleButton
+import com.cromulent.box_timer.presentation.timer_screen.components.RoundsRow
 import com.cromulent.box_timer.presentation.timer_screen.components.TimerCircleIndicator
-import compose.icons.FontAwesomeIcons
-import compose.icons.fontawesomeicons.Solid
-import compose.icons.fontawesomeicons.solid.CheckCircle
-import compose.icons.fontawesomeicons.solid.Exclamation
+import com.cromulent.box_timer.presentation.timer_screen.components.dialogs.ExitTimerDialog
+import com.cromulent.box_timer.presentation.timer_screen.components.dialogs.LapList
+import com.cromulent.box_timer.presentation.timer_screen.components.dialogs.WorkoutCompleteDialog
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
-@Composable
-private fun getStringResource(key: String): String {
-    return when (key) {
-        "title_ready" -> stringResource(Res.string.title_ready)
-        "title_fight" -> stringResource(Res.string.title_fight)
-        "title_paused" -> stringResource(Res.string.title_paused)
-        "title_rest" -> stringResource(Res.string.title_rest)
-        "title_counting_down" -> stringResource(Res.string.title_counting_down)
-        "title_workout_complete" -> stringResource(Res.string.title_workout_complete)
-        else -> key
-    }
-}
-
-@Composable
-private fun translateCountdownText(countdownText: String): String {
-    return if (countdownText.startsWith("Get Ready: ")) {
-        val number = countdownText.substringAfter("Get Ready: ").toIntOrNull() ?: 0
-        stringResource(Res.string.countdown_get_ready) + number
-    } else {
-        countdownText
-    }
-}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -208,7 +152,7 @@ private fun TimerScreenLandscape(
 
     Box(
         modifier = modifier
-            .background(Color.Transparent)
+            .background(Transparent)
             .statusBarsPadding()
             .fillMaxSize()
             .padding(top = 8.dp, bottom = 16.dp, start = 16.dp, end = 16.dp)
@@ -240,7 +184,7 @@ private fun TimerScreenLandscape(
 
                 RoundsRow(
                     modifier = Modifier
-                        .weight(1.5f)
+                        .weight(if(state.laps.isNotEmpty()) 1.8f else 1.3f)
                         .padding(12.dp),
                     state = state
                 )
@@ -259,7 +203,7 @@ private fun TimerScreenLandscape(
                         autoSize = TextAutoSize.StepBased(maxFontSize = 400.sp),
                         style = TextStyle(
                             shadow = Shadow(
-                                color = MaterialTheme.colorScheme.secondary,
+                                color = if(state.timerStatus == Running) MaterialTheme.colorScheme.secondary else Transparent,
                                 offset = Offset(0f, 4f),
                                 blurRadius = if (state.isInActiveState()) 30f else 0f
                             ),
@@ -426,43 +370,6 @@ private fun TimerScreenLandscape(
 }
 
 @Composable
-private fun RoundsRow(modifier: Modifier = Modifier, state: TimerState) {
-
-    var chipTextSize by remember { mutableStateOf(16.sp) }
-
-    Row(
-        modifier = modifier
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement
-            .spacedBy(
-                space = 24.dp,
-                alignment = Alignment.CenterHorizontally
-            )
-    ) {
-
-        Chip(
-            modifier = Modifier
-                .aspectRatio(1.9f),
-            paddingValues = PaddingValues(8.dp),
-            text = stringResource(Res.string.chip_round_number) + state.currentRound,
-            onSizeChanged = {
-                chipTextSize = it
-            }
-        )
-
-        Chip(
-            modifier = Modifier
-                .aspectRatio(1.9f),
-            paddingValues = PaddingValues(8.dp),
-            text = if (state.totalRounds == 1000) "∞" else stringResource(Res.string.chip_total_rounds) + state.totalRounds,
-            textSize = chipTextSize
-        )
-
-    }
-}
-
-@Composable
 private fun TimerScreenPortrait(
     state: TimerState = TimerState(
         timerStatus = Running
@@ -500,7 +407,8 @@ private fun TimerScreenPortrait(
             RoundsRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(0.35f),
+                    .weight(0.33f),
+                paddingValues = PaddingValues(if(state.laps.isNotEmpty()) 10.dp else 16.dp),
                 state = state)
 
             Spacer(Modifier.size(12.dp))
@@ -511,7 +419,7 @@ private fun TimerScreenPortrait(
                     .weight(2f),
                 remainingTime = state.remainingTime,
                 progress = state.progress,
-                isRunning = state.isInActiveState(),
+                timerStatus = state.timerStatus,
                 message = if (state.timerStatus == CountDown) translateCountdownText(state.countDownText) else getStringResource(
                     state.timerStatus.messageKey
                 )
@@ -644,217 +552,6 @@ private fun TimerScreenPortrait(
 
     }
 }
-
-@Composable
-private fun ExitTimerDialog(
-    onDismiss: () -> Unit,
-    onConfirmExit: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Dialog(
-        onDismissRequest = onDismiss,
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false,
-        )
-    ) {
-        Card(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 32.dp),
-            shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // Warning Icon
-                Icon(
-                    imageVector = FontAwesomeIcons.Solid.Exclamation,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = stringResource(Res.string.dialog_timer_running_title),
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Text(
-                    text = stringResource(Res.string.dialog_timer_running_message),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    OutlinedButton(
-                        onClick = onDismiss,
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.button_continue),
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Button(
-                        onClick = onConfirmExit,
-                        modifier = Modifier.weight(1f),
-                        shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.error
-                        )
-                    ) {
-                        Text(
-                            text = stringResource(Res.string.button_stop_exit),
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun WorkoutCompleteDialog(
-    onComplete: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Dialog(
-        onDismissRequest = { /* Prevent dismissing by clicking outside */ },
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false,
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false
-        )
-    ) {
-        Card(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp, horizontal = 32.dp),
-            shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // Success Icon
-                Icon(
-                    imageVector = FontAwesomeIcons.Solid.CheckCircle,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = stringResource(Res.string.dialog_workout_complete_title),
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.primary
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Text(
-                    text = stringResource(Res.string.dialog_workout_complete_message),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Button(
-                    onClick = onComplete,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
-                ) {
-                    Text(
-                        text = stringResource(Res.string.button_got_it),
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun LapList(modifier: Modifier = Modifier, laps: List<Lap>, roundDuration: Long) {
-    LazyColumn(
-        modifier = modifier
-    ) {
-        itemsIndexed(
-            laps
-        ) { index, item ->
-
-            val previousItem = laps.getOrNull(index + 1)
-            val previousItemCreateTime =
-                if (previousItem != null && previousItem.roundNumber == item.roundNumber) {
-                    laps[index + 1].createTime
-                } else {
-                    roundDuration
-                }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "${stringResource(Res.string.title_round)} ${item.roundNumber}",
-                    fontWeight = W500,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                Text(
-                    text = formatTime(item.createTime),
-                    fontWeight = W500,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                Text(
-                    text = formatTimeWithMillis(previousItemCreateTime - item.createTime),
-                    fontWeight = W500,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-            }
-        }
-    }
-}
-
 
 // Portrait Previews - Light Mode
 

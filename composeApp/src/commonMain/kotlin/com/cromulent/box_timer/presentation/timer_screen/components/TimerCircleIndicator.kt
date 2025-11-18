@@ -29,19 +29,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cromulent.box_timer.core.util.formatTime
+import com.cromulent.box_timer.presentation.theme.BoxTimerProThemePrv
+import com.cromulent.box_timer.presentation.theme.colorSchemes
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus
+import com.cromulent.box_timer.presentation.timer_screen.isInActiveState
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun TimerCircleIndicator(
     remainingTime: Long,
     progress: Float,
-    isRunning: Boolean = false,
+    timerStatus: TimerStatus,
     message: String,
     modifier: Modifier = Modifier,
 ) {
 
+    val isRunning: Boolean = timerStatus.isInActiveState()
+
     MyProgressIndicator(
         modifier = modifier
             .size(400.dp),
+        color = if (timerStatus == TimerStatus.Resting)
+            MaterialTheme.colorScheme.onSurface
+        else MaterialTheme.colorScheme.secondary,
         progress = progress,
     ) {
 
@@ -80,12 +90,15 @@ fun TimerCircleIndicator(
                 fontWeight = FontWeight.W600,
                 letterSpacing = 2.sp,
                 textAlign = TextAlign.Center,
-                color = if (isRunning) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                color = if (isRunning) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurface.copy(
+                    alpha = 0.7f
+                )
             )
         }
 
     }
 }
+
 @Composable
 private fun MyProgressIndicator(
     progress: Float = 0.1f,
@@ -97,7 +110,7 @@ private fun MyProgressIndicator(
 
     val coercedProgress = { progress.coerceIn(0f, 1f) }
     val stroke =
-        with(LocalDensity.current) { Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round) }
+        with(LocalDensity.current) { Stroke(width = 18.dp.toPx(), cap = StrokeCap.Round) }
 
     Box(
         modifier.fillMaxSize(),
@@ -146,4 +159,23 @@ private fun DrawScope.drawCircularIndicator(
         size = Size(arcDimen, arcDimen),
         style = stroke
     )
+}
+
+@Preview
+@Composable
+private fun TimerCircleIndicatorPrev() {
+
+    BoxTimerProThemePrv(
+        colorScheme = colorSchemes[0].darkColorScheme
+    ) {
+
+        TimerCircleIndicator(
+            remainingTime = 3000L,
+            progress = 0.5f,
+            timerStatus = TimerStatus.Resting,
+            message = "Rest"
+        )
+
+    }
+
 }

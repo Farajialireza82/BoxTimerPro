@@ -1,8 +1,18 @@
 package com.cromulent.box_timer.core.util
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.countdown_get_ready
+import boxtimerpro.composeapp.generated.resources.title_counting_down
+import boxtimerpro.composeapp.generated.resources.title_fight
+import boxtimerpro.composeapp.generated.resources.title_paused
+import boxtimerpro.composeapp.generated.resources.title_ready
+import boxtimerpro.composeapp.generated.resources.title_rest
+import boxtimerpro.composeapp.generated.resources.title_workout_complete
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.presentation.configuration_screen.util.WorkoutMode
+import org.jetbrains.compose.resources.stringResource
 
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -87,5 +97,28 @@ fun TimerSettings.toWorkoutMode(): WorkoutMode {
 fun NavController.popBackStackSafely() {
     if (previousBackStackEntry != null) {
         popBackStack()
+    }
+}
+
+@Composable
+fun translateCountdownText(countdownText: String): String {
+    return if (countdownText.startsWith("Get Ready: ")) {
+        val number = countdownText.substringAfter("Get Ready: ").toIntOrNull() ?: 0
+        stringResource(Res.string.countdown_get_ready) + number
+    } else {
+        countdownText
+    }
+}
+
+@Composable
+fun getStringResource(key: String): String {
+    return when (key) {
+        "title_ready" -> stringResource(Res.string.title_ready)
+        "title_fight" -> stringResource(Res.string.title_fight)
+        "title_paused" -> stringResource(Res.string.title_paused)
+        "title_rest" -> stringResource(Res.string.title_rest)
+        "title_counting_down" -> stringResource(Res.string.title_counting_down)
+        "title_workout_complete" -> stringResource(Res.string.title_workout_complete)
+        else -> key
     }
 }

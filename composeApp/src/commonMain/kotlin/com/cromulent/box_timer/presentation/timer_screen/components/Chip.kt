@@ -54,8 +54,7 @@ fun Chip(
     ) {
         BasicText(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+                .fillMaxWidth(),
             onTextLayout = {
                 onSizeChanged(it.layoutInput.style.fontSize)
             },
@@ -104,8 +103,7 @@ fun Chip(
     ) {
         Text(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
+                .fillMaxWidth(),
             text = text,
             fontSize = textSize,
             maxLines = 1,
