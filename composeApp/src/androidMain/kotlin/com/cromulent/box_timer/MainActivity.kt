@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
         }
         enableEdgeToEdge()
 
-        loadKoinModules(module{
+        loadKoinModules(module {
             single { this@MainActivity as Activity }
         })
 
@@ -65,7 +65,7 @@ class MainActivity : ComponentActivity() {
         val settingsRepository by inject<SettingsRepository>()
         val languageManager by inject<LanguageManager>()
         languageManager.setActivity(this@MainActivity)
-        
+
         // Get the saved language setting synchronously
         val savedSettings = runBlocking { settingsRepository.getAppSettings() }
         savedSettings.selectedLanguage?.let { language ->
@@ -77,13 +77,13 @@ class MainActivity : ComponentActivity() {
 
             BoxTimerProTheme {
                 val view = LocalView.current
-                val colorScheme = MaterialTheme.colorScheme
-                
+
                 SideEffect {
                     val window = (view.context as Activity).window
-                    window.statusBarColor = colorScheme.background.toArgb()
-                    WindowCompat.getInsetsController(window, view)
-                        .isAppearanceLightStatusBars = (setting?.isDarkMode == false)
+                    WindowCompat.getInsetsController(window, view).apply {
+                        isAppearanceLightStatusBars = (setting?.isDarkMode == false)
+                        isAppearanceLightNavigationBars = (setting?.isDarkMode == false)
+                    }
                 }
                 
                 // Apply text direction based on app language, not system language
