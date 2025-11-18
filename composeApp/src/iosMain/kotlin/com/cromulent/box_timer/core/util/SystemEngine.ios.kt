@@ -55,4 +55,10 @@ actual class SystemEngine {
         val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
         rootViewController?.presentViewController(alert, animated = true, completion = null)
     }
+
+    //no iOS implementation
+    actual fun shouldShowBatteryOptimizationDialog() = false
+
+    //no iOS implementation
+    actual fun dismissBatteryDialog() = Unit
 }

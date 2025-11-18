@@ -18,10 +18,11 @@ import org.koin.dsl.module
 
 actual val platformModule: Module = module {
 
-    single { AudioPlayer(androidApplication()) }
-    single { SystemEngine(get<Activity>(),) }
+    singleOf(::AudioPlayer).bind<AudioPlayer>()
+    singleOf(::SystemEngine).bind<SystemEngine>()
     singleOf(::LanguageManager).bind<LanguageManager>()
-    
+    singleOf(::DefaultAppContainer).bind<AppContainer>()
+
     viewModel { 
         TimerViewModel(
             settingsRepository = get(),
@@ -40,6 +41,4 @@ actual val platformModule: Module = module {
         )
     }
     
-    single<AppContainer> { DefaultAppContainer(androidContext()) }
-
 }

@@ -15,14 +15,19 @@ import com.cromulent.box_timer.core.util.AudioPlayer
 import com.cromulent.box_timer.core.util.SystemEngine
 import com.cromulent.box_timer.core.util.formatTime
 import com.cromulent.box_timer.data.AppContainer
-import com.cromulent.box_timer.data.repository.SettingsRepositoryImpl
 import com.cromulent.box_timer.data.repository.TimerRepositoryImpl
 import com.cromulent.box_timer.domain.AppSettings
+import com.cromulent.box_timer.domain.SettingsRepository
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.domain.timer.Lap
 import com.cromulent.box_timer.presentation.theme.colorSchemes
 import com.cromulent.box_timer.presentation.timer_screen.TimerStatus
-import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.*
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Completed
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.CountDown
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Paused
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Ready
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Resting
+import com.cromulent.box_timer.presentation.timer_screen.TimerStatus.Running
 import com.cromulent.box_timer.presentation.timer_screen.isInActiveState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +43,7 @@ class TimerService : Service() {
 
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
-    private val settingsRepository = SettingsRepositoryImpl()
+    private val settingsRepository by inject<SettingsRepository>()
     var appSettings: AppSettings? = null
 
 
