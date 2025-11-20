@@ -1,58 +1,41 @@
 package com.cromulent.box_timer.core.util
 
 import android.app.Activity
+import android.app.LocaleManager
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Build
+import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.remember
+import androidx.core.os.LocaleListCompat
 import com.cromulent.box_timer.domain.AppLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Locale
 
-actual class LanguageManager {
+actual class LanguageManager(
+    val context: Context
+) {
     private val _currentLanguage = MutableStateFlow(AppLanguage.SYSTEM)
-    actual val currentLanguage: StateFlow<AppLanguage> = _currentLanguage.asStateFlow()
-    private var activity: Activity? = null
-
-    fun setActivity(activity: Activity) {
-        this.activity = activity
-    }
 
     actual fun setLanguage(language: AppLanguage) {
         _currentLanguage.value = language
         applyLanguageToSystem(language)
     }
 
-    actual fun getCurrentLanguage(): AppLanguage {
-        return _currentLanguage.value
-    }
-    
     actual fun isRTL(): Boolean {
         val currentLang = _currentLanguage.value
         return when (currentLang) {
             AppLanguage.SYSTEM -> {
                 // For system, check the actual system language
-                val systemLang = getSystemLanguage()
-                systemLang.isRTL
+                getSystemLanguage().isRTL
             }
             else -> currentLang.isRTL
-        }
-    }
-    
-    actual fun getFontFamily(): String? {
-        val currentLang = _currentLanguage.value
-        return when (currentLang) {
-            AppLanguage.SYSTEM -> {
-                // For system, check the actual system language
-                val systemLang = getSystemLanguage()
-                systemLang.fontFamily
-            }
-            else -> currentLang.fontFamily
         }
     }
     
@@ -61,33 +44,21 @@ actual class LanguageManager {
             AppLanguage.SYSTEM -> {
                 // Get the actual system language and apply it
                 val systemLang = getSystemLanguage()
-                println("DEBUG: System language detected as: ${systemLang}")
                 systemLang.toLocale()
             }
             AppLanguage.ENGLISH -> Locale.ENGLISH
             AppLanguage.PERSIAN -> Locale("fa")
         }
-        
-        println("DEBUG: Applying locale: ${locale}")
-        Locale.setDefault(locale)
-        
-        // Apply locale to the current activity's configuration
-        activity?.let { act ->
-            val config = Configuration(act.resources.configuration)
-            config.setLocale(locale)
-            
-            // Apply the configuration to the activity's resources
-            @Suppress("DEPRECATION")
-            act.resources.updateConfiguration(config, act.resources.displayMetrics)
-            
-            // Also update the application context
-            val appContext = act.applicationContext
-            val appConfig = Configuration(appContext.resources.configuration)
-            appConfig.setLocale(locale)
-            @Suppress("DEPRECATION")
-            appContext.resources.updateConfiguration(appConfig, appContext.resources.displayMetrics)
-            
-            println("DEBUG: Language applied successfully")
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.getSystemService(LocaleManager::class.java)
+                .applicationLocales = LocaleList.forLanguageTags(locale.toLanguageTag())
+        } else {
+            AppCompatDelegate.setApplicationLocales(
+                LocaleListCompat.forLanguageTags(
+                    locale.toLanguageTag()
+                )
+            )
         }
     }
     
@@ -97,20 +68,6 @@ actual class LanguageManager {
             AppLanguage.ENGLISH -> Locale.ENGLISH
             AppLanguage.PERSIAN -> Locale("fa")
         }
-    }
-}
-
-val LocalLanguageManager = compositionLocalOf<LanguageManager> { 
-    error("LanguageManager not provided") 
-}
-
-@Composable
-fun ProvideLanguageManager(
-    languageManager: LanguageManager,
-    content: @Composable () -> Unit
-) {
-    CompositionLocalProvider(LocalLanguageManager provides languageManager) {
-        content()
     }
 }
 
