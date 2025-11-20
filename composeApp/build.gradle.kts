@@ -77,6 +77,12 @@ android {
         }
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     defaultConfig {
         applicationId = "com.cromulent.box_timer"
         minSdk = libs.versions.android.minSdk.get().toInt()

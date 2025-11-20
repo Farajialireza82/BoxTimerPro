@@ -22,6 +22,7 @@ actual class LanguageManager(
     val context: Context
 ) {
     private val _currentLanguage = MutableStateFlow(AppLanguage.SYSTEM)
+    actual val currentLanguage = _currentLanguage.asStateFlow()
 
     actual fun setLanguage(language: AppLanguage) {
         _currentLanguage.value = language
@@ -32,7 +33,6 @@ actual class LanguageManager(
         val currentLang = _currentLanguage.value
         return when (currentLang) {
             AppLanguage.SYSTEM -> {
-                // For system, check the actual system language
                 getSystemLanguage().isRTL
             }
             else -> currentLang.isRTL
