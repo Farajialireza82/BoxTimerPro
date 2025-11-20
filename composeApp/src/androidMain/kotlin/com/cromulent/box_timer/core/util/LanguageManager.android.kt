@@ -22,7 +22,6 @@ actual class LanguageManager(
     val context: Context
 ) {
     private val _currentLanguage = MutableStateFlow(AppLanguage.SYSTEM)
-    actual val currentLanguage = _currentLanguage.asStateFlow()
 
     actual fun setLanguage(language: AppLanguage) {
         _currentLanguage.value = language
