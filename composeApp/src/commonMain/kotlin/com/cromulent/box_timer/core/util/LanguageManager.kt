@@ -8,5 +8,4 @@ import kotlinx.coroutines.flow.asStateFlow
 expect class LanguageManager {
     fun setLanguage(language: AppLanguage)
     fun isRTL(): Boolean
-    val currentLanguage: StateFlow<AppLanguage>
 }

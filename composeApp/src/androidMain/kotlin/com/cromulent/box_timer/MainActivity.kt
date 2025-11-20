@@ -73,7 +73,6 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val setting by settingsRepository.appSettings.collectAsState(null)
-            val currentLanguage = languageManager.currentLanguage.collectAsState().value
 
             BoxTimerProTheme {
                 val view = LocalView.current
