@@ -247,7 +247,8 @@ private fun TimerScreenLandscape(
                             .weight(2f)
                             .padding(8.dp),
                         laps = state.laps,
-                        roundDuration = state.roundDuration
+                        roundDuration = state.roundDuration,
+                        deleteLap = { onAction(TimerActions.DeleteLap(it)) }
                     )
                 }
 
@@ -431,7 +432,10 @@ private fun TimerScreenPortrait(
                         .fillMaxSize()
                         .weight(0.5f),
                     laps = state.laps,
-                    roundDuration = state.roundDuration
+                    roundDuration = state.roundDuration,
+                    deleteLap = {
+                        lap -> onAction(TimerActions.DeleteLap(lap))
+                    }
                 )
 
             }
@@ -555,7 +559,6 @@ private fun TimerScreenPortrait(
 
 // Portrait Previews - Light Mode
 
-/*
 
 @Preview
 @Composable
@@ -934,7 +937,7 @@ private fun LandscapeScheme10Dark() {
     BoxTimerProThemePrv(colorScheme = colorSchemes[10].darkColorScheme) {
         TimerScreenLandscape(onAction = {}, onBackButtonClicked = {})
     }
-}*/
+}
 
 @Preview(widthDp = 800, heightDp = 340)
 @Composable

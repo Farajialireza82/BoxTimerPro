@@ -90,7 +90,7 @@ val FireDarkColorScheme = darkColorScheme(
 
     secondary = Color(0xFFff6b35),
     onSecondary = Color(0xFF0a0a0a),
-    secondaryContainer = Color(0xFFBABABA),
+    secondaryContainer = Color(0xFFBABABA).copy(alpha = 0.1f),
     onSecondaryContainer = Color(0xFFBABABA),
 
     tertiary = Color(0xFFFC5600),

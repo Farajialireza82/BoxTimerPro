@@ -110,7 +110,7 @@ private fun MyProgressIndicator(
 
     val coercedProgress = { progress.coerceIn(0f, 1f) }
     val stroke =
-        with(LocalDensity.current) { Stroke(width = 18.dp.toPx(), cap = StrokeCap.Round) }
+        with(LocalDensity.current) { Stroke(width = 14.dp.toPx(), cap = StrokeCap.Round) }
 
     Box(
         modifier.fillMaxSize(),

@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.Service.STOP_FOREGROUND_REMOVE
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.ServiceCompat.stopForeground
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,7 @@ import com.cromulent.box_timer.data.AppContainer
 import com.cromulent.box_timer.data.DefaultAppContainer
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
+import com.cromulent.box_timer.domain.timer.Lap
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,6 +49,14 @@ actual class TimerViewModel(
 
     actual fun onAction(action: TimerActions) {
         when (action) {
+            is TimerActions.DeleteLap -> {
+                Intent(context, TimerService::class.java).also {intent ->
+                    intent.action = TimerService.Actions.DELETE_LAP.toString()
+                    intent.putExtra("LAP_CREATE_TIME", action.lap.createTime)
+                    intent.putExtra("LAP_ROUND_NUMBER", action.lap.roundNumber)
+                    context.startService(intent)
+                }
+            }
             TimerActions.StartTimer -> {
                 Intent(context, TimerService::class.java).also {
                     it.action = TimerService.Actions.TOGGLE.toString()

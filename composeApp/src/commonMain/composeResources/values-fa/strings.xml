@@ -26,10 +26,10 @@
 
     <string name="general_settings_title">تنظیمات عمومی</string>
     <string name="audio_settings_title">تنظیمات صدا</string>
-    <string name="mute_all_sounds_title">بی‌صدا کردن همه صداها</string>
-    <string name="mute_all_sounds_subtitle">بی‌صدا کردن همه صداهای برنامه</string>
+    <string name="mute_all_sounds_title">بی‌صدا کردن کامل برنامه</string>
+    <string name="mute_all_sounds_subtitle">قطع کامل تمام صداهای برنامه</string>
     <string name="vibration_title">لرزش</string>
-    <string name="vibration_subtitle">بازخورد لمسی برای رویدادهای تایمر</string>
+    <string name="vibration_subtitle">لرزش دستگاه در حین تمرین</string>
     <string name="countdown_sound_title">صدای شمارش معکوس</string>
     <string name="countdown_sound_subtitle">صدا قبل از شروع دور</string>
     <string name="start_round_sound_title">صدای شروع دور</string>
@@ -75,12 +75,12 @@
     <string name="countdown_get_ready">آماده شوید: </string>
 
     <string name="dialog_timer_running_title">تایمر در حال اجرا است</string>
-    <string name="dialog_timer_running_message">تمرین شما هنوز در حال انجام است. آیا مطمئن هستید که می‌خواهید متوقف کرده و برگردید؟</string>
+    <string name="dialog_timer_running_message">تمرین شما هنوز در حال انجام است. آیا مطمئنید که می‌خواهید متوقف کرده و برگردید؟</string>
     <string name="button_continue">ادامه</string>
     <string name="button_stop_exit">توقف و خروج</string>
     <string name="button_got_it">متوجه شدم!</string>
     <string name="dialog_workout_complete_title">تمرین تکمیل شد!</string>
-    <string name="dialog_workout_complete_message">تبریک! شما تمام دورها را تکمیل کرده‌اید. کار عالی!</string>
+    <string name="dialog_workout_complete_message">تمرین شما به اتمام رسید. خسته نباشید!</string>
     <string name= "sth">"آماده شوید: &amp;</string>
 
     <string name="audio_title_mute">بی‌صدا</string>
@@ -90,7 +90,7 @@
     <string name="audio_title_bell_three_times">زنگ سه بار</string>
 
     <string name="audio_title_whistle">سوت</string>
-    <string name="audio_title_fight_deep_voice">🗣️مبارزه صدای عمیق</string>
+    <string name="audio_title_fight_deep_voice">FIGHT</string>
     <string name="audio_title_air_horn_long">بوق هوا طولانی</string>
     <string name="audio_title_air_horn_short">بوق هوا کوتاه</string>
     <string name="audio_title_buzzer_long">بازر طولانی</string>

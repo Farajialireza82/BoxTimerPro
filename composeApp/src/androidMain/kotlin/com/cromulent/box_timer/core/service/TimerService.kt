@@ -146,6 +146,15 @@ class TimerService : Service() {
             Actions.LAP.toString() -> {
                 addLap()
             }
+            Actions.DELETE_LAP.toString() -> {
+                val lapCreateTime = intent.getLongExtra("LAP_CREATE_TIME", -1L)
+                val lapRoundNumber = intent.getIntExtra("LAP_ROUND_NUMBER", -1)
+                if(lapCreateTime != -1L && lapRoundNumber != -1){
+                    val lap = Lap( roundNumber = lapRoundNumber, createTime = lapCreateTime)
+                    deleteLap(lap)
+
+                }
+            }
 
         }
         return super.onStartCommand(intent, flags, startId)
@@ -161,6 +170,18 @@ class TimerService : Service() {
         _timerState.update {
             it.copy(
                 laps = listOf(lap) + it.laps
+            )
+        }
+    }
+
+    private fun deleteLap(lap: Lap){
+
+        val laps = _timerState.value.laps.toMutableList()
+        laps.remove(lap)
+
+        _timerState.update {
+            it.copy(
+                laps = laps
             )
         }
     }
@@ -494,7 +515,7 @@ class TimerService : Service() {
     }
 
     enum class Actions {
-        TOGGLE, RESET, SKIP, LAP
+        TOGGLE, RESET, SKIP, LAP, DELETE_LAP
     }
 
     fun TimerStatus.getMessageString(): String {
