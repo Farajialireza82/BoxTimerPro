@@ -19,23 +19,23 @@ import java.util.concurrent.TimeUnit
 import androidx.core.content.edit
 
 
-actual class SystemEngine(val applicationContext: Context) {
+actual class SystemEngine(val activity: Activity) {
 
     companion object {
         private const val KEY_LAST_SHOWN = "battery_dialog_last_shown"
         private val ONE_DAY_MILLIS = TimeUnit.DAYS.toMillis(1)
     }
 
-    private var preferences: SharedPreferences = applicationContext.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    private var preferences: SharedPreferences = activity.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
 
 
     private var vibrator: Vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         val vibratorManager =
-            applicationContext.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            activity.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         vibratorManager.defaultVibrator
     } else {
         @Suppress("DEPRECATION")
-        applicationContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        activity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
 
     actual fun vibrate(duration: Long) {
@@ -54,12 +54,12 @@ actual class SystemEngine(val applicationContext: Context) {
     actual fun openEmail() {
         val intent = Intent(Intent.ACTION_SENDTO)
             .setData("mailto:farajialireza001@gmail.com".toUri())
-        applicationContext.startActivity(intent)
+        activity.startActivity(intent)
     }
 
     actual fun isBatteryOptimizationEnabled(): Boolean{
-        val powerManager = applicationContext.getSystemService(Context.POWER_SERVICE) as PowerManager
-        return powerManager.isIgnoringBatteryOptimizations(applicationContext.packageName).not()
+        val powerManager = activity.getSystemService(Context.POWER_SERVICE) as PowerManager
+        return powerManager.isIgnoringBatteryOptimizations(activity.packageName).not()
     }
 
     actual fun shouldShowBatteryOptimizationDialog(): Boolean{
@@ -78,8 +78,8 @@ actual class SystemEngine(val applicationContext: Context) {
     actual fun openOptimizationSettings(){
         try {
             val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
-            intent.data = "package:${applicationContext.packageName}".toUri()
-            applicationContext.startActivity(intent)
+            intent.data = "package:${activity.packageName}".toUri()
+            activity.startActivity(intent)
         } catch (e: Exception) {
             Log.e("BatteryOpt", "Failed to open battery settings", e)
             openGeneralBatterySettings()
@@ -89,7 +89,7 @@ actual class SystemEngine(val applicationContext: Context) {
     private fun openGeneralBatterySettings() {
         try {
             val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-            applicationContext.startActivity(intent)
+            activity.startActivity(intent)
         } catch (e: Exception) {
             e.printStackTrace()
         }
