@@ -11,12 +11,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
-class TimerRepositoryImpl() : TimerRepository {
+class TimerRepositoryImpl(
+    private val settings: Settings
+) : TimerRepository {
 
-    val settings = Settings() as ObservableSettings
+    private val observableSettings = settings as ObservableSettings
 
     @OptIn(ExperimentalSettingsApi::class)
-    override val timerSettings: Flow<TimerSettings>  = settings.getStringFlow("timer_settings", "NULL").map { settings ->
+    override val timerSettings: Flow<TimerSettings>  = observableSettings.getStringFlow("timer_settings", "NULL").map { settings ->
         if (settings == "NULL") {
             TimerSettings()
         } else {
@@ -25,11 +27,11 @@ class TimerRepositoryImpl() : TimerRepository {
     }
 
     override suspend fun updateTimerSettings(timerSettings: TimerSettings) {
-        settings.putString("timer_settings", Json.encodeToString(timerSettings))
+        observableSettings.putString("timer_settings", Json.encodeToString(timerSettings))
     }
 
     override suspend fun getTimerSettings(): TimerSettings {
-        val timerJson = settings.getStringOrNull("timer_settings")
+        val timerJson = observableSettings.getStringOrNull("timer_settings")
         return if (timerJson != null) {
             Json.decodeFromString(timerJson)
         } else {

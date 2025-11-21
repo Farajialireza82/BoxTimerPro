@@ -87,7 +87,7 @@ android {
         applicationId = "com.cromulent.box_timer"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 4
+        versionCode = 5
         versionName = "${project.findProperty("PROJECT_VERSION")}"
     }
     

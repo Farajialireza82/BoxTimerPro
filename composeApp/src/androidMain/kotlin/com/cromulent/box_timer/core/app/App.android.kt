@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
@@ -16,11 +20,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.cromulent.box_timer.BuildKonfig
+import com.cromulent.box_timer.core.changelog.ChangelogManager
 import com.cromulent.box_timer.core.service.TimerService
 import com.cromulent.box_timer.core.util.popBackStackSafely
 import com.cromulent.box_timer.data.AppContainer
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
+import com.cromulent.box_timer.presentation.changelog.ChangelogBottomSheet
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationScreenRoot
 import com.cromulent.box_timer.presentation.configuration_screen.ConfigurationViewModel
 import com.cromulent.box_timer.presentation.settings_screen.SettingsScreenRoot
@@ -28,6 +35,9 @@ import com.cromulent.box_timer.presentation.settings_screen.SettingsViewModel
 import com.cromulent.box_timer.presentation.theme.BoxTimerProTheme
 import com.cromulent.box_timer.presentation.timer_screen.TimerScreenRoot
 import com.cromulent.box_timer.presentation.timer_screen.TimerViewModel
+import boxtimerpro.composeapp.generated.resources.Res
+import boxtimerpro.composeapp.generated.resources.changelog_content
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -37,8 +47,19 @@ import org.koin.compose.viewmodel.koinViewModel
 actual fun App() {
 
     val context = LocalContext.current
+    val changelogManager = koinInject<ChangelogManager>()
 
     val navController = rememberNavController()
+    var showChangelog by remember { mutableStateOf(false) }
+    val currentVersion = BuildKonfig.APP_VERSION
+    val changelogContent = stringResource(Res.string.changelog_content)
+
+    // Check version on app start
+    LaunchedEffect(Unit) {
+        val shouldShow = changelogManager.checkAndUpdateVersion(currentVersion)
+        showChangelog = shouldShow
+    }
+
     BoxTimerProTheme {
 
         Box(
@@ -120,5 +141,13 @@ actual fun App() {
         navController.navigate(Route.TimerScreen)
     }
 
+    // Show changelog bottom sheet if version changed
+    if (showChangelog) {
+        ChangelogBottomSheet(
+            version = currentVersion,
+            changelogContent = changelogContent,
+            onDismissRequest = { showChangelog = false }
+        )
+    }
 
 }
