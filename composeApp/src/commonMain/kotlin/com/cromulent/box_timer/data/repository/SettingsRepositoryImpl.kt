@@ -14,13 +14,15 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
-class SettingsRepositoryImpl() : SettingsRepository {
+class SettingsRepositoryImpl(
+    private val settings: Settings
+) : SettingsRepository {
 
-    val settings = Settings() as ObservableSettings
+    private val observableSettings = settings as ObservableSettings
 
     @OptIn(ExperimentalSettingsApi::class)
     override val appSettings: Flow<AppSettings> =
-        settings.getStringFlow("app_settings", "NULL").map { settings ->
+        observableSettings.getStringFlow("app_settings", "NULL").map { settings ->
             if (settings == "NULL") {
                 AppSettings()
             } else {
@@ -29,11 +31,11 @@ class SettingsRepositoryImpl() : SettingsRepository {
         }
 
     override suspend fun updateAppSettings(appSettings: AppSettings) {
-        settings.putString("app_settings", Json.encodeToString(appSettings))
+        observableSettings.putString("app_settings", Json.encodeToString(appSettings))
     }
 
     override suspend fun getAppSettings(): AppSettings {
-        val appStringJson = settings.getStringOrNull("app_settings")
+        val appStringJson = observableSettings.getStringOrNull("app_settings")
         return if (appStringJson != null) {
             Json.decodeFromString(appStringJson)
         } else AppSettings()

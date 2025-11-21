@@ -18,6 +18,7 @@ import com.cromulent.box_timer.data.AppContainer
 import com.cromulent.box_timer.data.repository.TimerRepositoryImpl
 import com.cromulent.box_timer.domain.AppSettings
 import com.cromulent.box_timer.domain.SettingsRepository
+import com.cromulent.box_timer.domain.TimerRepository
 import com.cromulent.box_timer.domain.TimerSettings
 import com.cromulent.box_timer.domain.timer.Lap
 import com.cromulent.box_timer.presentation.theme.colorSchemes
@@ -74,7 +75,7 @@ class TimerService : Service() {
 
     private val _timerState by lazy { appContainer.timerState }
     private val timerState by lazy { _timerState.asStateFlow() }
-    private val timerRepository = TimerRepositoryImpl()
+    private val timerRepository: TimerRepository by inject ()
 
     private var phaseStartTime = 0L
     private var pauseStartTime = 0L

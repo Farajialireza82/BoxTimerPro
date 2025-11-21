@@ -141,4 +141,15 @@
     <string name="language_persian">فارسی</string>
     <string name="language_system">Follow System Settings</string>
 
+    <!-- Changelog -->
+    <string name="changelog_title">What's New in Version {0}</string>
+    <string name="changelog_button_got_it">Got it!</string>
+    <string name="changelog_content">- Fixed screen turning off during workouts
+- Added personal record tracking and display
+- Added ability to skip the current round and proceed to the next
+- Introduced "Infinite" mode for unlimited rounds
+- Added warning when battery saver is active (prevents timer issues)
+- Completely fixed language switching issues
+- Major UI/UX improvements and visual enhancements
+- Fixed various minor bugs and improved overall app stability</string>
 </resources>
